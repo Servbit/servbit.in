@@ -1,0 +1,250 @@
+{
+  "id": "presign-project-branch-bucket-object",
+  "operationId": "presignProjectBranchBucketObject",
+  "method": "POST",
+  "path": "/projects/{project_id}/branches/{branch_id}/buckets/{bucket_name}/objects/{object_key}/presign",
+  "tag": "buckets",
+  "tagDisplay": "Buckets",
+  "stability": "beta",
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Presign an upload or download for an object in a bucket",
+  "description": "Returns a presigned URL that transfers bytes directly to or from the\nobject's bucket on the specified branch, without the caller ever\nhandling S3 credentials. The `operation` field selects the direction:\n\n- `upload` returns a presigned `PUT` URL (the caller `PUT`s the file\n  bytes straight to `url` with the returned `headers`). Authorized with\n  project write access.\n- `download` returns a presigned `GET` URL (the caller `GET`s the\n  bytes straight from `url`). Authorized with project read access.\n\nThe platform mints a short-lived credential and builds the SigV4-signed\nURL against the branch's S3 data-plane host, returning it together with\nthe HTTP method, any headers the caller must echo, and the URL's expiry.\n\nServed by the user's session (no customer S3 credentials required).\n\n**Note**: This endpoint is currently in Beta.\n",
+  "descriptionHtml": "<p>Returns a presigned URL that transfers bytes directly to or from the\nobject's bucket on the specified branch, without the caller ever\nhandling S3 credentials. The <code>operation</code> field selects the direction:</p>\n<ul>\n<li><code>upload</code> returns a presigned <code>PUT</code> URL (the caller <code>PUT</code>s the file\nbytes straight to <code>url</code> with the returned <code>headers</code>). Authorized with\nproject write access.</li>\n<li><code>download</code> returns a presigned <code>GET</code> URL (the caller <code>GET</code>s the\nbytes straight from <code>url</code>). Authorized with project read access.</li>\n</ul>\n<p>The platform mints a short-lived credential and builds the SigV4-signed\nURL against the branch's S3 data-plane host, returning it together with\nthe HTTP method, any headers the caller must echo, and the URL's expiry.</p>\n<p>Served by the user's session (no customer S3 credentials required).</p>\n<p><strong>Note</strong>: This endpoint is currently in Beta.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "branch_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon branch ID",
+      "descriptionHtml": "<p>The Neon branch ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "bucket_name",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The bucket name",
+      "descriptionHtml": "<p>The bucket name</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "object_key",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The object key. Keys may contain `/`; the `/` characters of nested\nkeys must be percent-encoded (`%2F`) in the path segment.\n",
+      "descriptionHtml": "<p>The object key. Keys may contain <code>/</code>; the <code>/</code> characters of nested\nkeys must be percent-encoded (<code>%2F</code>) in the path segment.</p>\n",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": {
+    "required": true,
+    "properties": {
+      "operation": {
+        "type": "string",
+        "enum": [
+          "upload",
+          "download"
+        ],
+        "description": "The transfer direction. `upload` returns a presigned `PUT` URL;\n`download` returns a presigned `GET` URL.\n",
+        "details": {
+          "description": "The transfer direction. `upload` returns a presigned `PUT` URL;\n`download` returns a presigned `GET` URL.",
+          "descriptionHtml": "<p>The transfer direction. <code>upload</code> returns a presigned <code>PUT</code> URL;\n<code>download</code> returns a presigned <code>GET</code> URL.</p>",
+          "example": null,
+          "values": [
+            "upload",
+            "download"
+          ]
+        }
+      },
+      "content_type": {
+        "type": "string",
+        "description": "The `Content-Type` to bind into the signed request. Only meaningful\nfor `upload`: when set, the caller MUST send the same `Content-Type`\nheader on the `PUT`, and the value is echoed back in the response\n`headers`. Ignored for `download`.\n",
+        "details": {
+          "description": "The `Content-Type` to bind into the signed request. Only meaningful\nfor `upload`: when set, the caller MUST send the same `Content-Type`\nheader on the `PUT`, and the value is echoed back in the response\n`headers`. Ignored for `download`.",
+          "descriptionHtml": "<p>The <code>Content-Type</code> to bind into the signed request. Only meaningful\nfor <code>upload</code>: when set, the caller MUST send the same <code>Content-Type</code>\nheader on the <code>PUT</code>, and the value is echoed back in the response\n<code>headers</code>. Ignored for <code>download</code>.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "expires_in_seconds": {
+        "type": "integer",
+        "format": "int64",
+        "minimum": 1,
+        "maximum": 604800,
+        "default": 900,
+        "description": "How long the presigned URL stays valid, in seconds. Defaults to 900\n(15 minutes); capped at 604800 (7 days).\n",
+        "details": {
+          "description": "How long the presigned URL stays valid, in seconds. Defaults to 900\n(15 minutes); capped at 604800 (7 days).",
+          "descriptionHtml": "<p>How long the presigned URL stays valid, in seconds. Defaults to 900\n(15 minutes); capped at 604800 (7 days).</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "operation"
+    ],
+    "displayOrder": [
+      "operation",
+      "content_type",
+      "expires_in_seconds"
+    ],
+    "sections": null,
+    "seed": null,
+    "labels": null
+  },
+  "response": {
+    "status": "200",
+    "description": "A presigned URL valid until `expires_at`. The caller transfers the\nobject bytes by issuing `method url` with the returned `headers`.\n",
+    "descriptionHtml": "<p>A presigned URL valid until <code>expires_at</code>. The caller transfers the\nobject bytes by issuing <code>method url</code> with the returned <code>headers</code>.</p>\n",
+    "example": {
+      "url": "https://br-young-forest-a5b6c7d8.storage.c-5.us-east-2.aws.neon.tech/user-uploads-ms9mbu2o16/uploads/hello.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=nak_live_00000000000000000000000000000000%2Fus-east-2&X-Amz-Date=20250115T103000Z&X-Amz-Expires=900&X-Amz-Signature=0000000000000000000000000000000000000000000000000000000000000000&X-Amz-SignedHeaders=host",
+      "method": "GET",
+      "headers": {},
+      "expires_at": "2025-02-15T10:30:00Z"
+    },
+    "properties": {
+      "url": {
+        "type": "string",
+        "description": "The presigned URL. Transfer the object bytes by issuing\n`method url` with the returned `headers`.\n",
+        "details": {
+          "description": "The presigned URL. Transfer the object bytes by issuing\n`method url` with the returned `headers`.",
+          "descriptionHtml": "<p>The presigned URL. Transfer the object bytes by issuing\n<code>method url</code> with the returned <code>headers</code>.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "method": {
+        "type": "string",
+        "description": "The HTTP method to use against `url`: `PUT` for an upload,\n`GET` for a download.\n",
+        "details": {
+          "description": "The HTTP method to use against `url`: `PUT` for an upload,\n`GET` for a download.",
+          "descriptionHtml": "<p>The HTTP method to use against <code>url</code>: <code>PUT</code> for an upload,\n<code>GET</code> for a download.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "headers": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        },
+        "description": "Headers the caller MUST send verbatim on the request (e.g.\n`Content-Type` when it was signed on an upload). May be empty.\n",
+        "details": {
+          "description": "Headers the caller MUST send verbatim on the request (e.g.\n`Content-Type` when it was signed on an upload). May be empty.",
+          "descriptionHtml": "<p>Headers the caller MUST send verbatim on the request (e.g.\n<code>Content-Type</code> when it was signed on an upload). May be empty.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "expires_at": {
+        "type": "string",
+        "format": "date-time",
+        "description": "When the presigned URL stops being valid.",
+        "details": {
+          "description": "When the presigned URL stops being valid.",
+          "descriptionHtml": "<p>When the presigned URL stops being valid.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "url",
+      "method",
+      "headers",
+      "expires_at"
+    ],
+    "displayOrder": [
+      "url",
+      "method",
+      "headers",
+      "expires_at"
+    ]
+  },
+  "errors": [
+    {
+      "status": "404",
+      "description": "Bucket or branch not found",
+      "descriptionHtml": "<p>Bucket or branch not found</p>",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    },
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/buckets/$BUCKET_NAME/objects/$OBJECT_KEY/presign\" \\\n  -X POST \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.presignProjectBranchBucketObject({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    branch_id: process.env.BRANCH_ID,\n    bucket_name: process.env.BUCKET_NAME,\n    object_key: process.env.OBJECT_KEY\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": null
+  },
+  "specIndex": 160
+}

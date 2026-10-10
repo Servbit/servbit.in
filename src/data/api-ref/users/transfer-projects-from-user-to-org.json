@@ -1,0 +1,179 @@
+{
+  "id": "transfer-projects-from-user-to-org",
+  "operationId": "transferProjectsFromUserToOrg",
+  "method": "POST",
+  "path": "/users/me/projects/transfer",
+  "tag": "users",
+  "tagDisplay": "Users",
+  "stability": null,
+  "deprecated": true,
+  "sunset": "2026-07-01",
+  "summary": "Transfer projects from personal account to organization",
+  "description": "Deprecated. Personal accounts have been migrated to organizations, so this operation no longer applies. Removal scheduled for July 1, 2026.\n",
+  "descriptionHtml": "<p>Deprecated. Personal accounts have been migrated to organizations, so this operation no longer applies. Removal scheduled for July 1, 2026.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [],
+  "requestBody": {
+    "required": true,
+    "properties": {
+      "destination_org_id": {
+        "description": "The destination organization identifier",
+        "type": "string",
+        "pattern": "^[a-z0-9-]{1,60}$",
+        "details": {
+          "description": "The destination organization identifier",
+          "descriptionHtml": "<p>The destination organization identifier</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "project_ids": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 400,
+        "items": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]{1,60}$"
+        },
+        "description": "The list of projects ids to transfer. Maximum of 400 project ids",
+        "details": {
+          "description": "The list of projects ids to transfer. Maximum of 400 project ids",
+          "descriptionHtml": "<p>The list of projects ids to transfer. Maximum of 400 project ids</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "destination_org_id",
+      "project_ids"
+    ],
+    "displayOrder": [
+      "destination_org_id",
+      "project_ids"
+    ],
+    "sections": null,
+    "seed": null,
+    "labels": null
+  },
+  "response": {
+    "status": "200",
+    "description": "Projects successfully transferred from personal account to organization",
+    "descriptionHtml": "<p>Projects successfully transferred from personal account to organization</p>",
+    "example": null,
+    "properties": {},
+    "requiredFields": [],
+    "displayOrder": []
+  },
+  "errors": [
+    {
+      "status": "406",
+      "description": "Transfer failed. The target organization has too many projects or an incompatible plan. Reduce projects or upgrade the target organization.",
+      "descriptionHtml": "<p>Transfer failed. The target organization has too many projects or an incompatible plan. Reduce projects or upgrade the target organization.</p>",
+      "properties": {
+        "limits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "expected",
+              "actual"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Identifier of the unsatisfied limit. Possible values are:\n- subscription_type\n- projects_count\n- project_region\n"
+              },
+              "expected": {
+                "type": "string",
+                "description": "Required value for the limit named by `name`. Compare with `actual` to determine the shortfall."
+              },
+              "actual": {
+                "type": "string",
+                "description": "Current value of the named limit, which does not satisfy the required `expected` value."
+              }
+            }
+          },
+          "description": "Plan limits that were not satisfied by the request."
+        }
+      },
+      "required": [
+        "limits"
+      ]
+    },
+    {
+      "status": "422",
+      "description": "Transfer failed. Projects with active integrations (for example, GitHub or Vercel) cannot be transferred.",
+      "descriptionHtml": "<p>Transfer failed. Projects with active integrations (for example, GitHub or Vercel) cannot be transferred.</p>",
+      "properties": {
+        "projects": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "integration"
+            ],
+            "properties": {
+              "id": {
+                "description": "The Neon project ID. Use as the `project_id` path parameter in other endpoints.",
+                "type": "string",
+                "pattern": "^[a-z0-9-]{1,60}$"
+              },
+              "integration": {
+                "type": "string",
+                "description": "Name of the external integration associated with the project."
+              }
+            }
+          },
+          "description": "Projects that have the requested integration, each including the project details and associated integration metadata."
+        }
+      },
+      "required": [
+        "projects"
+      ]
+    },
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/users/me/projects/transfer\" \\\n  -X POST \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.transferProjectsFromUserToOrg({\n  client: neon.client\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": null
+  },
+  "specIndex": 139
+}

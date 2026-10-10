@@ -1,0 +1,253 @@
+{
+  "id": "list-neon-auth-integrations",
+  "operationId": "listNeonAuthIntegrations",
+  "method": "GET",
+  "path": "/projects/{project_id}/auth/integrations",
+  "tag": "auth-legacy",
+  "tagDisplay": "Legacy Auth",
+  "stability": null,
+  "deprecated": true,
+  "sunset": "2026-03-01",
+  "summary": "List active integrations with auth providers",
+  "description": "Deprecated. Use `/projects/{project_id}/branches/{branch_id}/auth` instead. Removal scheduled for March 1, 2026.",
+  "descriptionHtml": "<p>Deprecated. Use <code>/projects/{project_id}/branches/{branch_id}/auth</code> instead. Removal scheduled for March 1, 2026.</p>",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": null,
+  "response": {
+    "status": "200",
+    "description": "Return management API keys metadata",
+    "descriptionHtml": "<p>Return management API keys metadata</p>",
+    "example": null,
+    "properties": {
+      "data": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "auth_provider",
+            "auth_provider_project_id",
+            "branch_id",
+            "db_name",
+            "created_at",
+            "owned_by",
+            "jwks_url"
+          ],
+          "x-sensitive": [
+            "db_name"
+          ],
+          "properties": {
+            "auth_provider": {
+              "description": "Authentication provider integrated with this Neon Auth configuration. `better_auth` integrates with Better Auth (the current, recommended provider). `stack` integrates with Stack Auth (deprecated). `mock` is a simulated provider for local development and testing only.",
+              "type": "string",
+              "enum": [
+                "mock",
+                "stack",
+                "better_auth"
+              ],
+              "details": {
+                "description": "Authentication provider integrated with this Neon Auth configuration. `better_auth` integrates with Better Auth (the current, recommended provider). `stack` integrates with Stack Auth (deprecated). `mock` is a simulated provider for local development and testing only.",
+                "descriptionHtml": "<p>Authentication provider integrated with this Neon Auth configuration. <code>better_auth</code> integrates with Better Auth (the current, recommended provider). <code>stack</code> integrates with Stack Auth (deprecated). <code>mock</code> is a simulated provider for local development and testing only.</p>",
+                "example": null,
+                "values": [
+                  "mock",
+                  "stack",
+                  "better_auth"
+                ]
+              }
+            },
+            "auth_provider_project_id": {
+              "type": "string",
+              "description": "Project identifier assigned by the auth provider for this integration.",
+              "details": {
+                "description": "Project identifier assigned by the auth provider for this integration.",
+                "descriptionHtml": "<p>Project identifier assigned by the auth provider for this integration.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "branch_id": {
+              "description": "The Neon branch ID. Returned as `id` from `GET /projects/{project_id}/branches`.",
+              "example": "br-cool-darkness-12345678",
+              "type": "string",
+              "pattern": "^[a-z0-9-]{1,60}$",
+              "details": {
+                "description": "The Neon branch ID. Returned as `id` from `GET /projects/{project_id}/branches`.",
+                "descriptionHtml": "<p>The Neon branch ID. Returned as <code>id</code> from <code>GET /projects/{project_id}/branches</code>.</p>",
+                "example": "br-cool-darkness-12345678",
+                "values": null
+              }
+            },
+            "db_name": {
+              "type": "string",
+              "description": "Name of the database used by the Neon Auth integration.",
+              "details": {
+                "description": "Name of the database used by the Neon Auth integration.",
+                "descriptionHtml": "<p>Name of the database used by the Neon Auth integration.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "created_at": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Timestamp when the Neon Auth integration was created, in RFC 3339 format (UTC).",
+              "example": "2025-01-15T10:30:00Z",
+              "details": {
+                "description": "Timestamp when the Neon Auth integration was created, in RFC 3339 format (UTC).",
+                "descriptionHtml": "<p>Timestamp when the Neon Auth integration was created, in RFC 3339 format (UTC).</p>",
+                "example": "2025-01-15T10:30:00Z",
+                "values": null
+              }
+            },
+            "owned_by": {
+              "description": "Owner of the auth provider project. `neon` means the project is created and managed by Neon on your behalf. `user` means the project was created in your own auth provider account and is self-managed.",
+              "type": "string",
+              "enum": [
+                "user",
+                "neon"
+              ],
+              "details": {
+                "description": "Owner of the auth provider project. `neon` means the project is created and managed by Neon on your behalf. `user` means the project was created in your own auth provider account and is self-managed.",
+                "descriptionHtml": "<p>Owner of the auth provider project. <code>neon</code> means the project is created and managed by Neon on your behalf. <code>user</code> means the project was created in your own auth provider account and is self-managed.</p>",
+                "example": null,
+                "values": [
+                  "user",
+                  "neon"
+                ]
+              }
+            },
+            "transfer_status": {
+              "description": "Ownership transfer state for the auth provider project. `initiated` means a transfer was requested but not completed. `finished` means it completed successfully.",
+              "type": "string",
+              "enum": [
+                "initiated",
+                "finished"
+              ],
+              "details": {
+                "description": "Ownership transfer state for the auth provider project. `initiated` means a transfer was requested but not completed. `finished` means it completed successfully.",
+                "descriptionHtml": "<p>Ownership transfer state for the auth provider project. <code>initiated</code> means a transfer was requested but not completed. <code>finished</code> means it completed successfully.</p>",
+                "example": null,
+                "values": [
+                  "initiated",
+                  "finished"
+                ]
+              }
+            },
+            "jwks_url": {
+              "type": "string",
+              "description": "URL of the provider's JWKS endpoint used to verify JWTs.",
+              "details": {
+                "description": "URL of the provider's JWKS endpoint used to verify JWTs.",
+                "descriptionHtml": "<p>URL of the provider's JWKS endpoint used to verify JWTs.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "base_url": {
+              "type": "string",
+              "description": "Base URL of the Neon Auth service endpoint for this integration. Injected into the project environment as `NEON_AUTH_BASE_URL`.",
+              "details": {
+                "description": "Base URL of the Neon Auth service endpoint for this integration. Injected into the project environment as `NEON_AUTH_BASE_URL`.",
+                "descriptionHtml": "<p>Base URL of the Neon Auth service endpoint for this integration. Injected into the project environment as <code>NEON_AUTH_BASE_URL</code>.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "name": {
+              "type": "string",
+              "description": "Application name shown in auth emails and communications. Defaults to the project name.",
+              "minLength": 1,
+              "maxLength": 256,
+              "details": {
+                "description": "Application name shown in auth emails and communications. Defaults to the project name.",
+                "descriptionHtml": "<p>Application name shown in auth emails and communications. Defaults to the project name.</p>",
+                "example": null,
+                "values": null
+              }
+            }
+          },
+          "displayOrder": [
+            "auth_provider",
+            "auth_provider_project_id",
+            "branch_id",
+            "db_name",
+            "created_at",
+            "owned_by",
+            "jwks_url",
+            "base_url",
+            "name",
+            "transfer_status"
+          ]
+        },
+        "description": "Neon Auth integrations configured for the project.",
+        "details": {
+          "description": "Neon Auth integrations configured for the project.",
+          "descriptionHtml": "<p>Neon Auth integrations configured for the project.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "data"
+    ],
+    "displayOrder": [
+      "data"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/auth/integrations\" \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.listNeonAuthIntegrations({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": "Projects → Auth → Configuration"
+  },
+  "specIndex": 46
+}

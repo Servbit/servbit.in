@@ -1,0 +1,155 @@
+{
+  "id": "get-neon-auth-email-server",
+  "operationId": "getNeonAuthEmailServer",
+  "method": "GET",
+  "path": "/projects/{project_id}/auth/email_server",
+  "tag": "auth-legacy",
+  "tagDisplay": "Legacy Auth",
+  "stability": null,
+  "deprecated": true,
+  "sunset": "2026-03-01",
+  "summary": "Retrieve email server configuration",
+  "description": "Deprecated. Use `/projects/{project_id}/branches/{branch_id}/auth/email_provider` instead. Removal scheduled for March 1, 2026.\n",
+  "descriptionHtml": "<p>Deprecated. Use <code>/projects/{project_id}/branches/{branch_id}/auth/email_provider</code> instead. Removal scheduled for March 1, 2026.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": null,
+  "response": {
+    "status": "200",
+    "description": "Returns the email server configuration for the Neon Auth\n\n**Alternative shape:** set `type: shared` to use the shared variant (all fields optional).",
+    "descriptionHtml": "<p>Returns the email server configuration for the Neon Auth</p>\n<p><strong>Alternative shape:</strong> set <code>type: shared</code> to use the shared variant (all fields optional).</p>",
+    "example": null,
+    "properties": {
+      "host": {
+        "type": "string",
+        "description": "Hostname of the email server.",
+        "details": {
+          "description": "Hostname of the email server.",
+          "descriptionHtml": "<p>Hostname of the email server.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "port": {
+        "type": "integer",
+        "description": "TCP port of the SMTP server. Common values: 25 (SMTP), 465 (SMTPS), 587 (submission).",
+        "details": {
+          "description": "TCP port of the SMTP server. Common values: 25 (SMTP), 465 (SMTPS), 587 (submission).",
+          "descriptionHtml": "<p>TCP port of the SMTP server. Common values: 25 (SMTP), 465 (SMTPS), 587 (submission).</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "username": {
+        "type": "string",
+        "description": "Username for authenticating with the SMTP server.",
+        "details": {
+          "description": "Username for authenticating with the SMTP server.",
+          "descriptionHtml": "<p>Username for authenticating with the SMTP server.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "password": {
+        "type": "string",
+        "description": "On GET, returned redacted (empty) for ordinary callers, while callers with project-credential read permission receive the stored password — do not assume this field is empty. Update (PATCH) responses always return it redacted (empty) regardless of permission. Provide a value on update to set or rotate the password.",
+        "details": {
+          "description": "On GET, returned redacted (empty) for ordinary callers, while callers with project-credential read permission receive the stored password — do not assume this field is empty. Update (PATCH) responses always return it redacted (empty) regardless of permission. Provide a value on update to set or rotate the password.",
+          "descriptionHtml": "<p>On GET, returned redacted (empty) for ordinary callers, while callers with project-credential read permission receive the stored password — do not assume this field is empty. Update (PATCH) responses always return it redacted (empty) regardless of permission. Provide a value on update to set or rotate the password.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "sender_email": {
+        "type": "string",
+        "description": "Email address used as the From address on outgoing auth emails.",
+        "details": {
+          "description": "Email address used as the From address on outgoing auth emails.",
+          "descriptionHtml": "<p>Email address used as the From address on outgoing auth emails.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "sender_name": {
+        "type": "string",
+        "description": "Display name shown as the sender in outgoing emails.",
+        "details": {
+          "description": "Display name shown as the sender in outgoing emails.",
+          "descriptionHtml": "<p>Display name shown as the sender in outgoing emails.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "host",
+      "port",
+      "username",
+      "password",
+      "sender_email",
+      "sender_name"
+    ],
+    "displayOrder": [
+      "host",
+      "port",
+      "username",
+      "password",
+      "sender_email",
+      "sender_name"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/auth/email_server\" \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.getNeonAuthEmailServer({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": null
+  },
+  "specIndex": 55
+}

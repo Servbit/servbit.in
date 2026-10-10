@@ -1,0 +1,382 @@
+{
+  "id": "list-project-branch-bucket-objects",
+  "operationId": "listProjectBranchBucketObjects",
+  "method": "GET",
+  "path": "/projects/{project_id}/branches/{branch_id}/buckets/{bucket_name}/objects",
+  "tag": "buckets",
+  "tagDisplay": "Buckets",
+  "stability": "beta",
+  "deprecated": false,
+  "sunset": null,
+  "summary": "List objects in a bucket",
+  "description": "Lists objects visible in the named bucket on the specified branch,\nincluding those inherited from ancestor branches. Listing is served by\nthe user's session (no customer S3 credentials required).\n\nWhen `delimiter` is supplied (typically `/`), keys are collapsed into\ncommon prefixes (`folders`) so callers can render a folder-style\nbrowser; keys that do not contain the delimiter after `prefix` are\nreturned as `objects`.\n\n**Note**: This endpoint is currently in Beta.\n",
+  "descriptionHtml": "<p>Lists objects visible in the named bucket on the specified branch,\nincluding those inherited from ancestor branches. Listing is served by\nthe user's session (no customer S3 credentials required).</p>\n<p>When <code>delimiter</code> is supplied (typically <code>/</code>), keys are collapsed into\ncommon prefixes (<code>folders</code>) so callers can render a folder-style\nbrowser; keys that do not contain the delimiter after <code>prefix</code> are\nreturned as <code>objects</code>.</p>\n<p><strong>Note</strong>: This endpoint is currently in Beta.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "branch_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon branch ID",
+      "descriptionHtml": "<p>The Neon branch ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "bucket_name",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The bucket name",
+      "descriptionHtml": "<p>The bucket name</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "prefix",
+      "type": "string",
+      "in": "query",
+      "required": false,
+      "description": "Only list objects whose key starts with this prefix.",
+      "descriptionHtml": "<p>Only list objects whose key starts with this prefix.</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "delimiter",
+      "type": "string",
+      "in": "query",
+      "required": false,
+      "description": "Collapse keys sharing a common prefix up to the first occurrence of\nthis delimiter (typically `/`) into the `folders` array.\n",
+      "descriptionHtml": "<p>Collapse keys sharing a common prefix up to the first occurrence of\nthis delimiter (typically <code>/</code>) into the <code>folders</code> array.</p>\n",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "cursor",
+      "type": "string",
+      "in": "query",
+      "required": false,
+      "description": "Opaque pagination cursor returned as `next_cursor` by a previous\ncall. Resume listing after the last item of the previous page.\n",
+      "descriptionHtml": "<p>Opaque pagination cursor returned as <code>next_cursor</code> by a previous\ncall. Resume listing after the last item of the previous page.</p>\n",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "limit",
+      "type": "integer",
+      "in": "query",
+      "required": false,
+      "description": "Maximum number of items (objects + folders) to return.",
+      "descriptionHtml": "<p>Maximum number of items (objects + folders) to return.</p>",
+      "default": 1000,
+      "example": null
+    }
+  ],
+  "requestBody": null,
+  "response": {
+    "status": "200",
+    "description": "The list of objects and folders",
+    "descriptionHtml": "<p>The list of objects and folders</p>",
+    "example": {
+      "folders": [],
+      "objects": [
+        {
+          "key": "uploads/hello.txt",
+          "size": 11,
+          "last_modified": "2025-01-15T10:30:00Z",
+          "etag": "5eb63bbbe01eeed093cb22bb8f5acdc3"
+        }
+      ],
+      "prefix": "",
+      "is_truncated": false
+    },
+    "properties": {
+      "folders": {
+        "type": "array",
+        "description": "Common prefixes (folder names) collapsed under the requested\n`delimiter`. Empty when no `delimiter` was supplied.\n",
+        "items": {
+          "type": "string"
+        },
+        "details": {
+          "description": "Common prefixes (folder names) collapsed under the requested\n`delimiter`. Empty when no `delimiter` was supplied.",
+          "descriptionHtml": "<p>Common prefixes (folder names) collapsed under the requested\n<code>delimiter</code>. Empty when no <code>delimiter</code> was supplied.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "objects": {
+        "type": "array",
+        "description": "Objects whose keys did not collapse into a folder.",
+        "items": {
+          "type": "object",
+          "required": [
+            "key",
+            "size",
+            "last_modified",
+            "etag"
+          ],
+          "properties": {
+            "key": {
+              "type": "string",
+              "description": "The full object key.",
+              "details": {
+                "description": "The full object key.",
+                "descriptionHtml": "<p>The full object key.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "size": {
+              "type": "integer",
+              "format": "int64",
+              "description": "The object size in bytes.",
+              "details": {
+                "description": "The object size in bytes.",
+                "descriptionHtml": "<p>The object size in bytes.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "last_modified": {
+              "type": "string",
+              "format": "date-time",
+              "description": "The time the object was last modified.",
+              "details": {
+                "description": "The time the object was last modified.",
+                "descriptionHtml": "<p>The time the object was last modified.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "etag": {
+              "type": "string",
+              "description": "The object's entity tag (content hash).",
+              "details": {
+                "description": "The object's entity tag (content hash).",
+                "descriptionHtml": "<p>The object's entity tag (content hash).</p>",
+                "example": null,
+                "values": null
+              }
+            }
+          },
+          "displayOrder": [
+            "key",
+            "size",
+            "last_modified",
+            "etag"
+          ]
+        },
+        "details": {
+          "description": "Objects whose keys did not collapse into a folder.",
+          "descriptionHtml": "<p>Objects whose keys did not collapse into a folder.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "prefix": {
+        "type": "string",
+        "description": "The prefix that was applied to this listing (echoed back).",
+        "details": {
+          "description": "The prefix that was applied to this listing (echoed back).",
+          "descriptionHtml": "<p>The prefix that was applied to this listing (echoed back).</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "next_cursor": {
+        "type": "string",
+        "description": "Pagination cursor to pass as `cursor` on the next request. Empty\nwhen the listing is not truncated.\n",
+        "details": {
+          "description": "Pagination cursor to pass as `cursor` on the next request. Empty\nwhen the listing is not truncated.",
+          "descriptionHtml": "<p>Pagination cursor to pass as <code>cursor</code> on the next request. Empty\nwhen the listing is not truncated.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "is_truncated": {
+        "type": "boolean",
+        "description": "True when more results exist beyond this page.",
+        "details": {
+          "description": "True when more results exist beyond this page.",
+          "descriptionHtml": "<p>True when more results exist beyond this page.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "folders",
+      "objects",
+      "prefix",
+      "is_truncated"
+    ],
+    "displayOrder": [
+      "folders",
+      "objects",
+      "prefix",
+      "is_truncated",
+      "next_cursor"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/buckets/$BUCKET_NAME/objects\" \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.listProjectBranchBucketObjects({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    branch_id: process.env.BRANCH_ID,\n    bucket_name: process.env.BUCKET_NAME\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": {
+    "command": "neon buckets object list <branch_id>",
+    "flags": [
+      {
+        "name": "analytics",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "api-key",
+        "type": "string",
+        "required": false,
+        "default": ""
+      },
+      {
+        "name": "color",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "config-dir",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "context-file",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "help",
+        "type": "boolean",
+        "required": false,
+        "alias": "h"
+      },
+      {
+        "name": "output",
+        "type": "string",
+        "required": false,
+        "alias": "o",
+        "enum": [
+          "json",
+          "yaml",
+          "table"
+        ],
+        "default": "table"
+      },
+      {
+        "name": "profile",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "version",
+        "type": "boolean",
+        "required": false,
+        "alias": "v"
+      },
+      {
+        "name": "project-id",
+        "type": "string",
+        "required": false,
+        "apiEquiv": "project_id",
+        "apiEquivIn": "parameter"
+      },
+      {
+        "name": "branch",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "cursor",
+        "type": "string",
+        "required": false,
+        "apiEquiv": "cursor",
+        "apiEquivIn": "parameter"
+      },
+      {
+        "name": "delimiter",
+        "type": "string",
+        "required": false,
+        "apiEquiv": "delimiter",
+        "apiEquivIn": "parameter"
+      },
+      {
+        "name": "limit",
+        "type": "number",
+        "required": false,
+        "apiEquiv": "limit",
+        "apiEquivIn": "parameter"
+      },
+      {
+        "name": "recursive",
+        "type": "boolean",
+        "required": false,
+        "default": false
+      }
+    ],
+    "positionals": [
+      {
+        "display": "<branch_id>",
+        "apiEquiv": "branch_id"
+      }
+    ]
+  },
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": null
+  },
+  "specIndex": 156
+}

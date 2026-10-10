@@ -1,0 +1,179 @@
+{
+  "id": "get-project-branch-storage",
+  "operationId": "getProjectBranchStorage",
+  "method": "GET",
+  "path": "/projects/{project_id}/branches/{branch_id}/storage",
+  "tag": "storage",
+  "tagDisplay": "Storage",
+  "stability": "beta",
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Get branch object storage state",
+  "description": "Returns whether branchable object storage is usable for the specified\nbranch. A 200 response means the branch is registered in the object storage\nservice and the S3 data plane will accept requests for it. A 404\nresponse includes a `reason` field indicating why object storage is unavailable.\n\n**Note**: This endpoint is currently in Beta.\n",
+  "descriptionHtml": "<p>Returns whether branchable object storage is usable for the specified\nbranch. A 200 response means the branch is registered in the object storage\nservice and the S3 data plane will accept requests for it. A 404\nresponse includes a <code>reason</code> field indicating why object storage is unavailable.</p>\n<p><strong>Note</strong>: This endpoint is currently in Beta.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "branch_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon branch ID",
+      "descriptionHtml": "<p>The Neon branch ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": null,
+  "response": {
+    "status": "200",
+    "description": "Object storage is enabled for this branch",
+    "descriptionHtml": "<p>Object storage is enabled for this branch</p>",
+    "example": {
+      "enabled": true,
+      "s3_endpoint": "https://br-young-forest-a5b6c7d8.storage.c-5.us-east-2.aws.neon.tech",
+      "region": "us-east-2",
+      "force_path_style": true
+    },
+    "properties": {
+      "enabled": {
+        "type": "boolean",
+        "description": "Always `true` in 200 responses. Present for forward compatibility: a\nfuture version may add intermediate states; callers should treat `true`\nas \"object storage is usable for this branch right now.\"\n",
+        "details": {
+          "description": "Always `true` in 200 responses. Present for forward compatibility: a\nfuture version may add intermediate states; callers should treat `true`\nas \"object storage is usable for this branch right now.\"",
+          "descriptionHtml": "<p>Always <code>true</code> in 200 responses. Present for forward compatibility: a\nfuture version may add intermediate states; callers should treat <code>true</code>\nas &quot;object storage is usable for this branch right now.&quot;</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "s3_endpoint": {
+        "type": "string",
+        "format": "uri",
+        "description": "The S3-compatible endpoint URL for this branch.",
+        "example": "https://br-cool-moon-42.storage.c-2.local.neon.build",
+        "details": {
+          "description": "The S3-compatible endpoint URL for this branch.",
+          "descriptionHtml": "<p>The S3-compatible endpoint URL for this branch.</p>",
+          "example": "https://br-cool-moon-42.storage.c-2.local.neon.build",
+          "values": null
+        }
+      },
+      "region": {
+        "type": "string",
+        "description": "The AWS region for this branch's object storage. The platform normalizes\nthe us-east-1 convention server-side: a non-empty region string is\nalways returned in 200 responses (e.g. `\"us-east-1\"` for the S3\ndefault region).\n",
+        "example": "us-east-2",
+        "details": {
+          "description": "The AWS region for this branch's object storage. The platform normalizes\nthe us-east-1 convention server-side: a non-empty region string is\nalways returned in 200 responses (e.g. `\"us-east-1\"` for the S3\ndefault region).",
+          "descriptionHtml": "<p>The AWS region for this branch's object storage. The platform normalizes\nthe us-east-1 convention server-side: a non-empty region string is\nalways returned in 200 responses (e.g. <code>&quot;us-east-1&quot;</code> for the S3\ndefault region).</p>",
+          "example": "us-east-2",
+          "values": null
+        }
+      },
+      "force_path_style": {
+        "type": "boolean",
+        "description": "Whether the S3 client must use path-style addressing\n(bucket-in-path rather than virtual-hosted subdomain).\nAlways true: the wildcard TLS cert covers one level of subdomain\n(*.storage.<suffix>), so the branch ID occupies that label and the\nbucket name must travel in the request path, not as a further\nsubdomain. Callers must set the S3 SDK's ForcePathStyle (or\nequivalent) to true.\n",
+        "example": true,
+        "details": {
+          "description": "Whether the S3 client must use path-style addressing\n(bucket-in-path rather than virtual-hosted subdomain).\nAlways true: the wildcard TLS cert covers one level of subdomain\n(*.storage.<suffix>), so the branch ID occupies that label and the\nbucket name must travel in the request path, not as a further\nsubdomain. Callers must set the S3 SDK's ForcePathStyle (or\nequivalent) to true.",
+          "descriptionHtml": "<p>Whether the S3 client must use path-style addressing\n(bucket-in-path rather than virtual-hosted subdomain).\nAlways true: the wildcard TLS cert covers one level of subdomain\n(*.storage.&lt;suffix&gt;), so the branch ID occupies that label and the\nbucket name must travel in the request path, not as a further\nsubdomain. Callers must set the S3 SDK's ForcePathStyle (or\nequivalent) to true.</p>",
+          "example": "true",
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "enabled",
+      "s3_endpoint",
+      "region",
+      "force_path_style"
+    ],
+    "displayOrder": [
+      "enabled",
+      "s3_endpoint",
+      "region",
+      "force_path_style"
+    ]
+  },
+  "errors": [
+    {
+      "status": "404",
+      "description": "Object storage is not enabled for this branch, or the project/branch was not\nfound. The body is always `BranchStorageNotEnabled` — see `reason` for\nthe exact cause.\n",
+      "descriptionHtml": "<p>Object storage is not enabled for this branch, or the project/branch was not\nfound. The body is always <code>BranchStorageNotEnabled</code> — see <code>reason</code> for\nthe exact cause.</p>\n",
+      "properties": {
+        "code": {
+          "type": "string",
+          "example": "STORAGE_NOT_ENABLED"
+        },
+        "message": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string",
+          "enum": [
+            "org_not_entitled",
+            "region_unavailable",
+            "branch_directory_missing",
+            "branch_not_found"
+          ],
+          "description": "Machine-readable reason why object storage is unavailable:\n- `org_not_entitled`: the org's `PlatformBranchableStorage` feature flag is off.\n- `region_unavailable`: the project's region has no object storage admin service wired.\n- `branch_directory_missing`: the branch is not registered in the object storage service.\n- `branch_not_found`: the project or branch does not exist, or the caller does not\n  have access to it.\n"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "reason"
+      ]
+    },
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/storage\" \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.getProjectBranchStorage({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    branch_id: process.env.BRANCH_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": null
+  },
+  "specIndex": 151
+}

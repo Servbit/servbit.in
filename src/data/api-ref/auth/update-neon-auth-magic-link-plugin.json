@@ -1,0 +1,185 @@
+{
+  "id": "update-neon-auth-magic-link-plugin",
+  "operationId": "updateNeonAuthMagicLinkPlugin",
+  "method": "PATCH",
+  "path": "/projects/{project_id}/branches/{branch_id}/auth/plugins/magic-link",
+  "tag": "auth",
+  "tagDisplay": "Authentication",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Update magic link plugin configuration",
+  "description": "Updates the magic link plugin configuration for Neon Auth.\nThe magic link plugin enables passwordless authentication via email magic links.\n",
+  "descriptionHtml": "<p>Updates the magic link plugin configuration for Neon Auth.\nThe magic link plugin enables passwordless authentication via email magic links.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "branch_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon branch ID",
+      "descriptionHtml": "<p>The Neon branch ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": {
+    "required": true,
+    "properties": {
+      "enabled": {
+        "type": "boolean",
+        "description": "Whether to enable the magic link plugin.",
+        "details": {
+          "description": "Whether to enable the magic link plugin.",
+          "descriptionHtml": "<p>Whether to enable the magic link plugin.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "expires_in": {
+        "type": "integer",
+        "format": "int32",
+        "minimum": 5,
+        "maximum": 1440,
+        "description": "Minutes until the magic link expires.",
+        "details": {
+          "description": "Minutes until the magic link expires.",
+          "descriptionHtml": "<p>Minutes until the magic link expires.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "disable_sign_up": {
+        "type": "boolean",
+        "description": "When true, sign-up via magic link is disabled.",
+        "details": {
+          "description": "When true, sign-up via magic link is disabled.",
+          "descriptionHtml": "<p>When true, sign-up via magic link is disabled.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [],
+    "displayOrder": [
+      "enabled",
+      "expires_in",
+      "disable_sign_up"
+    ],
+    "sections": null,
+    "seed": null,
+    "labels": null
+  },
+  "response": {
+    "status": "200",
+    "description": "The magic link plugin configuration has been updated",
+    "descriptionHtml": "<p>The magic link plugin configuration has been updated</p>",
+    "example": {
+      "enabled": true,
+      "expires_in": 5,
+      "disable_sign_up": false
+    },
+    "properties": {
+      "enabled": {
+        "type": "boolean",
+        "description": "Whether the magic link plugin is enabled.",
+        "default": false,
+        "details": {
+          "description": "Whether the magic link plugin is enabled.",
+          "descriptionHtml": "<p>Whether the magic link plugin is enabled.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "expires_in": {
+        "type": "integer",
+        "format": "int32",
+        "minimum": 5,
+        "maximum": 1440,
+        "default": 5,
+        "description": "Minutes until the magic link expires.",
+        "details": {
+          "description": "Minutes until the magic link expires.",
+          "descriptionHtml": "<p>Minutes until the magic link expires.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "disable_sign_up": {
+        "type": "boolean",
+        "default": false,
+        "description": "Whether to disable sign-up via magic link.",
+        "details": {
+          "description": "Whether to disable sign-up via magic link.",
+          "descriptionHtml": "<p>Whether to disable sign-up via magic link.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "enabled",
+      "expires_in",
+      "disable_sign_up"
+    ],
+    "displayOrder": [
+      "enabled",
+      "expires_in",
+      "disable_sign_up"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/auth/plugins/magic-link\" \\\n  -X PATCH \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.updateNeonAuthMagicLinkPlugin({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    branch_id: process.env.BRANCH_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": "Projects → Auth → Plugins"
+  },
+  "specIndex": 70
+}

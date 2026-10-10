@@ -1,0 +1,218 @@
+{
+  "id": "get-project-jwks",
+  "operationId": "getProjectJWKS",
+  "method": "GET",
+  "path": "/projects/{project_id}/jwks",
+  "tag": "projects",
+  "tagDisplay": "Projects",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "List JWKS URLs",
+  "description": "Returns the JWKS URLs available for verifying JWTs used as the authentication mechanism for the specified project.\n",
+  "descriptionHtml": "<p>Returns the JWKS URLs available for verifying JWTs used as the authentication mechanism for the specified project.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": null,
+  "response": {
+    "status": "200",
+    "description": "The JWKS URLs available for the project",
+    "descriptionHtml": "<p>The JWKS URLs available for the project</p>",
+    "example": {
+      "jwks": []
+    },
+    "properties": {
+      "jwks": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "id",
+            "project_id",
+            "jwks_url",
+            "provider_name",
+            "created_at",
+            "updated_at"
+          ],
+          "properties": {
+            "id": {
+              "description": "The JWKS configuration's ID.",
+              "type": "string",
+              "details": {
+                "description": "The JWKS configuration's ID.",
+                "descriptionHtml": "<p>The JWKS configuration's ID.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "project_id": {
+              "description": "The Neon project ID. Returned as `id` from `GET /projects`.",
+              "type": "string",
+              "pattern": "^[a-z0-9-]{1,60}$",
+              "details": {
+                "description": "The Neon project ID. Returned as `id` from `GET /projects`.",
+                "descriptionHtml": "<p>The Neon project ID. Returned as <code>id</code> from <code>GET /projects</code>.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "branch_id": {
+              "description": "The Neon branch ID. Returned as `id` from `GET /projects/{project_id}/branches`.",
+              "type": "string",
+              "pattern": "^[a-z0-9-]{1,60}$",
+              "details": {
+                "description": "The Neon branch ID. Returned as `id` from `GET /projects/{project_id}/branches`.",
+                "descriptionHtml": "<p>The Neon branch ID. Returned as <code>id</code> from <code>GET /projects/{project_id}/branches</code>.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "jwks_url": {
+              "description": "URL of the provider's JWKS endpoint used to verify JWTs.",
+              "type": "string",
+              "details": {
+                "description": "URL of the provider's JWKS endpoint used to verify JWTs.",
+                "descriptionHtml": "<p>URL of the provider's JWKS endpoint used to verify JWTs.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "provider_name": {
+              "description": "The name of the authentication provider (e.g., Clerk, Stytch, Auth0)",
+              "type": "string",
+              "details": {
+                "description": "The name of the authentication provider (e.g., Clerk, Stytch, Auth0)",
+                "descriptionHtml": "<p>The name of the authentication provider (e.g., Clerk, Stytch, Auth0)</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "created_at": {
+              "description": "The date and time when the JWKS was created",
+              "type": "string",
+              "format": "date-time",
+              "details": {
+                "description": "The date and time when the JWKS was created",
+                "descriptionHtml": "<p>The date and time when the JWKS was created</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "updated_at": {
+              "description": "The date and time when the JWKS was last modified",
+              "type": "string",
+              "format": "date-time",
+              "details": {
+                "description": "The date and time when the JWKS was last modified",
+                "descriptionHtml": "<p>The date and time when the JWKS was last modified</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "jwt_audience": {
+              "description": "Expected JWT `aud` claim value configured for this JWKS.",
+              "type": "string",
+              "details": {
+                "description": "Expected JWT `aud` claim value configured for this JWKS.",
+                "descriptionHtml": "<p>Expected JWT <code>aud</code> claim value configured for this JWKS.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "role_names": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Database role names that are permitted to authenticate using this JWKS configuration.",
+              "details": {
+                "description": "Database role names that are permitted to authenticate using this JWKS configuration.",
+                "descriptionHtml": "<p>Database role names that are permitted to authenticate using this JWKS configuration.</p>",
+                "example": null,
+                "values": null
+              }
+            }
+          },
+          "displayOrder": [
+            "id",
+            "project_id",
+            "jwks_url",
+            "provider_name",
+            "created_at",
+            "updated_at",
+            "branch_id",
+            "jwt_audience",
+            "role_names"
+          ]
+        },
+        "description": "JWKS configurations associated with the project.",
+        "details": {
+          "description": "JWKS configurations associated with the project.",
+          "descriptionHtml": "<p>JWKS configurations associated with the project.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "jwks"
+    ],
+    "displayOrder": [
+      "jwks"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/jwks\" \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.getProjectJwks({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": "Projects → Settings → Authentication providers"
+  },
+  "specIndex": 22
+}

@@ -1,0 +1,157 @@
+{
+  "id": "update-neon-auth-phone-number-plugin",
+  "operationId": "updateNeonAuthPhoneNumberPlugin",
+  "method": "PATCH",
+  "path": "/projects/{project_id}/branches/{branch_id}/auth/plugins/phone-number",
+  "tag": "auth",
+  "tagDisplay": "Authentication",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Update phone number plugin configuration",
+  "description": "Updates the phone number plugin configuration for Neon Auth.\nOnly the fields provided in the request body are updated; omitted fields retain their current values.\nThe phone number plugin enables phone-based OTP authentication.\nOTP codes are delivered via the `send.otp` webhook event with `delivery_preference: \"sms\"`.\nA webhook must be configured with the `send.otp` event enabled for SMS delivery to work.\n",
+  "descriptionHtml": "<p>Updates the phone number plugin configuration for Neon Auth.\nOnly the fields provided in the request body are updated; omitted fields retain their current values.\nThe phone number plugin enables phone-based OTP authentication.\nOTP codes are delivered via the <code>send.otp</code> webhook event with <code>delivery_preference: &quot;sms&quot;</code>.\nA webhook must be configured with the <code>send.otp</code> event enabled for SMS delivery to work.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "branch_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon branch ID",
+      "descriptionHtml": "<p>The Neon branch ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": {
+    "required": true,
+    "properties": {
+      "enabled": {
+        "type": "boolean",
+        "description": "Whether the phone number plugin is enabled.",
+        "details": {
+          "description": "Whether the phone number plugin is enabled.",
+          "descriptionHtml": "<p>Whether the phone number plugin is enabled.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "otp_expires_in": {
+        "type": "integer",
+        "description": "Time in seconds before the OTP expires",
+        "minimum": 60,
+        "maximum": 600,
+        "details": {
+          "description": "Time in seconds before the OTP expires",
+          "descriptionHtml": "<p>Time in seconds before the OTP expires</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [],
+    "displayOrder": [
+      "enabled",
+      "otp_expires_in"
+    ],
+    "sections": null,
+    "seed": null,
+    "labels": null
+  },
+  "response": {
+    "status": "200",
+    "description": "The phone number plugin configuration has been updated",
+    "descriptionHtml": "<p>The phone number plugin configuration has been updated</p>",
+    "example": {
+      "enabled": false,
+      "otp_expires_in": 300
+    },
+    "properties": {
+      "enabled": {
+        "type": "boolean",
+        "description": "Whether the phone number plugin is enabled.",
+        "default": false,
+        "details": {
+          "description": "Whether the phone number plugin is enabled.",
+          "descriptionHtml": "<p>Whether the phone number plugin is enabled.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "otp_expires_in": {
+        "type": "integer",
+        "description": "Time in seconds before the OTP expires",
+        "default": 300,
+        "minimum": 60,
+        "maximum": 600,
+        "details": {
+          "description": "Time in seconds before the OTP expires",
+          "descriptionHtml": "<p>Time in seconds before the OTP expires</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "enabled"
+    ],
+    "displayOrder": [
+      "enabled",
+      "otp_expires_in"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/auth/plugins/phone-number\" \\\n  -X PATCH \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.updateNeonAuthPhoneNumberPlugin({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    branch_id: process.env.BRANCH_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": null
+  },
+  "specIndex": 72
+}

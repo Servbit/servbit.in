@@ -1,0 +1,157 @@
+{
+  "id": "create-neon-auth-new-user",
+  "operationId": "createNeonAuthNewUser",
+  "method": "POST",
+  "path": "/projects/auth/user",
+  "tag": "auth-legacy",
+  "tagDisplay": "Legacy Auth",
+  "stability": null,
+  "deprecated": true,
+  "sunset": "2026-03-01",
+  "summary": "Create new auth user",
+  "description": "Deprecated. Use `/projects/{project_id}/branches/{branch_id}/auth/users` instead. Removal scheduled for March 1, 2026.\nThe user will be created in your neon_auth.users_sync table and automatically propagated to your auth project, whether Neon-managed or provider-owned.\n",
+  "descriptionHtml": "<p>Deprecated. Use <code>/projects/{project_id}/branches/{branch_id}/auth/users</code> instead. Removal scheduled for March 1, 2026.\nThe user will be created in your neon_auth.users_sync table and automatically propagated to your auth project, whether Neon-managed or provider-owned.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [],
+  "requestBody": {
+    "required": true,
+    "properties": {
+      "project_id": {
+        "description": "The Neon project ID. Returned as `id` from `GET /projects`.",
+        "type": "string",
+        "pattern": "^[a-z0-9-]{1,60}$",
+        "details": {
+          "description": "The Neon project ID. Returned as `id` from `GET /projects`.",
+          "descriptionHtml": "<p>The Neon project ID. Returned as <code>id</code> from <code>GET /projects</code>.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "auth_provider": {
+        "description": "Authentication provider integrated with this Neon Auth configuration. `better_auth` integrates with Better Auth (the current, recommended provider). `stack` integrates with Stack Auth (deprecated). `mock` is a simulated provider for local development and testing only.",
+        "type": "string",
+        "enum": [
+          "mock",
+          "stack",
+          "better_auth"
+        ],
+        "details": {
+          "description": "Authentication provider integrated with this Neon Auth configuration. `better_auth` integrates with Better Auth (the current, recommended provider). `stack` integrates with Stack Auth (deprecated). `mock` is a simulated provider for local development and testing only.",
+          "descriptionHtml": "<p>Authentication provider integrated with this Neon Auth configuration. <code>better_auth</code> integrates with Better Auth (the current, recommended provider). <code>stack</code> integrates with Stack Auth (deprecated). <code>mock</code> is a simulated provider for local development and testing only.</p>",
+          "example": null,
+          "values": [
+            "mock",
+            "stack",
+            "better_auth"
+          ]
+        }
+      },
+      "email": {
+        "description": "Email address of the new user.",
+        "type": "string",
+        "format": "email",
+        "minLength": 1,
+        "maxLength": 256,
+        "details": {
+          "description": "Email address of the new user.",
+          "descriptionHtml": "<p>Email address of the new user.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 255,
+        "description": "Display name for the new user. When omitted, the created user has no display name.",
+        "details": {
+          "description": "Display name for the new user. When omitted, the created user has no display name.",
+          "descriptionHtml": "<p>Display name for the new user. When omitted, the created user has no display name.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "project_id",
+      "auth_provider",
+      "email"
+    ],
+    "displayOrder": [
+      "project_id",
+      "auth_provider",
+      "email",
+      "name"
+    ],
+    "sections": null,
+    "seed": null,
+    "labels": null
+  },
+  "response": {
+    "status": "201",
+    "description": "Creates new user",
+    "descriptionHtml": "<p>Creates new user</p>",
+    "example": null,
+    "properties": {
+      "id": {
+        "description": "ID of newly created user",
+        "type": "string",
+        "details": {
+          "description": "ID of newly created user",
+          "descriptionHtml": "<p>ID of newly created user</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "id"
+    ],
+    "displayOrder": [
+      "id"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/auth/user\" \\\n  -X POST \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.createNeonAuthNewUser({\n  client: neon.client\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": null
+  },
+  "specIndex": 40
+}

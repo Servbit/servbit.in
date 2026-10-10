@@ -1,0 +1,273 @@
+{
+  "id": "remove-project-member-role",
+  "operationId": "removeProjectMemberRole",
+  "method": "DELETE",
+  "path": "/projects/{project_id}/members/{member_id}/role",
+  "tag": "projects",
+  "tagDisplay": "Projects",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Remove an org member's role on a project",
+  "description": "Idempotently removes the explicit project grant. The member's organization-role\ndefault project permission still applies. Self-DELETE requires\n`confirm_self_lockout=true` when effective manage access would be lost.\n",
+  "descriptionHtml": "<p>Idempotently removes the explicit project grant. The member's organization-role\ndefault project permission still applies. Self-DELETE requires\n<code>confirm_self_lockout=true</code> when effective manage access would be lost.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": null,
+      "descriptionHtml": null,
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "member_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": null,
+      "descriptionHtml": null,
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "confirm_self_lockout",
+      "type": "boolean",
+      "in": "query",
+      "required": false,
+      "description": null,
+      "descriptionHtml": null,
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": null,
+  "response": {
+    "status": "200",
+    "description": "Role removed, or no-op if no explicit row existed",
+    "descriptionHtml": "<p>Role removed, or no-op if no explicit row existed</p>",
+    "example": null,
+    "properties": {
+      "project_id": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]{1,60}$"
+      },
+      "member_id": {
+        "type": "string",
+        "format": "uuid"
+      },
+      "user_id": {
+        "type": "string",
+        "format": "uuid"
+      },
+      "email": {
+        "type": "string",
+        "format": "email",
+        "minLength": 1,
+        "maxLength": 256,
+        "description": "Email address of the user who has been granted access to the project.",
+        "details": {
+          "description": "Email address of the user who has been granted access to the project.",
+          "descriptionHtml": "<p>Email address of the user who has been granted access to the project.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "name": {
+        "type": "string",
+        "description": "The user's display name.",
+        "details": {
+          "description": "The user's display name.",
+          "descriptionHtml": "<p>The user's display name.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "org_role": {
+        "type": "string",
+        "enum": [
+          "admin",
+          "member",
+          "editor",
+          "viewer",
+          "collaborator"
+        ],
+        "description": "Organization-level role used by project member role management.\n",
+        "details": {
+          "description": "Organization-level role used by project member role management.",
+          "descriptionHtml": "<p>Organization-level role used by project member role management.</p>",
+          "example": null,
+          "values": [
+            "admin",
+            "member",
+            "editor",
+            "viewer",
+            "collaborator"
+          ]
+        }
+      },
+      "project_role": {
+        "description": "The resulting effective project role after applying org-admin default access, explicit grants, and creator fallback. Null only when the member has no remaining effective project access.",
+        "type": "string",
+        "enum": [
+          "viewer",
+          "editor",
+          "admin"
+        ],
+        "details": {
+          "description": "The resulting effective project role after applying org-admin default access, explicit grants, and creator fallback. Null only when the member has no remaining effective project access.",
+          "descriptionHtml": "<p>The resulting effective project role after applying org-admin default access, explicit grants, and creator fallback. Null only when the member has no remaining effective project access.</p>",
+          "example": null,
+          "values": [
+            "viewer",
+            "editor",
+            "admin"
+          ]
+        }
+      },
+      "org_default_project_permission": {
+        "type": "string",
+        "enum": [
+          "VIEWER",
+          "EDITOR",
+          "ADMIN"
+        ],
+        "description": "The caller's effective permission for a project when\nper-project permissions are enabled. `VIEWER` grants read access,\n`EDITOR` adds update access, and `ADMIN` grants full management.\nOmitted for personal projects, flag-off organizations, and non-user\nsubjects.\n",
+        "details": {
+          "description": "The caller's effective permission for a project when\nper-project permissions are enabled. `VIEWER` grants read access,\n`EDITOR` adds update access, and `ADMIN` grants full management.\nOmitted for personal projects, flag-off organizations, and non-user\nsubjects.",
+          "descriptionHtml": "<p>The caller's effective permission for a project when\nper-project permissions are enabled. <code>VIEWER</code> grants read access,\n<code>EDITOR</code> adds update access, and <code>ADMIN</code> grants full management.\nOmitted for personal projects, flag-off organizations, and non-user\nsubjects.</p>",
+          "example": null,
+          "values": [
+            "VIEWER",
+            "EDITOR",
+            "ADMIN"
+          ]
+        }
+      },
+      "explicit_project_permission": {
+        "type": "string",
+        "enum": [
+          "VIEWER",
+          "EDITOR",
+          "ADMIN"
+        ],
+        "description": "The caller's effective permission for a project when\nper-project permissions are enabled. `VIEWER` grants read access,\n`EDITOR` adds update access, and `ADMIN` grants full management.\nOmitted for personal projects, flag-off organizations, and non-user\nsubjects.\n",
+        "details": {
+          "description": "The caller's effective permission for a project when\nper-project permissions are enabled. `VIEWER` grants read access,\n`EDITOR` adds update access, and `ADMIN` grants full management.\nOmitted for personal projects, flag-off organizations, and non-user\nsubjects.",
+          "descriptionHtml": "<p>The caller's effective permission for a project when\nper-project permissions are enabled. <code>VIEWER</code> grants read access,\n<code>EDITOR</code> adds update access, and <code>ADMIN</code> grants full management.\nOmitted for personal projects, flag-off organizations, and non-user\nsubjects.</p>",
+          "example": null,
+          "values": [
+            "VIEWER",
+            "EDITOR",
+            "ADMIN"
+          ]
+        }
+      },
+      "effective_project_permission": {
+        "type": "string",
+        "enum": [
+          "VIEWER",
+          "EDITOR",
+          "ADMIN"
+        ],
+        "description": "The caller's effective permission for a project when\nper-project permissions are enabled. `VIEWER` grants read access,\n`EDITOR` adds update access, and `ADMIN` grants full management.\nOmitted for personal projects, flag-off organizations, and non-user\nsubjects.\n",
+        "details": {
+          "description": "The caller's effective permission for a project when\nper-project permissions are enabled. `VIEWER` grants read access,\n`EDITOR` adds update access, and `ADMIN` grants full management.\nOmitted for personal projects, flag-off organizations, and non-user\nsubjects.",
+          "descriptionHtml": "<p>The caller's effective permission for a project when\nper-project permissions are enabled. <code>VIEWER</code> grants read access,\n<code>EDITOR</code> adds update access, and <code>ADMIN</code> grants full management.\nOmitted for personal projects, flag-off organizations, and non-user\nsubjects.</p>",
+          "example": null,
+          "values": [
+            "VIEWER",
+            "EDITOR",
+            "ADMIN"
+          ]
+        }
+      },
+      "credential_rotation_recommended": {
+        "type": "boolean",
+        "description": "Hint that database credentials may need rotation after the role change.\n",
+        "details": {
+          "description": "Hint that database credentials may need rotation after the role change.",
+          "descriptionHtml": "<p>Hint that database credentials may need rotation after the role change.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "org_api_key_rotation_recommended": {
+        "type": "boolean",
+        "description": "Hint that project-scoped org API keys created by the target user may need rotation.\n",
+        "details": {
+          "description": "Hint that project-scoped org API keys created by the target user may need rotation.",
+          "descriptionHtml": "<p>Hint that project-scoped org API keys created by the target user may need rotation.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "project_id",
+      "member_id",
+      "user_id",
+      "org_role"
+    ],
+    "displayOrder": [
+      "project_id",
+      "member_id",
+      "user_id",
+      "org_role",
+      "name",
+      "email",
+      "project_role",
+      "org_default_project_permission",
+      "explicit_project_permission",
+      "effective_project_permission",
+      "credential_rotation_recommended",
+      "org_api_key_rotation_recommended"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/members/$MEMBER_ID/role\" \\\n  -X DELETE \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.removeProjectMemberRole({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    member_id: process.env.MEMBER_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": null
+  },
+  "specIndex": 17
+}

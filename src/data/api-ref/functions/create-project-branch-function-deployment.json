@@ -1,0 +1,316 @@
+{
+  "id": "create-project-branch-function-deployment",
+  "operationId": "createProjectBranchFunctionDeployment",
+  "method": "POST",
+  "path": "/projects/{project_id}/branches/{branch_id}/functions/{slug}/deployments",
+  "tag": "functions",
+  "tagDisplay": "Functions",
+  "stability": "beta",
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Deploy code to a function",
+  "description": "Creates a deployment for the function. Supply any subset of zip,\nenvironment, and runtime; omitted fields inherit the\nfunction's latest version. At least one field must be supplied. The\nfirst deployment of a function must include zip. The newest deployment\nbecomes active.\n\n**Note**: This endpoint is currently in Beta.\n",
+  "descriptionHtml": "<p>Creates a deployment for the function. Supply any subset of zip,\nenvironment, and runtime; omitted fields inherit the\nfunction's latest version. At least one field must be supplied. The\nfirst deployment of a function must include zip. The newest deployment\nbecomes active.</p>\n<p><strong>Note</strong>: This endpoint is currently in Beta.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "branch_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon branch ID",
+      "descriptionHtml": "<p>The Neon branch ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "slug",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The function slug",
+      "descriptionHtml": "<p>The function slug</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": {
+    "required": true,
+    "properties": {},
+    "requiredFields": [],
+    "displayOrder": [],
+    "sections": null,
+    "seed": null,
+    "labels": null
+  },
+  "response": {
+    "status": "201",
+    "description": "The created deployment",
+    "descriptionHtml": "<p>The created deployment</p>",
+    "example": {
+      "deployment": {
+        "id": 1,
+        "status": "pending",
+        "memory_mib": 2048,
+        "runtime": "nodejs24",
+        "created_at": "2025-01-15T10:30:00Z"
+      }
+    },
+    "properties": {
+      "deployment": {
+        "type": "object",
+        "required": [
+          "id",
+          "status",
+          "memory_mib",
+          "runtime",
+          "created_at"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The deployment id, which is the platform version number (monotonic per function).",
+            "details": {
+              "description": "The deployment id, which is the platform version number (monotonic per function).",
+              "descriptionHtml": "<p>The deployment id, which is the platform version number (monotonic per function).</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "building",
+              "completed",
+              "failed"
+            ],
+            "description": "Build lifecycle status of the deployment.",
+            "details": {
+              "description": "Build lifecycle status of the deployment.",
+              "descriptionHtml": "<p>Build lifecycle status of the deployment.</p>",
+              "example": null,
+              "values": [
+                "pending",
+                "building",
+                "completed",
+                "failed"
+              ]
+            }
+          },
+          "memory_mib": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "runtime": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "environment": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The NAMES of the deployment's environment variables, sorted.\nValues are encrypted at rest and are never returned — they are\nwrite-only. To change a value, deploy the variable with the new\nvalue; to remove a variable, deploy it with an empty value.\n",
+            "details": {
+              "description": "The NAMES of the deployment's environment variables, sorted.\nValues are encrypted at rest and are never returned — they are\nwrite-only. To change a value, deploy the variable with the new\nvalue; to remove a variable, deploy it with an empty value.",
+              "descriptionHtml": "<p>The NAMES of the deployment's environment variables, sorted.\nValues are encrypted at rest and are never returned — they are\nwrite-only. To change a value, deploy the variable with the new\nvalue; to remove a variable, deploy it with an empty value.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "error": {
+            "type": "string",
+            "description": "Human-readable reason the deployment build failed. Present only\nwhen `status` is `failed`.\n",
+            "details": {
+              "description": "Human-readable reason the deployment build failed. Present only\nwhen `status` is `failed`.",
+              "descriptionHtml": "<p>Human-readable reason the deployment build failed. Present only\nwhen <code>status</code> is <code>failed</code>.</p>",
+              "example": null,
+              "values": null
+            }
+          }
+        },
+        "displayOrder": [
+          "id",
+          "status",
+          "memory_mib",
+          "runtime",
+          "created_at",
+          "environment",
+          "error"
+        ]
+      }
+    },
+    "requiredFields": [
+      "deployment"
+    ],
+    "displayOrder": [
+      "deployment"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/functions/$SLUG/deployments\" \\\n  -X POST \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.createProjectBranchFunctionDeployment({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    branch_id: process.env.BRANCH_ID,\n    slug: process.env.SLUG\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": {
+    "command": "neon functions deploy <branch_id>",
+    "flags": [
+      {
+        "name": "analytics",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "api-key",
+        "type": "string",
+        "required": false,
+        "default": ""
+      },
+      {
+        "name": "color",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "config-dir",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "context-file",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "help",
+        "type": "boolean",
+        "required": false,
+        "alias": "h"
+      },
+      {
+        "name": "output",
+        "type": "string",
+        "required": false,
+        "alias": "o",
+        "enum": [
+          "json",
+          "yaml",
+          "table"
+        ],
+        "default": "table"
+      },
+      {
+        "name": "profile",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "version",
+        "type": "boolean",
+        "required": false,
+        "alias": "v"
+      },
+      {
+        "name": "branch",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "project-id",
+        "type": "string",
+        "required": false,
+        "apiEquiv": "project_id",
+        "apiEquivIn": "parameter"
+      },
+      {
+        "name": "bundle",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "env",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "runtime",
+        "type": "string",
+        "required": false,
+        "enum": [
+          "nodejs24"
+        ]
+      },
+      {
+        "name": "src",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "wait",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      }
+    ],
+    "positionals": [
+      {
+        "display": "<branch_id>",
+        "apiEquiv": "branch_id"
+      }
+    ]
+  },
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": null
+  },
+  "specIndex": 170
+}

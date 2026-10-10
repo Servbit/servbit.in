@@ -1,0 +1,308 @@
+{
+  "id": "set-snapshot-schedule",
+  "operationId": "setSnapshotSchedule",
+  "method": "PUT",
+  "path": "/projects/{project_id}/branches/{branch_id}/backup_schedule",
+  "tag": "snapshots",
+  "tagDisplay": "Snapshots",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Update backup schedule",
+  "description": "Updates the backup schedule for the specified branch.\nThe schedule defines how often automatic snapshots are created (for example, `daily` or `weekly`). Requires a paid plan.\n",
+  "descriptionHtml": "<p>Updates the backup schedule for the specified branch.\nThe schedule defines how often automatic snapshots are created (for example, <code>daily</code> or <code>weekly</code>). Requires a paid plan.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "branch_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The branch ID",
+      "descriptionHtml": "<p>The branch ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": {
+    "required": true,
+    "properties": {
+      "schedule": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "frequency"
+          ],
+          "properties": {
+            "frequency": {
+              "type": "string",
+              "description": "How often to take snapshots. Known values: `daily`, `weekly`, `monthly`.\n",
+              "example": "daily",
+              "details": {
+                "description": "How often to take snapshots. Known values: `daily`, `weekly`, `monthly`.",
+                "descriptionHtml": "<p>How often to take snapshots. Known values: <code>daily</code>, <code>weekly</code>, <code>monthly</code>.</p>",
+                "example": "daily",
+                "values": null
+              }
+            },
+            "hour": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 23,
+              "description": "The hour of the day to take the snapshot (if applicable).\n",
+              "details": {
+                "description": "The hour of the day to take the snapshot (if applicable).",
+                "descriptionHtml": "<p>The hour of the day to take the snapshot (if applicable).</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "day": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 31,
+              "description": "The day of the week or month to take the snapshot (if applicable).\n",
+              "details": {
+                "description": "The day of the week or month to take the snapshot (if applicable).",
+                "descriptionHtml": "<p>The day of the week or month to take the snapshot (if applicable).</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "month": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 12,
+              "description": "The month of the year to take the snapshot (if applicable).\n",
+              "details": {
+                "description": "The month of the year to take the snapshot (if applicable).",
+                "descriptionHtml": "<p>The month of the year to take the snapshot (if applicable).</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "retention_seconds": {
+              "type": "integer",
+              "minimum": 3600,
+              "maximum": 3024000,
+              "default": 3024000,
+              "description": "How long to keep a scheduled snapshot (in seconds) before it's automatically deleted.\nThe default is 3024000 seconds (35 days), which is also the maximum.\nManually created snapshots have no maximum retention: set their `expires_at` instead.\n",
+              "details": {
+                "description": "How long to keep a scheduled snapshot (in seconds) before it's automatically deleted.\nThe default is 3024000 seconds (35 days), which is also the maximum.\nManually created snapshots have no maximum retention: set their `expires_at` instead.",
+                "descriptionHtml": "<p>How long to keep a scheduled snapshot (in seconds) before it's automatically deleted.\nThe default is 3024000 seconds (35 days), which is also the maximum.\nManually created snapshots have no maximum retention: set their <code>expires_at</code> instead.</p>",
+                "example": null,
+                "values": null
+              }
+            }
+          },
+          "displayOrder": [
+            "frequency",
+            "hour",
+            "day",
+            "month",
+            "retention_seconds"
+          ]
+        },
+        "description": "List of schedule entries defining the backup frequency. At least one entry is required.",
+        "details": {
+          "description": "List of schedule entries defining the backup frequency. At least one entry is required.",
+          "descriptionHtml": "<p>List of schedule entries defining the backup frequency. At least one entry is required.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "schedule"
+    ],
+    "displayOrder": [
+      "schedule"
+    ],
+    "sections": null,
+    "seed": null,
+    "labels": null
+  },
+  "response": {
+    "status": "200",
+    "description": "Empty response",
+    "descriptionHtml": "<p>Empty response</p>",
+    "example": null,
+    "properties": {},
+    "requiredFields": [],
+    "displayOrder": []
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/backup_schedule\" \\\n  -X PUT \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.setSnapshotSchedule({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    branch_id: process.env.BRANCH_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": {
+    "command": "neon snapshots schedule set",
+    "flags": [
+      {
+        "name": "analytics",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "api-key",
+        "type": "string",
+        "required": false,
+        "default": ""
+      },
+      {
+        "name": "color",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "config-dir",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "context-file",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "help",
+        "type": "boolean",
+        "required": false,
+        "alias": "h"
+      },
+      {
+        "name": "output",
+        "type": "string",
+        "required": false,
+        "alias": "o",
+        "enum": [
+          "json",
+          "yaml",
+          "table"
+        ],
+        "default": "table"
+      },
+      {
+        "name": "profile",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "version",
+        "type": "boolean",
+        "required": false,
+        "alias": "v"
+      },
+      {
+        "name": "project-id",
+        "type": "string",
+        "required": false,
+        "apiEquiv": "project_id",
+        "apiEquivIn": "parameter"
+      },
+      {
+        "name": "branch",
+        "type": "string",
+        "required": false,
+        "alias": "b"
+      },
+      {
+        "name": "day",
+        "type": "number",
+        "required": false,
+        "apiEquiv": "schedule.day",
+        "apiEquivIn": "body"
+      },
+      {
+        "name": "frequency",
+        "type": "string",
+        "required": false,
+        "enum": [
+          "daily",
+          "weekly",
+          "monthly"
+        ],
+        "apiEquiv": "schedule.frequency",
+        "apiEquivIn": "body"
+      },
+      {
+        "name": "hour",
+        "type": "number",
+        "required": false,
+        "apiEquiv": "schedule.hour",
+        "apiEquivIn": "body"
+      },
+      {
+        "name": "month",
+        "type": "number",
+        "required": false,
+        "apiEquiv": "schedule.month",
+        "apiEquivIn": "body"
+      },
+      {
+        "name": "retention",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "schedule",
+        "type": "string",
+        "required": false,
+        "apiEquiv": "schedule",
+        "apiEquivIn": "body"
+      }
+    ],
+    "positionals": []
+  },
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": "Projects → Backup & restore"
+  },
+  "specIndex": 147
+}

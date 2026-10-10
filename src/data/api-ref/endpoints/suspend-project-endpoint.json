@@ -1,0 +1,893 @@
+{
+  "id": "suspend-project-endpoint",
+  "operationId": "suspendProjectEndpoint",
+  "method": "POST",
+  "path": "/projects/{project_id}/endpoints/{endpoint_id}/suspend",
+  "tag": "endpoints",
+  "tagDisplay": "Endpoints",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Suspend compute endpoint",
+  "description": "Suspends the specified compute endpoint.\nAn `endpoint_id` has an `ep-` prefix.\nFor information about compute endpoints, see [Manage computes](https://neon.com/docs/manage/endpoints/).\n",
+  "descriptionHtml": "<p>Suspends the specified compute endpoint.\nAn <code>endpoint_id</code> has an <code>ep-</code> prefix.\nFor information about compute endpoints, see <a href=\"https://neon.com/docs/manage/endpoints/\">Manage computes</a>.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "endpoint_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The endpoint ID",
+      "descriptionHtml": "<p>The endpoint ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": null,
+  "response": {
+    "status": "200",
+    "description": "Suspended the specified endpoint",
+    "descriptionHtml": "<p>Suspended the specified endpoint</p>",
+    "example": {
+      "endpoint": {
+        "host": "ep-cool-darkness-a5b6c7d8.c-4.us-east-2.aws.neon.tech",
+        "hosts": {
+          "read_only_host": "ep-cool-darkness-a5b6c7d8.c-4.us-east-2.aws.neon.tech",
+          "read_only_pooled_host": "ep-cool-darkness-a5b6c7d8-pooler.c-4.us-east-2.aws.neon.tech"
+        },
+        "id": "ep-cool-darkness-a5b6c7d8",
+        "slug": "ep-cool-darkness-a5b6c7d8",
+        "branch_slug": "br-young-forest-a5b6c7d8",
+        "project_slug": "aged-wildflower-123456",
+        "project_id": "aged-wildflower-123456",
+        "branch_id": "br-young-forest-a5b6c7d8",
+        "autoscaling_limit_min_cu": 1,
+        "autoscaling_limit_max_cu": 1,
+        "region_id": "aws-us-east-2",
+        "type": "read_only",
+        "current_state": "idle",
+        "group": {
+          "size": {
+            "min": 1,
+            "max": 1
+          },
+          "allow_readable_secondaries": true,
+          "computes": [
+            {
+              "binding_id": "czk",
+              "current_state": "idle",
+              "role": "read_only",
+              "compute_host": "ep-cool-darkness-a5b6c7d8-czk.c-4.us-east-2.aws.neon.tech",
+              "compute_pooled_host": "ep-cool-darkness-a5b6c7d8-czk-pooler.c-4.us-east-2.aws.neon.tech",
+              "created_at": "2025-01-15T10:30:00Z",
+              "updated_at": "2025-01-15T10:30:00Z"
+            }
+          ]
+        },
+        "settings": {
+          "pg_settings": {
+            "statement_timeout": "60000",
+            "idle_in_transaction_session_timeout": "300000"
+          }
+        },
+        "pooler_enabled": false,
+        "pooler_mode": "transaction",
+        "disabled": false,
+        "passwordless_access": true,
+        "last_active": "2025-01-15T11:00:00Z",
+        "creation_source": "console",
+        "created_at": "2025-01-15T10:30:00Z",
+        "updated_at": "2025-01-15T10:30:00Z",
+        "proxy_host": "c-4.us-east-2.aws.neon.tech",
+        "suspend_timeout_seconds": 0,
+        "provisioner": "k8s-neonvm"
+      },
+      "operations": []
+    },
+    "properties": {
+      "endpoint": {
+        "description": "Compute endpoint created or retrieved, including its current lifecycle state.",
+        "type": "object",
+        "required": [
+          "host",
+          "id",
+          "project_id",
+          "branch_id",
+          "region_id",
+          "autoscaling_limit_max_cu",
+          "autoscaling_limit_min_cu",
+          "type",
+          "current_state",
+          "pooler_enabled",
+          "pooler_mode",
+          "disabled",
+          "passwordless_access",
+          "creation_source",
+          "created_at",
+          "updated_at",
+          "settings",
+          "proxy_host",
+          "suspend_timeout_seconds",
+          "provisioner"
+        ],
+        "x-sensitive": [
+          "host"
+        ],
+        "properties": {
+          "host": {
+            "description": "The hostname of the compute endpoint. This is the hostname specified when connecting to a Neon database.\n",
+            "type": "string",
+            "details": {
+              "description": "The hostname of the compute endpoint. This is the hostname specified when connecting to a Neon database.",
+              "descriptionHtml": "<p>The hostname of the compute endpoint. This is the hostname specified when connecting to a Neon database.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "id": {
+            "description": "The compute endpoint ID. Compute endpoint IDs have an `ep-` prefix. For example: `ep-little-smoke-851426`\n",
+            "type": "string",
+            "pattern": "^[a-z0-9-]{1,60}$",
+            "details": {
+              "description": "The compute endpoint ID. Compute endpoint IDs have an `ep-` prefix. For example: `ep-little-smoke-851426`",
+              "descriptionHtml": "<p>The compute endpoint ID. Compute endpoint IDs have an <code>ep-</code> prefix. For example: <code>ep-little-smoke-851426</code></p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "name": {
+            "type": "string",
+            "description": "Optional name of the compute endpoint\n",
+            "details": {
+              "description": "Optional name of the compute endpoint",
+              "descriptionHtml": "<p>Optional name of the compute endpoint</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "project_id": {
+            "description": "The ID of the project this compute endpoint belongs to.",
+            "type": "string",
+            "pattern": "^[a-z0-9-]{1,60}$",
+            "details": {
+              "description": "The ID of the project this compute endpoint belongs to.",
+              "descriptionHtml": "<p>The ID of the project this compute endpoint belongs to.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "branch_id": {
+            "description": "The ID of the branch this compute endpoint belongs to.",
+            "type": "string",
+            "pattern": "^[a-z0-9-]{1,60}$",
+            "details": {
+              "description": "The ID of the branch this compute endpoint belongs to.",
+              "descriptionHtml": "<p>The ID of the branch this compute endpoint belongs to.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "autoscaling_limit_min_cu": {
+            "description": "The minimum number of Compute Units\n",
+            "type": "number",
+            "minimum": 0.25,
+            "details": {
+              "description": "The minimum number of Compute Units",
+              "descriptionHtml": "<p>The minimum number of Compute Units</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "autoscaling_limit_max_cu": {
+            "description": "The maximum number of Compute Units\n",
+            "type": "number",
+            "minimum": 0.25,
+            "details": {
+              "description": "The maximum number of Compute Units",
+              "descriptionHtml": "<p>The maximum number of Compute Units</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "region_id": {
+            "type": "string",
+            "description": "Cloud region where the resource's Postgres compute and storage reside (for example, `aws-us-east-1`). Valid values are returned by `GET /regions`.\n",
+            "example": "aws-us-east-1",
+            "details": {
+              "description": "Cloud region where the resource's Postgres compute and storage reside (for example, `aws-us-east-1`). Valid values are returned by `GET /regions`.",
+              "descriptionHtml": "<p>Cloud region where the resource's Postgres compute and storage reside (for example, <code>aws-us-east-1</code>). Valid values are returned by <code>GET /regions</code>.</p>",
+              "example": "aws-us-east-1",
+              "values": null
+            }
+          },
+          "type": {
+            "description": "Compute endpoint type. `read_write`: the primary read-write endpoint (one per branch). `read_only`: a read replica endpoint (multiple allowed per branch).",
+            "type": "string",
+            "enum": [
+              "read_only",
+              "read_write"
+            ],
+            "details": {
+              "description": "Compute endpoint type. `read_write`: the primary read-write endpoint (one per branch). `read_only`: a read replica endpoint (multiple allowed per branch).",
+              "descriptionHtml": "<p>Compute endpoint type. <code>read_write</code>: the primary read-write endpoint (one per branch). <code>read_only</code>: a read replica endpoint (multiple allowed per branch).</p>",
+              "example": null,
+              "values": [
+                "read_only",
+                "read_write"
+              ]
+            }
+          },
+          "current_state": {
+            "description": "Lifecycle state of the compute endpoint. `init`: being initialized. `active`: running and accepting connections. `idle`: suspended (scaled to zero).",
+            "type": "string",
+            "enum": [
+              "init",
+              "active",
+              "idle"
+            ],
+            "details": {
+              "description": "Lifecycle state of the compute endpoint. `init`: being initialized. `active`: running and accepting connections. `idle`: suspended (scaled to zero).",
+              "descriptionHtml": "<p>Lifecycle state of the compute endpoint. <code>init</code>: being initialized. <code>active</code>: running and accepting connections. <code>idle</code>: suspended (scaled to zero).</p>",
+              "example": null,
+              "values": [
+                "init",
+                "active",
+                "idle"
+              ]
+            }
+          },
+          "pending_state": {
+            "description": "Target state the compute endpoint is transitioning to. Omitted when no transition is in progress.",
+            "type": "string",
+            "enum": [
+              "init",
+              "active",
+              "idle"
+            ],
+            "details": {
+              "description": "Target state the compute endpoint is transitioning to. Omitted when no transition is in progress.",
+              "descriptionHtml": "<p>Target state the compute endpoint is transitioning to. Omitted when no transition is in progress.</p>",
+              "example": null,
+              "values": [
+                "init",
+                "active",
+                "idle"
+              ]
+            }
+          },
+          "settings": {
+            "type": "object",
+            "description": "A collection of settings for a compute endpoint",
+            "properties": {
+              "pg_settings": {
+                "description": "A raw representation of Postgres settings",
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "details": {
+                  "description": "A raw representation of Postgres settings",
+                  "descriptionHtml": "<p>A raw representation of Postgres settings</p>",
+                  "example": null,
+                  "values": null
+                }
+              },
+              "pgbouncer_settings": {
+                "deprecated": true,
+                "x-sunset": "2026-06-20",
+                "description": "Deprecated. PgBouncer settings for the compute endpoint. Removal scheduled for June 20, 2026.\n",
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "details": {
+                  "description": "Deprecated. PgBouncer settings for the compute endpoint. Removal scheduled for June 20, 2026.",
+                  "descriptionHtml": "<p>Deprecated. PgBouncer settings for the compute endpoint. Removal scheduled for June 20, 2026.</p>",
+                  "example": null,
+                  "values": null
+                }
+              },
+              "preload_libraries": {
+                "description": "The shared libraries to preload into the project's compute instances.\n",
+                "type": "object",
+                "properties": {
+                  "use_defaults": {
+                    "type": "boolean",
+                    "description": "When true, the project's preload libraries include the platform default set in addition to any libraries listed in `enabled_libraries`.",
+                    "details": {
+                      "description": "When true, the project's preload libraries include the platform default set in addition to any libraries listed in `enabled_libraries`.",
+                      "descriptionHtml": "<p>When true, the project's preload libraries include the platform default set in addition to any libraries listed in <code>enabled_libraries</code>.</p>",
+                      "example": null,
+                      "values": null
+                    }
+                  },
+                  "enabled_libraries": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Names of shared preload libraries to enable for the project.",
+                    "details": {
+                      "description": "Names of shared preload libraries to enable for the project.",
+                      "descriptionHtml": "<p>Names of shared preload libraries to enable for the project.</p>",
+                      "example": null,
+                      "values": null
+                    }
+                  }
+                },
+                "details": {
+                  "description": "The shared libraries to preload into the project's compute instances.",
+                  "descriptionHtml": "<p>The shared libraries to preload into the project's compute instances.</p>",
+                  "example": null,
+                  "values": null
+                },
+                "displayOrder": [
+                  "use_defaults",
+                  "enabled_libraries"
+                ]
+              }
+            },
+            "details": {
+              "description": "A collection of settings for a compute endpoint",
+              "descriptionHtml": "<p>A collection of settings for a compute endpoint</p>",
+              "example": null,
+              "values": null
+            },
+            "displayOrder": [
+              "pg_settings",
+              "pgbouncer_settings",
+              "preload_libraries"
+            ]
+          },
+          "pooler_enabled": {
+            "deprecated": true,
+            "description": "Deprecated. To use connection pooling, append `-pooler` to the endpoint ID in the connection string.\n",
+            "type": "boolean",
+            "details": {
+              "description": "Deprecated. To use connection pooling, append `-pooler` to the endpoint ID in the connection string.",
+              "descriptionHtml": "<p>Deprecated. To use connection pooling, append <code>-pooler</code> to the endpoint ID in the connection string.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "pooler_mode": {
+            "deprecated": true,
+            "x-sunset": "2026-06-20",
+            "description": "Deprecated. The connection pooler mode. Removal scheduled for June 20, 2026.\n",
+            "type": "string",
+            "enum": [
+              "transaction"
+            ],
+            "details": {
+              "description": "Deprecated. The connection pooler mode. Removal scheduled for June 20, 2026.",
+              "descriptionHtml": "<p>Deprecated. The connection pooler mode. Removal scheduled for June 20, 2026.</p>",
+              "example": null,
+              "values": [
+                "transaction"
+              ]
+            }
+          },
+          "disabled": {
+            "description": "Whether to restrict connections to the compute endpoint.\nEnabling this option schedules a suspend compute operation.\nA disabled compute endpoint cannot be enabled by a connection or\nconsole action.\n",
+            "type": "boolean",
+            "details": {
+              "description": "Whether to restrict connections to the compute endpoint.\nEnabling this option schedules a suspend compute operation.\nA disabled compute endpoint cannot be enabled by a connection or\nconsole action.",
+              "descriptionHtml": "<p>Whether to restrict connections to the compute endpoint.\nEnabling this option schedules a suspend compute operation.\nA disabled compute endpoint cannot be enabled by a connection or\nconsole action.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "passwordless_access": {
+            "description": "Whether to permit passwordless access to the compute endpoint\n",
+            "type": "boolean",
+            "details": {
+              "description": "Whether to permit passwordless access to the compute endpoint",
+              "descriptionHtml": "<p>Whether to permit passwordless access to the compute endpoint</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "last_active": {
+            "description": "A timestamp indicating when the compute endpoint was last active\n",
+            "type": "string",
+            "format": "date-time",
+            "details": {
+              "description": "A timestamp indicating when the compute endpoint was last active",
+              "descriptionHtml": "<p>A timestamp indicating when the compute endpoint was last active</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "creation_source": {
+            "description": "The compute endpoint creation source\n",
+            "type": "string",
+            "details": {
+              "description": "The compute endpoint creation source",
+              "descriptionHtml": "<p>The compute endpoint creation source</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "created_at": {
+            "description": "A timestamp indicating when the compute endpoint was created\n",
+            "type": "string",
+            "format": "date-time",
+            "details": {
+              "description": "A timestamp indicating when the compute endpoint was created",
+              "descriptionHtml": "<p>A timestamp indicating when the compute endpoint was created</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "updated_at": {
+            "description": "A timestamp indicating when the compute endpoint was last updated\n",
+            "type": "string",
+            "format": "date-time",
+            "details": {
+              "description": "A timestamp indicating when the compute endpoint was last updated",
+              "descriptionHtml": "<p>A timestamp indicating when the compute endpoint was last updated</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "A timestamp indicating when the compute endpoint was last started\n",
+            "details": {
+              "description": "A timestamp indicating when the compute endpoint was last started",
+              "descriptionHtml": "<p>A timestamp indicating when the compute endpoint was last started</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "suspended_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "A timestamp indicating when the compute endpoint was last suspended\n",
+            "details": {
+              "description": "A timestamp indicating when the compute endpoint was last suspended",
+              "descriptionHtml": "<p>A timestamp indicating when the compute endpoint was last suspended</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "proxy_host": {
+            "description": "Deprecated. Use the `host` property instead.\n",
+            "type": "string",
+            "details": {
+              "description": "Deprecated. Use the `host` property instead.",
+              "descriptionHtml": "<p>Deprecated. Use the <code>host</code> property instead.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "suspend_timeout_seconds": {
+            "description": "Scale-to-zero idle timeout, in seconds, before the compute suspends. `0` means the plan default applies; `-1` means scale-to-zero is disabled (never suspends).",
+            "type": "integer",
+            "format": "int64",
+            "minimum": -1,
+            "maximum": 604800,
+            "details": {
+              "description": "Scale-to-zero idle timeout, in seconds, before the compute suspends. `0` means the plan default applies; `-1` means scale-to-zero is disabled (never suspends).",
+              "descriptionHtml": "<p>Scale-to-zero idle timeout, in seconds, before the compute suspends. <code>0</code> means the plan default applies; <code>-1</code> means scale-to-zero is disabled (never suspends).</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "provisioner": {
+            "description": "Compute provisioner. `k8s-neonvm` (default) supports Autoscaling; `k8s-pod` is fixed-size compute. Also `docker` and `serverless-platform`.",
+            "type": "string",
+            "example": "k8s-neonvm",
+            "details": {
+              "description": "Compute provisioner. `k8s-neonvm` (default) supports Autoscaling; `k8s-pod` is fixed-size compute. Also `docker` and `serverless-platform`.",
+              "descriptionHtml": "<p>Compute provisioner. <code>k8s-neonvm</code> (default) supports Autoscaling; <code>k8s-pod</code> is fixed-size compute. Also <code>docker</code> and <code>serverless-platform</code>.</p>",
+              "example": "k8s-neonvm",
+              "values": null
+            }
+          },
+          "compute_release_version": {
+            "description": "Attached compute's release version number.\n",
+            "type": "string",
+            "details": {
+              "description": "Attached compute's release version number.",
+              "descriptionHtml": "<p>Attached compute's release version number.</p>",
+              "example": null,
+              "values": null
+            }
+          }
+        },
+        "example": {
+          "host": "ep-silent-smoke-806639.us-east-2.aws.neon.tech",
+          "id": "ep-silent-smoke-806639",
+          "name": "My cool compute",
+          "project_id": "spring-example-302709",
+          "branch_id": "br-wispy-meadow-118737",
+          "autoscaling_limit_min_cu": 1,
+          "autoscaling_limit_max_cu": 1,
+          "region_id": "aws-us-east-2",
+          "type": "read_write",
+          "current_state": "init",
+          "pending_state": "active",
+          "settings": {
+            "pg_settings": {}
+          },
+          "pooler_enabled": false,
+          "pooler_mode": "transaction",
+          "disabled": false,
+          "passwordless_access": true,
+          "creation_source": "console",
+          "created_at": "2022-12-03T15:37:07Z",
+          "updated_at": "2022-12-03T15:37:07Z",
+          "proxy_host": "us-east-2.aws.neon.tech",
+          "suspend_timeout_seconds": 0,
+          "provisioner": "k8s-neonvm"
+        },
+        "details": {
+          "description": "Compute endpoint created or retrieved, including its current lifecycle state.",
+          "descriptionHtml": "<p>Compute endpoint created or retrieved, including its current lifecycle state.</p>",
+          "example": "{\n  \"host\": \"ep-silent-smoke-806639.us-east-2.aws.neon.tech\",\n  \"id\": \"ep-silent-smoke-806639\",\n  \"name\": \"My cool compute\",\n  \"project_id\": \"spring-example-302709\",\n  \"branch_id\": \"br-wispy-meadow-118737\",\n  \"autoscaling_limit_min_cu\": 1,\n  \"autoscaling_limit_max_cu\": 1,\n  \"region_id\": \"aws-us-east-2\",\n  \"type\": \"read_write\",\n  \"current_state\": \"init\",\n  \"pending_state\": \"active\",\n  \"settings\": {\n    \"pg_settings\": {}\n  },\n  \"pooler_enabled\": false,\n  \"pooler_mode\": \"transaction\",\n  \"disabled\": false,\n  \"passwordless_access\": true,\n  \"creation_source\": \"console\",\n  \"created_at\": \"2022-12-03T15:37:07Z\",\n  \"updated_at\": \"2022-12-03T15:37:07Z\",\n  \"proxy_host\": \"us-east-2.aws.neon.tech\",\n  \"suspend_timeout_seconds\": 0,\n  \"provisioner\": \"k8s-neonvm\"\n}",
+          "values": null
+        },
+        "displayOrder": [
+          "host",
+          "id",
+          "project_id",
+          "branch_id",
+          "autoscaling_limit_min_cu",
+          "autoscaling_limit_max_cu",
+          "region_id",
+          "type",
+          "current_state",
+          "settings",
+          "pooler_enabled",
+          "pooler_mode",
+          "disabled",
+          "passwordless_access",
+          "creation_source",
+          "created_at",
+          "updated_at",
+          "proxy_host",
+          "suspend_timeout_seconds",
+          "provisioner",
+          "name",
+          "pending_state",
+          "last_active",
+          "compute_release_version",
+          "started_at",
+          "suspended_at"
+        ]
+      },
+      "operations": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "An asynchronous action Neon performs on your resources (for example, starting a compute or creating a branch). Fields such as `action`, `status`, and `total_duration_ms` describe the operation and its progress.",
+          "required": [
+            "id",
+            "project_id",
+            "action",
+            "status",
+            "failures_count",
+            "created_at",
+            "updated_at",
+            "total_duration_ms"
+          ],
+          "properties": {
+            "id": {
+              "description": "The operation ID",
+              "type": "string",
+              "format": "uuid",
+              "details": {
+                "description": "The operation ID",
+                "descriptionHtml": "<p>The operation ID</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "project_id": {
+              "description": "The ID of the project this operation ran on.",
+              "type": "string",
+              "pattern": "^[a-z0-9-]{1,60}$",
+              "details": {
+                "description": "The ID of the project this operation ran on.",
+                "descriptionHtml": "<p>The ID of the project this operation ran on.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "branch_id": {
+              "description": "The ID of the branch this operation ran on.",
+              "type": "string",
+              "pattern": "^[a-z0-9-]{1,60}$",
+              "details": {
+                "description": "The ID of the branch this operation ran on.",
+                "descriptionHtml": "<p>The ID of the branch this operation ran on.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "endpoint_id": {
+              "description": "The ID of the compute endpoint this operation ran on.",
+              "type": "string",
+              "pattern": "^[a-z0-9-]{1,60}$",
+              "details": {
+                "description": "The ID of the compute endpoint this operation ran on.",
+                "descriptionHtml": "<p>The ID of the compute endpoint this operation ran on.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "action": {
+              "description": "The action performed by the operation",
+              "type": "string",
+              "enum": [
+                "create_compute",
+                "create_timeline",
+                "start_compute",
+                "suspend_compute",
+                "apply_config",
+                "check_availability",
+                "delete_timeline",
+                "create_branch",
+                "import_data",
+                "tenant_ignore",
+                "tenant_attach",
+                "tenant_detach",
+                "tenant_detach_safekeepers",
+                "tenant_attach_safekeepers",
+                "tenant_reattach",
+                "replace_safekeeper",
+                "disable_maintenance",
+                "apply_storage_config",
+                "prepare_secondary_pageserver",
+                "switch_pageserver",
+                "detach_parent_branch",
+                "timeline_archive",
+                "timeline_unarchive",
+                "start_reserved_compute",
+                "sync_dbs_and_roles_from_compute",
+                "apply_schema_from_branch",
+                "timeline_mark_invisible",
+                "timeline_update_protected_config",
+                "prewarm_replica",
+                "promote_replica",
+                "set_storage_non_dirty",
+                "swap_binding_id",
+                "finalize_migration",
+                "mark_migration_prepared",
+                "update_catalog",
+                "epc_sync"
+              ],
+              "details": {
+                "description": "The action performed by the operation",
+                "descriptionHtml": "<p>The action performed by the operation</p>",
+                "example": null,
+                "values": [
+                  "create_compute",
+                  "create_timeline",
+                  "start_compute",
+                  "suspend_compute",
+                  "apply_config",
+                  "check_availability",
+                  "delete_timeline",
+                  "create_branch",
+                  "import_data",
+                  "tenant_ignore",
+                  "tenant_attach",
+                  "tenant_detach",
+                  "tenant_detach_safekeepers",
+                  "tenant_attach_safekeepers",
+                  "tenant_reattach",
+                  "replace_safekeeper",
+                  "disable_maintenance",
+                  "apply_storage_config",
+                  "prepare_secondary_pageserver",
+                  "switch_pageserver",
+                  "detach_parent_branch",
+                  "timeline_archive",
+                  "timeline_unarchive",
+                  "start_reserved_compute",
+                  "sync_dbs_and_roles_from_compute",
+                  "apply_schema_from_branch",
+                  "timeline_mark_invisible",
+                  "timeline_update_protected_config",
+                  "prewarm_replica",
+                  "promote_replica",
+                  "set_storage_non_dirty",
+                  "swap_binding_id",
+                  "finalize_migration",
+                  "mark_migration_prepared",
+                  "update_catalog",
+                  "epc_sync"
+                ]
+              }
+            },
+            "status": {
+              "description": "Current lifecycle state of the operation. On `failed`, see `failures_count` and `retry_at` for retry detail.",
+              "type": "string",
+              "enum": [
+                "scheduling",
+                "running",
+                "finished",
+                "failed",
+                "error",
+                "cancelling",
+                "cancelled",
+                "skipped"
+              ],
+              "details": {
+                "description": "Current lifecycle state of the operation. On `failed`, see `failures_count` and `retry_at` for retry detail.",
+                "descriptionHtml": "<p>Current lifecycle state of the operation. On <code>failed</code>, see <code>failures_count</code> and <code>retry_at</code> for retry detail.</p>",
+                "example": null,
+                "values": [
+                  "scheduling",
+                  "running",
+                  "finished",
+                  "failed",
+                  "error",
+                  "cancelling",
+                  "cancelled",
+                  "skipped"
+                ]
+              }
+            },
+            "error": {
+              "description": "Human-readable message describing why the operation failed.",
+              "type": "string",
+              "details": {
+                "description": "Human-readable message describing why the operation failed.",
+                "descriptionHtml": "<p>Human-readable message describing why the operation failed.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "failures_count": {
+              "description": "The number of times the operation failed",
+              "type": "integer",
+              "format": "int32",
+              "details": {
+                "description": "The number of times the operation failed",
+                "descriptionHtml": "<p>The number of times the operation failed</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "retry_at": {
+              "description": "A timestamp indicating when the operation was last retried",
+              "type": "string",
+              "format": "date-time",
+              "details": {
+                "description": "A timestamp indicating when the operation was last retried",
+                "descriptionHtml": "<p>A timestamp indicating when the operation was last retried</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "created_at": {
+              "description": "A timestamp indicating when the operation was created",
+              "type": "string",
+              "format": "date-time",
+              "details": {
+                "description": "A timestamp indicating when the operation was created",
+                "descriptionHtml": "<p>A timestamp indicating when the operation was created</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "updated_at": {
+              "description": "A timestamp indicating when the operation status was last updated",
+              "type": "string",
+              "format": "date-time",
+              "details": {
+                "description": "A timestamp indicating when the operation status was last updated",
+                "descriptionHtml": "<p>A timestamp indicating when the operation status was last updated</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "total_duration_ms": {
+              "description": "The total duration of the operation in milliseconds",
+              "type": "integer",
+              "format": "int32",
+              "details": {
+                "description": "The total duration of the operation in milliseconds",
+                "descriptionHtml": "<p>The total duration of the operation in milliseconds</p>",
+                "example": null,
+                "values": null
+              }
+            }
+          },
+          "example": {
+            "id": "d8ac46eb-a757-42b1-9907-f78322ee394e",
+            "project_id": "spring-example-302709",
+            "branch_id": "br-wispy-meadow-118737",
+            "endpoint_id": "ep-silent-smoke-806639",
+            "action": "start_compute",
+            "status": "finished",
+            "failures_count": 0,
+            "created_at": "2022-11-15T20:02:00Z",
+            "updated_at": "2022-11-15T20:02:02Z",
+            "total_duration_ms": 200
+          },
+          "displayOrder": [
+            "id",
+            "project_id",
+            "action",
+            "status",
+            "failures_count",
+            "created_at",
+            "updated_at",
+            "total_duration_ms",
+            "branch_id",
+            "endpoint_id",
+            "error",
+            "retry_at"
+          ]
+        }
+      }
+    },
+    "requiredFields": [
+      "endpoint",
+      "operations"
+    ],
+    "displayOrder": [
+      "endpoint",
+      "operations"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/endpoints/$ENDPOINT_ID/suspend\" \\\n  -X POST \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.suspendProjectEndpoint({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    endpoint_id: process.env.ENDPOINT_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": null
+  },
+  "specIndex": 112
+}

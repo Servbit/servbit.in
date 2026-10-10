@@ -1,0 +1,436 @@
+{
+  "id": "get-project-branch-data-api",
+  "operationId": "getProjectBranchDataAPI",
+  "method": "GET",
+  "path": "/projects/{project_id}/branches/{branch_id}/data-api/{database_name}",
+  "tag": "dataapi",
+  "tagDisplay": "Data API",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Retrieve Neon Data API configuration",
+  "description": "Retrieves the Neon Data API configuration for the specified branch,\nincluding endpoint URL, enabled state, and database settings.\n",
+  "descriptionHtml": "<p>Retrieves the Neon Data API configuration for the specified branch,\nincluding endpoint URL, enabled state, and database settings.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "branch_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon branch ID",
+      "descriptionHtml": "<p>The Neon branch ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "database_name",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The database name",
+      "descriptionHtml": "<p>The database name</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": null,
+  "response": {
+    "status": "200",
+    "description": "Returns the Neon Data API for the specified branch",
+    "descriptionHtml": "<p>Returns the Neon Data API for the specified branch</p>",
+    "example": {
+      "url": "https://ep-cool-darkness-a5b6c7d8.apirest.c-5.us-east-2.aws.neon.tech/neondb/rest/v1",
+      "status": "active",
+      "settings": {
+        "db_aggregates_enabled": true,
+        "db_anon_role": "anonymous",
+        "db_schemas": [
+          "public"
+        ],
+        "jwt_role_claim_key": ".role"
+      },
+      "available_schemas": [
+        "auth",
+        "public"
+      ]
+    },
+    "properties": {
+      "url": {
+        "type": "string",
+        "description": "The URL of the Neon Data API",
+        "format": "uri",
+        "details": {
+          "description": "The URL of the Neon Data API",
+          "descriptionHtml": "<p>The URL of the Neon Data API</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "status": {
+        "type": "string",
+        "description": "The status of the Neon Data API deployment",
+        "details": {
+          "description": "The status of the Neon Data API deployment",
+          "descriptionHtml": "<p>The status of the Neon Data API deployment</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "settings": {
+        "type": "object",
+        "properties": {
+          "db_aggregates_enabled": {
+            "type": "boolean",
+            "description": "Enable aggregates feature",
+            "default": true,
+            "details": {
+              "description": "Enable aggregates feature",
+              "descriptionHtml": "<p>Enable aggregates feature</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "db_anon_role": {
+            "type": "string",
+            "description": "Database role to use for anonymous requests",
+            "default": "anonymous",
+            "details": {
+              "description": "Database role to use for anonymous requests",
+              "descriptionHtml": "<p>Database role to use for anonymous requests</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "db_extra_search_path": {
+            "type": "string",
+            "description": "Extra schemas to add to the search path",
+            "details": {
+              "description": "Extra schemas to add to the search path",
+              "descriptionHtml": "<p>Extra schemas to add to the search path</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "db_max_rows": {
+            "type": "integer",
+            "description": "Hard limit on the number of rows returned in a single Data API response. No limit when unset.",
+            "details": {
+              "description": "Hard limit on the number of rows returned in a single Data API response. No limit when unset.",
+              "descriptionHtml": "<p>Hard limit on the number of rows returned in a single Data API response. No limit when unset.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "db_schemas": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of schemas to expose via the API. Default: [\"public\"]",
+            "details": {
+              "description": "List of schemas to expose via the API. Default: [\"public\"]",
+              "descriptionHtml": "<p>List of schemas to expose via the API. Default: [&quot;public&quot;]</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "jwt_role_claim_key": {
+            "type": "string",
+            "description": "JWT claim key to use for role extraction",
+            "default": ".role",
+            "details": {
+              "description": "JWT claim key to use for role extraction",
+              "descriptionHtml": "<p>JWT claim key to use for role extraction</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "jwt_cache_max_lifetime": {
+            "type": "integer",
+            "description": "Maximum lifetime of the Data API's JWT cache, in seconds.",
+            "details": {
+              "description": "Maximum lifetime of the Data API's JWT cache, in seconds.",
+              "descriptionHtml": "<p>Maximum lifetime of the Data API's JWT cache, in seconds.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "openapi_mode": {
+            "type": "string",
+            "description": "OpenAPI specification mode (ignore-privileges, disabled)",
+            "default": "disabled",
+            "details": {
+              "description": "OpenAPI specification mode (ignore-privileges, disabled)",
+              "descriptionHtml": "<p>OpenAPI specification mode (ignore-privileges, disabled)</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "server_cors_allowed_origins": {
+            "type": "string",
+            "description": "CORS allowed origins",
+            "details": {
+              "description": "CORS allowed origins",
+              "descriptionHtml": "<p>CORS allowed origins</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "server_timing_enabled": {
+            "type": "boolean",
+            "description": "When enabled, the Data API adds `Server-Timing` headers to each response showing database execution and internal processing time. Default: disabled.",
+            "details": {
+              "description": "When enabled, the Data API adds `Server-Timing` headers to each response showing database execution and internal processing time. Default: disabled.",
+              "descriptionHtml": "<p>When enabled, the Data API adds <code>Server-Timing</code> headers to each response showing database execution and internal processing time. Default: disabled.</p>",
+              "example": null,
+              "values": null
+            }
+          }
+        },
+        "required": [],
+        "x-tags": [
+          "DataAPI"
+        ],
+        "description": "Configuration settings for the Neon Data API",
+        "details": {
+          "description": "Configuration settings for the Neon Data API",
+          "descriptionHtml": "<p>Configuration settings for the Neon Data API</p>",
+          "example": null,
+          "values": null
+        },
+        "displayOrder": [
+          "db_aggregates_enabled",
+          "db_anon_role",
+          "db_extra_search_path",
+          "db_max_rows",
+          "db_schemas",
+          "jwt_role_claim_key",
+          "jwt_cache_max_lifetime",
+          "openapi_mode",
+          "server_cors_allowed_origins",
+          "server_timing_enabled"
+        ]
+      },
+      "available_schemas": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "nullable": true,
+        "description": "List of available database schemas (SubZero only)",
+        "details": {
+          "description": "List of available database schemas (SubZero only)",
+          "descriptionHtml": "<p>List of available database schemas (SubZero only)</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "observed_at": {
+        "type": "string",
+        "format": "date-time",
+        "description": "When `settings` and `available_schemas` were read from the database. While the\ncompute is suspended they are served from that read, so a change made directly in\nthe database since then shows up in the first response served while the compute is\nactive.\n",
+        "details": {
+          "description": "When `settings` and `available_schemas` were read from the database. While the\ncompute is suspended they are served from that read, so a change made directly in\nthe database since then shows up in the first response served while the compute is\nactive.",
+          "descriptionHtml": "<p>When <code>settings</code> and <code>available_schemas</code> were read from the database. While the\ncompute is suspended they are served from that read, so a change made directly in\nthe database since then shows up in the first response served while the compute is\nactive.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "url",
+      "status"
+    ],
+    "displayOrder": [
+      "url",
+      "status",
+      "settings",
+      "available_schemas",
+      "observed_at"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/data-api/$DATABASE_NAME\" \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.getProjectBranchDataApi({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    branch_id: process.env.BRANCH_ID,\n    database_name: process.env.DATABASE_NAME\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": {
+    "command": "neon data-api get",
+    "flags": [
+      {
+        "name": "analytics",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "api-key",
+        "type": "string",
+        "required": false,
+        "default": ""
+      },
+      {
+        "name": "color",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "config-dir",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "context-file",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "help",
+        "type": "boolean",
+        "required": false,
+        "alias": "h"
+      },
+      {
+        "name": "output",
+        "type": "string",
+        "required": false,
+        "alias": "o",
+        "enum": [
+          "json",
+          "yaml",
+          "table"
+        ],
+        "default": "table"
+      },
+      {
+        "name": "profile",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "version",
+        "type": "boolean",
+        "required": false,
+        "alias": "v"
+      },
+      {
+        "name": "branch",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "database",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "project-id",
+        "type": "string",
+        "required": false,
+        "apiEquiv": "project_id",
+        "apiEquivIn": "parameter"
+      }
+    ],
+    "positionals": []
+  },
+  "mcp": {
+    "tool": "provision_neon_data_api",
+    "description": "Provisions the Neon Data API for a Neon branch. The Data API enables HTTP-based access to your Postgres database with automatic JWT authentication support. <interactive_behavior> When called WITHOUT an authProvider: 1. Automatically checks if Neon Auth is already provisioned 2. Checks if Data API already exists 3. Returns authentication options for user selection: - neon_auth: Use Neon Auth (recommended) - external: Use external provider (Clerk, Auth0, Stytch) - none: No authentication (not recommended) 4. User selects an option, then call this tool again with authProvider specified When called WITH authProvider=\"neon_auth\" and provisionNeonAuthFirst=true: - Automatically provisions Neon Auth first (if not already set up) - Then provisions the Data API with Neon Auth integration When called WITH authProvider=\"none\": - Provisions Data API without a pre-configured JWKS - User will need to manually configure a JWKS URL before the Data API can be used </interactive_behavior> <workflow> The tool will: 1. Resolve the default branch if branchId is not provided 2. Resolve the default database if databaseName is not provided 3. If no authProvider: check existing config and return options for selection 4. If authProvider specified: create the Data API endpoint with that auth 5. If provisionNeonAuthFirst: set up Neon Auth before Data API 6. Return the Data API URL for your application </workflow> <key_features> - HTTP-based API: Access your Postgres database via REST endpoints - JWT Authentication: Supports Neon Auth or external providers (Clerk, Auth0, Stytch, etc.) - Row Level Security: Works with RLS policies for fine-grained access control - Branch-compatible: Data API configuration branches with your database - PostgREST-compatible: Uses the same API patterns as PostgREST </key_features>",
+    "arguments": [
+      {
+        "name": "projectId",
+        "type": "string",
+        "required": true,
+        "description": "The ID of the project to provision the Data API for"
+      },
+      {
+        "name": "branchId",
+        "type": "string",
+        "required": false,
+        "description": "An optional ID of the branch to provision the Data API for. If not provided, the default branch is used."
+      },
+      {
+        "name": "databaseName",
+        "type": "string",
+        "required": false,
+        "description": "The database name to provision the Data API for. If not provided, the default database is used."
+      },
+      {
+        "name": "authProvider",
+        "type": "enum",
+        "required": false,
+        "description": "The authentication provider - \"neon_auth\" for Neon Auth integration, \"external\" for third-party providers like Clerk, Auth0, or Stytch, or \"none\" for unauthenticated access (not recommended). If not specified, the tool will check existing auth configuration and return options for selection."
+      },
+      {
+        "name": "jwksUrl",
+        "type": "string",
+        "required": false,
+        "description": "The JWKS URL for external authentication providers. Required when authProvider is \"external\"."
+      },
+      {
+        "name": "providerName",
+        "type": "string",
+        "required": false,
+        "description": "The name of the external authentication provider (e.g., \"Clerk\", \"Auth0\", \"Stytch\"). Used when authProvider is \"external\"."
+      },
+      {
+        "name": "jwtAudience",
+        "type": "string",
+        "required": false,
+        "description": "The expected JWT audience claim. Tokens without an audience claim will still be accepted."
+      },
+      {
+        "name": "provisionNeonAuthFirst",
+        "type": "boolean",
+        "required": false,
+        "description": "When true with authProvider=\"neon_auth\", provisions Neon Auth before Data API if not already set up."
+      }
+    ]
+  },
+  "console": {
+    "breadcrumb": "Projects → Data API"
+  },
+  "specIndex": 25
+}

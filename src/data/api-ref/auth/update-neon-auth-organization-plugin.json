@@ -1,0 +1,348 @@
+{
+  "id": "update-neon-auth-organization-plugin",
+  "operationId": "updateNeonAuthOrganizationPlugin",
+  "method": "PATCH",
+  "path": "/projects/{project_id}/branches/{branch_id}/auth/plugins/organization",
+  "tag": "auth",
+  "tagDisplay": "Authentication",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Update organization plugin configuration",
+  "description": "Updates the organization plugin configuration for Neon Auth.\nThe organization plugin enables multi-tenant organization support.\n",
+  "descriptionHtml": "<p>Updates the organization plugin configuration for Neon Auth.\nThe organization plugin enables multi-tenant organization support.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "branch_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon branch ID",
+      "descriptionHtml": "<p>The Neon branch ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": {
+    "required": true,
+    "properties": {
+      "enabled": {
+        "type": "boolean",
+        "description": "Controls whether the organization plugin is active for the organization.",
+        "details": {
+          "description": "Controls whether the organization plugin is active for the organization.",
+          "descriptionHtml": "<p>Controls whether the organization plugin is active for the organization.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "organization_limit": {
+        "type": "integer",
+        "format": "int32",
+        "minimum": 1,
+        "description": "Maximum organizations a user can belong to (created or joined). At the limit, the user cannot create or join more.",
+        "details": {
+          "description": "Maximum organizations a user can belong to (created or joined). At the limit, the user cannot create or join more.",
+          "descriptionHtml": "<p>Maximum organizations a user can belong to (created or joined). At the limit, the user cannot create or join more.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "membership_limit": {
+        "type": "integer",
+        "format": "int32",
+        "minimum": 1,
+        "description": "Maximum members per organization.",
+        "details": {
+          "description": "Maximum members per organization.",
+          "descriptionHtml": "<p>Maximum members per organization.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "creator_role": {
+        "type": "string",
+        "description": "Role of the organization's creator. `owner`: full control, including deleting the org and transferring ownership. `admin`: manage members and settings only.",
+        "enum": [
+          "admin",
+          "owner"
+        ],
+        "details": {
+          "description": "Role of the organization's creator. `owner`: full control, including deleting the org and transferring ownership. `admin`: manage members and settings only.",
+          "descriptionHtml": "<p>Role of the organization's creator. <code>owner</code>: full control, including deleting the org and transferring ownership. <code>admin</code>: manage members and settings only.</p>",
+          "example": null,
+          "values": [
+            "admin",
+            "owner"
+          ]
+        }
+      },
+      "send_invitation_email": {
+        "type": "boolean",
+        "description": "When true, invited users receive an email containing an accept link. Requires that the invited user has a verified email address.",
+        "details": {
+          "description": "When true, invited users receive an email containing an accept link. Requires that the invited user has a verified email address.",
+          "descriptionHtml": "<p>When true, invited users receive an email containing an accept link. Requires that the invited user has a verified email address.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [],
+    "displayOrder": [
+      "enabled",
+      "organization_limit",
+      "membership_limit",
+      "creator_role",
+      "send_invitation_email"
+    ],
+    "sections": null,
+    "seed": null,
+    "labels": null
+  },
+  "response": {
+    "status": "200",
+    "description": "The organization plugin configuration has been updated",
+    "descriptionHtml": "<p>The organization plugin configuration has been updated</p>",
+    "example": {
+      "enabled": true,
+      "organization_limit": 10,
+      "membership_limit": 100,
+      "creator_role": "owner",
+      "send_invitation_email": false
+    },
+    "properties": {
+      "enabled": {
+        "type": "boolean",
+        "description": "Whether the organization plugin is enabled.",
+        "default": true,
+        "details": {
+          "description": "Whether the organization plugin is enabled.",
+          "descriptionHtml": "<p>Whether the organization plugin is enabled.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "organization_limit": {
+        "type": "integer",
+        "format": "int32",
+        "minimum": 1,
+        "default": 10,
+        "description": "Maximum organizations a user can belong to (created or joined). At the limit, the user cannot create or join more.",
+        "details": {
+          "description": "Maximum organizations a user can belong to (created or joined). At the limit, the user cannot create or join more.",
+          "descriptionHtml": "<p>Maximum organizations a user can belong to (created or joined). At the limit, the user cannot create or join more.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "membership_limit": {
+        "type": "integer",
+        "format": "int32",
+        "minimum": 1,
+        "default": 100,
+        "description": "Maximum number of members per organization.",
+        "details": {
+          "description": "Maximum number of members per organization.",
+          "descriptionHtml": "<p>Maximum number of members per organization.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "creator_role": {
+        "type": "string",
+        "description": "Role of the organization's creator. `owner`: full control, including deleting the org and transferring ownership. `admin`: manage members and settings only.",
+        "default": "owner",
+        "enum": [
+          "admin",
+          "owner"
+        ],
+        "details": {
+          "description": "Role of the organization's creator. `owner`: full control, including deleting the org and transferring ownership. `admin`: manage members and settings only.",
+          "descriptionHtml": "<p>Role of the organization's creator. <code>owner</code>: full control, including deleting the org and transferring ownership. <code>admin</code>: manage members and settings only.</p>",
+          "example": null,
+          "values": [
+            "admin",
+            "owner"
+          ]
+        }
+      },
+      "send_invitation_email": {
+        "type": "boolean",
+        "description": "Whether to send invitation emails when inviting members to an organization.",
+        "default": false,
+        "details": {
+          "description": "Whether to send invitation emails when inviting members to an organization.",
+          "descriptionHtml": "<p>Whether to send invitation emails when inviting members to an organization.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "enabled",
+      "organization_limit",
+      "membership_limit",
+      "creator_role",
+      "send_invitation_email"
+    ],
+    "displayOrder": [
+      "enabled",
+      "organization_limit",
+      "membership_limit",
+      "creator_role",
+      "send_invitation_email"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/auth/plugins/organization\" \\\n  -X PATCH \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.updateNeonAuthOrganizationPlugin({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    branch_id: process.env.BRANCH_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": {
+    "command": "neon neon-auth config organization update",
+    "flags": [
+      {
+        "name": "analytics",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "api-key",
+        "type": "string",
+        "required": false,
+        "default": ""
+      },
+      {
+        "name": "color",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "config-dir",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "context-file",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "help",
+        "type": "boolean",
+        "required": false,
+        "alias": "h"
+      },
+      {
+        "name": "output",
+        "type": "string",
+        "required": false,
+        "alias": "o",
+        "enum": [
+          "json",
+          "yaml",
+          "table"
+        ],
+        "default": "table"
+      },
+      {
+        "name": "profile",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "version",
+        "type": "boolean",
+        "required": false,
+        "alias": "v"
+      },
+      {
+        "name": "branch",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "project-id",
+        "type": "string",
+        "required": false,
+        "apiEquiv": "project_id",
+        "apiEquivIn": "parameter"
+      },
+      {
+        "name": "creator-role",
+        "type": "string",
+        "required": false,
+        "enum": [
+          "admin",
+          "owner"
+        ],
+        "apiEquiv": "creator_role",
+        "apiEquivIn": "body"
+      },
+      {
+        "name": "enabled",
+        "type": "boolean",
+        "required": false,
+        "apiEquiv": "enabled",
+        "apiEquivIn": "body"
+      },
+      {
+        "name": "limit",
+        "type": "number",
+        "required": false
+      }
+    ],
+    "positionals": []
+  },
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": "Projects → Auth → Plugins"
+  },
+  "specIndex": 68
+}

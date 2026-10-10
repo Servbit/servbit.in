@@ -1,0 +1,122 @@
+{
+  "id": "set-organization-spending-limit",
+  "operationId": "setOrganizationSpendingLimit",
+  "method": "PUT",
+  "path": "/organizations/{org_id}/billing/spending_limit",
+  "tag": "organizations",
+  "tagDisplay": "Organizations",
+  "stability": "beta",
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Set organization spending limit",
+  "description": "Sets the monthly spending limit for the specified organization.\nTo remove a previously configured limit, send a DELETE request to this endpoint.\nWhen a limit is configured, email notifications are sent at 80% and 100% of the limit.\nComputes are not suspended when the limit is reached.\nAvailable to organization admins on Launch and Scale plans only.\n",
+  "descriptionHtml": "<p>Sets the monthly spending limit for the specified organization.\nTo remove a previously configured limit, send a DELETE request to this endpoint.\nWhen a limit is configured, email notifications are sent at 80% and 100% of the limit.\nComputes are not suspended when the limit is reached.\nAvailable to organization admins on Launch and Scale plans only.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "org_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon organization ID",
+      "descriptionHtml": "<p>The Neon organization ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": {
+    "required": true,
+    "properties": {
+      "spending_limit_cents": {
+        "description": "Monthly spending cap in cents. Must be positive. To remove a\npreviously configured limit, send a DELETE request to the\nspending_limit endpoint — `0` and `null` are rejected here.\nThe cap is alert-only: notifications fire at 80% and 100%, but\ncomputes are not suspended. Setting a cap below the period's\nalready-accrued spend is permitted and will trigger the\nover-limit notification on the next worker run.\n",
+        "type": "integer",
+        "format": "int64",
+        "minimum": 1,
+        "details": {
+          "description": "Monthly spending cap in cents. Must be positive. To remove a\npreviously configured limit, send a DELETE request to the\nspending_limit endpoint — `0` and `null` are rejected here.\nThe cap is alert-only: notifications fire at 80% and 100%, but\ncomputes are not suspended. Setting a cap below the period's\nalready-accrued spend is permitted and will trigger the\nover-limit notification on the next worker run.",
+          "descriptionHtml": "<p>Monthly spending cap in cents. Must be positive. To remove a\npreviously configured limit, send a DELETE request to the\nspending_limit endpoint — <code>0</code> and <code>null</code> are rejected here.\nThe cap is alert-only: notifications fire at 80% and 100%, but\ncomputes are not suspended. Setting a cap below the period's\nalready-accrued spend is permitted and will trigger the\nover-limit notification on the next worker run.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "spending_limit_cents"
+    ],
+    "displayOrder": [
+      "spending_limit_cents"
+    ],
+    "sections": null,
+    "seed": null,
+    "labels": null
+  },
+  "response": {
+    "status": "200",
+    "description": "The updated spending limit value.",
+    "descriptionHtml": "<p>The updated spending limit value.</p>",
+    "example": null,
+    "properties": {
+      "spending_limit_cents": {
+        "description": "Monthly spending cap in cents. `null` indicates that no limit\nis currently configured.\n",
+        "type": "integer",
+        "format": "int64",
+        "nullable": true,
+        "details": {
+          "description": "Monthly spending cap in cents. `null` indicates that no limit\nis currently configured.",
+          "descriptionHtml": "<p>Monthly spending cap in cents. <code>null</code> indicates that no limit\nis currently configured.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "spending_limit_cents"
+    ],
+    "displayOrder": [
+      "spending_limit_cents"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/organizations/$ORG_ID/billing/spending_limit\" \\\n  -X PUT \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.setOrganizationSpendingLimit({\n  client: neon.client,\n  path: {\n    org_id: process.env.ORG_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": "Organization → Billing → Spending limit"
+  },
+  "specIndex": 122
+}

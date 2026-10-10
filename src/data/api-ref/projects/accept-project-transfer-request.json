@@ -1,0 +1,136 @@
+{
+  "id": "accept-project-transfer-request",
+  "operationId": "acceptProjectTransferRequest",
+  "method": "PUT",
+  "path": "/projects/{project_id}/transfer_requests/{request_id}",
+  "tag": "projects",
+  "tagDisplay": "Projects",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Accept a project transfer request",
+  "description": "Accepts a transfer request for the specified project, transferring it to the specified organization\nor user. If org_id is not passed, the project will be transferred to the current user or organization account.\n",
+  "descriptionHtml": "<p>Accepts a transfer request for the specified project, transferring it to the specified organization\nor user. If org_id is not passed, the project will be transferred to the current user or organization account.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "request_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project transfer request ID",
+      "descriptionHtml": "<p>The Neon project transfer request ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": {
+    "required": false,
+    "properties": {
+      "org_id": {
+        "description": "The Neon organization ID to transfer the project to. If not provided, the project will be\ntransferred to the current user or organization account.\n",
+        "example": "org-cool-darkness-12345678",
+        "type": "string",
+        "pattern": "^[a-z0-9-]{1,60}$",
+        "details": {
+          "description": "The Neon organization ID to transfer the project to. If not provided, the project will be\ntransferred to the current user or organization account.",
+          "descriptionHtml": "<p>The Neon organization ID to transfer the project to. If not provided, the project will be\ntransferred to the current user or organization account.</p>",
+          "example": "org-cool-darkness-12345678",
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [],
+    "displayOrder": [
+      "org_id"
+    ],
+    "sections": null,
+    "seed": null,
+    "labels": null
+  },
+  "response": null,
+  "errors": [
+    {
+      "status": "406",
+      "description": "Account doesn't satisfy the plan requirements to own the project",
+      "descriptionHtml": "<p>Account doesn't satisfy the plan requirements to own the project</p>",
+      "properties": {
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "message",
+              "code"
+            ],
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Description of why the plan is not satisfied"
+              },
+              "code": {
+                "type": "string",
+                "description": "A short code identifying the reason"
+              }
+            }
+          },
+          "description": "List of reasons why the target account's plan cannot satisfy the transfer requirements. Each item contains a `code` identifying the constraint and a `message` with a human-readable explanation."
+        }
+      },
+      "required": [
+        "reasons"
+      ]
+    },
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/transfer_requests/$REQUEST_ID\" \\\n  -X PUT \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.acceptProjectTransferRequest({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    request_id: process.env.REQUEST_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": "Claim"
+  },
+  "specIndex": 21
+}

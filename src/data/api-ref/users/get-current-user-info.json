@@ -1,0 +1,920 @@
+{
+  "id": "get-current-user-info",
+  "operationId": "getCurrentUserInfo",
+  "method": "GET",
+  "path": "/users/me",
+  "tag": "users",
+  "tagDisplay": "Users",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Retrieve current user details",
+  "description": "Retrieves information about the currently authenticated Neon user,\nincluding account identifiers, plan details, and linked auth accounts.\n",
+  "descriptionHtml": "<p>Retrieves information about the currently authenticated Neon user,\nincluding account identifiers, plan details, and linked auth accounts.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [],
+  "requestBody": null,
+  "response": {
+    "status": "200",
+    "description": "Returned information about the current user\n",
+    "descriptionHtml": "<p>Returned information about the current user</p>\n",
+    "example": {
+      "active_seconds_limit": 0,
+      "auth_accounts": [
+        {
+          "email": "jane.doe@example.com",
+          "image": "https://example.com/avatar.png",
+          "login": "jane-doe",
+          "name": "Jane",
+          "provider": "google"
+        },
+        {
+          "email": "jane.doe@example.com",
+          "image": "https://example.com/avatar.png",
+          "login": "jane-doe",
+          "name": "Jane",
+          "provider": "keycloak"
+        },
+        {
+          "email": "jane.doe@example.com",
+          "image": "https://example.com/avatar.png",
+          "login": "jane-doe",
+          "name": "Jane",
+          "provider": "vercelmp"
+        }
+      ],
+      "email": "jane.doe@example.com",
+      "id": "00000000-0000-0000-0000-000000000000",
+      "image": "https://example.com/avatar.png",
+      "login": "jane-doe",
+      "name": "Jane",
+      "last_name": "Doe",
+      "projects_limit": 0,
+      "branches_limit": 0,
+      "max_autoscaling_limit": 0,
+      "plan": "free"
+    },
+    "properties": {
+      "active_seconds_limit": {
+        "description": "Control plane observes active endpoints of a user this amount of wall-clock time.\n",
+        "type": "integer",
+        "format": "int64",
+        "details": {
+          "description": "Control plane observes active endpoints of a user this amount of wall-clock time.",
+          "descriptionHtml": "<p>Control plane observes active endpoints of a user this amount of wall-clock time.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "billing_account": {
+        "description": "Billing account associated with the current user, including plan and subscription details.",
+        "type": "object",
+        "required": [
+          "state",
+          "payment_source",
+          "subscription_type",
+          "payment_method",
+          "quota_reset_at_last",
+          "name",
+          "email",
+          "address_city",
+          "address_country",
+          "address_line1",
+          "address_line2",
+          "address_postal_code",
+          "address_state"
+        ],
+        "x-sensitive": [
+          "name",
+          "email",
+          "state",
+          "tax_id",
+          "address_city",
+          "address_country",
+          "address_line1",
+          "address_line2",
+          "address_postal_code",
+          "address_state"
+        ],
+        "properties": {
+          "state": {
+            "description": "State of the billing account. `UNKNOWN`: state is not determined. `active`: the account is active and in normal operation. `suspended`: the account has been suspended. `deactivated`: the account has been deactivated. `deleted`: the account has been deleted.\n",
+            "type": "string",
+            "enum": [
+              "UNKNOWN",
+              "active",
+              "suspended",
+              "deactivated",
+              "deleted"
+            ],
+            "details": {
+              "description": "State of the billing account. `UNKNOWN`: state is not determined. `active`: the account is active and in normal operation. `suspended`: the account has been suspended. `deactivated`: the account has been deactivated. `deleted`: the account has been deleted.",
+              "descriptionHtml": "<p>State of the billing account. <code>UNKNOWN</code>: state is not determined. <code>active</code>: the account is active and in normal operation. <code>suspended</code>: the account has been suspended. <code>deactivated</code>: the account has been deactivated. <code>deleted</code>: the account has been deleted.</p>",
+              "example": null,
+              "values": [
+                "UNKNOWN",
+                "active",
+                "suspended",
+                "deactivated",
+                "deleted"
+              ]
+            }
+          },
+          "payment_source": {
+            "description": "Payment source attached to the billing account, such as a credit card on file.",
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Type of payment source. E.g. \"card\".\n",
+                "details": {
+                  "description": "Type of payment source. E.g. \"card\".",
+                  "descriptionHtml": "<p>Type of payment source. E.g. &quot;card&quot;.</p>",
+                  "example": null,
+                  "values": null
+                }
+              },
+              "card": {
+                "description": "Bank card details for this payment source.",
+                "type": "object",
+                "required": [
+                  "last4"
+                ],
+                "properties": {
+                  "last4": {
+                    "type": "string",
+                    "description": "Last 4 digits of the card.\n",
+                    "details": {
+                      "description": "Last 4 digits of the card.",
+                      "descriptionHtml": "<p>Last 4 digits of the card.</p>",
+                      "example": null,
+                      "values": null
+                    }
+                  },
+                  "brand": {
+                    "type": "string",
+                    "description": "Card network reported by the payment processor. Set to `unknown` when the network cannot be determined.\n",
+                    "enum": [
+                      "amex",
+                      "diners",
+                      "discover",
+                      "jcb",
+                      "mastercard",
+                      "unionpay",
+                      "unknown",
+                      "visa"
+                    ],
+                    "details": {
+                      "description": "Card network reported by the payment processor. Set to `unknown` when the network cannot be determined.",
+                      "descriptionHtml": "<p>Card network reported by the payment processor. Set to <code>unknown</code> when the network cannot be determined.</p>",
+                      "example": null,
+                      "values": [
+                        "amex",
+                        "diners",
+                        "discover",
+                        "jcb",
+                        "mastercard",
+                        "unionpay",
+                        "unknown",
+                        "visa"
+                      ]
+                    }
+                  },
+                  "exp_month": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Credit card expiration month\n",
+                    "details": {
+                      "description": "Credit card expiration month",
+                      "descriptionHtml": "<p>Credit card expiration month</p>",
+                      "example": null,
+                      "values": null
+                    }
+                  },
+                  "exp_year": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Credit card expiration year\n",
+                    "details": {
+                      "description": "Credit card expiration year",
+                      "descriptionHtml": "<p>Credit card expiration year</p>",
+                      "example": null,
+                      "values": null
+                    }
+                  }
+                },
+                "details": {
+                  "description": "Bank card details for this payment source.",
+                  "descriptionHtml": "<p>Bank card details for this payment source.</p>",
+                  "example": null,
+                  "values": null
+                },
+                "displayOrder": [
+                  "last4",
+                  "brand",
+                  "exp_month",
+                  "exp_year"
+                ]
+              }
+            },
+            "details": {
+              "description": "Payment source attached to the billing account, such as a credit card on file.",
+              "descriptionHtml": "<p>Payment source attached to the billing account, such as a credit card on file.</p>",
+              "example": null,
+              "values": null
+            },
+            "displayOrder": [
+              "type",
+              "card"
+            ]
+          },
+          "subscription_type": {
+            "type": "string",
+            "description": "Type of subscription to Neon Cloud.\nNotice that for users without billing account this will be \"UNKNOWN\"\n",
+            "enum": [
+              "UNKNOWN",
+              "direct_sales",
+              "direct_sales_v3",
+              "aws_marketplace",
+              "free_v2",
+              "free_v3",
+              "launch",
+              "launch_v3",
+              "scale",
+              "scale_v3",
+              "business",
+              "vercel_pg_legacy"
+            ],
+            "details": {
+              "description": "Type of subscription to Neon Cloud.\nNotice that for users without billing account this will be \"UNKNOWN\"",
+              "descriptionHtml": "<p>Type of subscription to Neon Cloud.\nNotice that for users without billing account this will be &quot;UNKNOWN&quot;</p>",
+              "example": null,
+              "values": [
+                "UNKNOWN",
+                "direct_sales",
+                "direct_sales_v3",
+                "aws_marketplace",
+                "free_v2",
+                "free_v3",
+                "launch",
+                "launch_v3",
+                "scale",
+                "scale_v3",
+                "business",
+                "vercel_pg_legacy"
+              ]
+            }
+          },
+          "payment_method": {
+            "type": "string",
+            "description": "Indicates whether and how an account makes payments.\n",
+            "enum": [
+              "UNKNOWN",
+              "none",
+              "stripe",
+              "direct_payment",
+              "aws_mp",
+              "azure_mp",
+              "vercel_mp",
+              "staff",
+              "trial",
+              "sponsorship",
+              "shared_payment_token"
+            ],
+            "details": {
+              "description": "Indicates whether and how an account makes payments.",
+              "descriptionHtml": "<p>Indicates whether and how an account makes payments.</p>",
+              "example": null,
+              "values": [
+                "UNKNOWN",
+                "none",
+                "stripe",
+                "direct_payment",
+                "aws_mp",
+                "azure_mp",
+                "vercel_mp",
+                "staff",
+                "trial",
+                "sponsorship",
+                "shared_payment_token"
+              ]
+            }
+          },
+          "quota_reset_at_last": {
+            "description": "Timestamp of the last quota reset. Set to the account creation time when the account is first created.\n",
+            "type": "string",
+            "format": "date-time",
+            "details": {
+              "description": "Timestamp of the last quota reset. Set to the account creation time when the account is first created.",
+              "descriptionHtml": "<p>Timestamp of the last quota reset. Set to the account creation time when the account is first created.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "name": {
+            "description": "The full name of the individual or entity that owns the billing account. This name appears on invoices.",
+            "type": "string",
+            "details": {
+              "description": "The full name of the individual or entity that owns the billing account. This name appears on invoices.",
+              "descriptionHtml": "<p>The full name of the individual or entity that owns the billing account. This name appears on invoices.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "email": {
+            "description": "Billing email, to receive emails related to invoices and subscriptions.\n",
+            "type": "string",
+            "format": "email",
+            "minLength": 1,
+            "maxLength": 256,
+            "details": {
+              "description": "Billing email, to receive emails related to invoices and subscriptions.",
+              "descriptionHtml": "<p>Billing email, to receive emails related to invoices and subscriptions.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "address_city": {
+            "description": "Billing address city.\n",
+            "type": "string",
+            "details": {
+              "description": "Billing address city.",
+              "descriptionHtml": "<p>Billing address city.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "address_country": {
+            "description": "Billing address country code defined by ISO 3166-1 alpha-2.\n",
+            "type": "string",
+            "details": {
+              "description": "Billing address country code defined by ISO 3166-1 alpha-2.",
+              "descriptionHtml": "<p>Billing address country code defined by ISO 3166-1 alpha-2.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "address_country_name": {
+            "description": "Billing address country name.\n",
+            "type": "string",
+            "details": {
+              "description": "Billing address country name.",
+              "descriptionHtml": "<p>Billing address country name.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "address_line1": {
+            "description": "Billing address line 1.\n",
+            "type": "string",
+            "details": {
+              "description": "Billing address line 1.",
+              "descriptionHtml": "<p>Billing address line 1.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "address_line2": {
+            "description": "Billing address line 2.\n",
+            "type": "string",
+            "details": {
+              "description": "Billing address line 2.",
+              "descriptionHtml": "<p>Billing address line 2.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "address_postal_code": {
+            "description": "Billing address postal code.\n",
+            "type": "string",
+            "details": {
+              "description": "Billing address postal code.",
+              "descriptionHtml": "<p>Billing address postal code.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "address_state": {
+            "description": "Billing address state or region.\n",
+            "type": "string",
+            "details": {
+              "description": "Billing address state or region.",
+              "descriptionHtml": "<p>Billing address state or region.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "orb_portal_url": {
+            "description": "Orb user portal url\n",
+            "type": "string",
+            "details": {
+              "description": "Orb user portal url",
+              "descriptionHtml": "<p>Orb user portal url</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "tax_id": {
+            "description": "The tax identification number for the billing account, displayed on invoices.\n",
+            "type": "string",
+            "details": {
+              "description": "The tax identification number for the billing account, displayed on invoices.",
+              "descriptionHtml": "<p>The tax identification number for the billing account, displayed on invoices.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "tax_id_type": {
+            "description": "The type of the tax identification number based on the country.\n",
+            "type": "string",
+            "details": {
+              "description": "The type of the tax identification number based on the country.",
+              "descriptionHtml": "<p>The type of the tax identification number based on the country.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "plan_details": {
+            "description": "Details of the subscription plan associated with the billing account.",
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Plan name, for example `free`, `launch`, or `scale`.",
+                "details": {
+                  "description": "Plan name, for example `free`, `launch`, or `scale`.",
+                  "descriptionHtml": "<p>Plan name, for example <code>free</code>, <code>launch</code>, or <code>scale</code>.</p>",
+                  "example": null,
+                  "values": null
+                }
+              },
+              "version": {
+                "description": "Version of the plan, expressed as `major` and `minor` components.",
+                "type": "object",
+                "required": [
+                  "major",
+                  "minor"
+                ],
+                "properties": {
+                  "major": {
+                    "type": "integer"
+                  },
+                  "minor": {
+                    "type": "integer"
+                  }
+                },
+                "details": {
+                  "description": "Version of the plan, expressed as `major` and `minor` components.",
+                  "descriptionHtml": "<p>Version of the plan, expressed as <code>major</code> and <code>minor</code> components.</p>",
+                  "example": null,
+                  "values": null
+                },
+                "displayOrder": [
+                  "major",
+                  "minor"
+                ]
+              }
+            },
+            "details": {
+              "description": "Details of the subscription plan associated with the billing account.",
+              "descriptionHtml": "<p>Details of the subscription plan associated with the billing account.</p>",
+              "example": null,
+              "values": null
+            },
+            "displayOrder": [
+              "name",
+              "version"
+            ]
+          },
+          "spending_limit_cents": {
+            "description": "Monthly spending cap in cents for V3 paid plans. When set,\nnotifications are sent at 80% and 100% of this limit. `null`\nmeans no limit is configured.\n",
+            "type": "integer",
+            "format": "int64",
+            "nullable": true,
+            "details": {
+              "description": "Monthly spending cap in cents for V3 paid plans. When set,\nnotifications are sent at 80% and 100% of this limit. `null`\nmeans no limit is configured.",
+              "descriptionHtml": "<p>Monthly spending cap in cents for V3 paid plans. When set,\nnotifications are sent at 80% and 100% of this limit. <code>null</code>\nmeans no limit is configured.</p>",
+              "example": null,
+              "values": null
+            }
+          }
+        },
+        "details": {
+          "description": "Billing account associated with the current user, including plan and subscription details.",
+          "descriptionHtml": "<p>Billing account associated with the current user, including plan and subscription details.</p>",
+          "example": null,
+          "values": null
+        },
+        "displayOrder": [
+          "state",
+          "payment_source",
+          "subscription_type",
+          "payment_method",
+          "quota_reset_at_last",
+          "name",
+          "email",
+          "address_city",
+          "address_country",
+          "address_line1",
+          "address_line2",
+          "address_postal_code",
+          "address_state",
+          "orb_portal_url",
+          "address_country_name",
+          "tax_id",
+          "tax_id_type",
+          "plan_details",
+          "spending_limit_cents"
+        ]
+      },
+      "auth_accounts": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "provider",
+            "email",
+            "name",
+            "login",
+            "image"
+          ],
+          "x-sensitive": [
+            "email",
+            "name",
+            "login"
+          ],
+          "properties": {
+            "email": {
+              "description": "Email address associated with this auth account.",
+              "type": "string",
+              "format": "email",
+              "minLength": 1,
+              "maxLength": 256,
+              "details": {
+                "description": "Email address associated with this auth account.",
+                "descriptionHtml": "<p>Email address associated with this auth account.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "image": {
+              "type": "string",
+              "description": "URL of the user's profile picture as provided by the identity provider.",
+              "details": {
+                "description": "URL of the user's profile picture as provided by the identity provider.",
+                "descriptionHtml": "<p>URL of the user's profile picture as provided by the identity provider.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "login": {
+              "type": "string",
+              "deprecated": true,
+              "description": "Deprecated. Use the `email` field.\n",
+              "details": {
+                "description": "Deprecated. Use the `email` field.",
+                "descriptionHtml": "<p>Deprecated. Use the <code>email</code> field.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "name": {
+              "type": "string",
+              "description": "Display name of the account as provided by the identity provider.",
+              "details": {
+                "description": "Display name of the account as provided by the identity provider.",
+                "descriptionHtml": "<p>Display name of the account as provided by the identity provider.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "provider": {
+              "description": "Identity provider id from keycloak",
+              "type": "string",
+              "enum": [
+                "github",
+                "google",
+                "hasura",
+                "microsoft",
+                "microsoftv2",
+                "vercelmp",
+                "keycloak"
+              ],
+              "details": {
+                "description": "Identity provider id from keycloak",
+                "descriptionHtml": "<p>Identity provider id from keycloak</p>",
+                "example": null,
+                "values": [
+                  "github",
+                  "google",
+                  "hasura",
+                  "microsoft",
+                  "microsoftv2",
+                  "vercelmp",
+                  "keycloak"
+                ]
+              }
+            }
+          },
+          "displayOrder": [
+            "email",
+            "image",
+            "login",
+            "name",
+            "provider"
+          ]
+        },
+        "description": "Authentication provider accounts linked to the current user.",
+        "details": {
+          "description": "Authentication provider accounts linked to the current user.",
+          "descriptionHtml": "<p>Authentication provider accounts linked to the current user.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "email": {
+        "description": "Email address of the authenticated user.",
+        "type": "string",
+        "format": "email",
+        "minLength": 1,
+        "maxLength": 256,
+        "details": {
+          "description": "Email address of the authenticated user.",
+          "descriptionHtml": "<p>Email address of the authenticated user.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "id": {
+        "type": "string",
+        "description": "The Neon user ID.",
+        "details": {
+          "description": "The Neon user ID.",
+          "descriptionHtml": "<p>The Neon user ID.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "image": {
+        "type": "string",
+        "description": "URL of the user's profile avatar image.",
+        "details": {
+          "description": "URL of the user's profile avatar image.",
+          "descriptionHtml": "<p>URL of the user's profile avatar image.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "login": {
+        "type": "string",
+        "deprecated": true,
+        "description": "Deprecated. Use the `email` field.\n",
+        "details": {
+          "description": "Deprecated. Use the `email` field.",
+          "descriptionHtml": "<p>Deprecated. Use the <code>email</code> field.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "name": {
+        "type": "string",
+        "description": "First name of the current user.",
+        "details": {
+          "description": "First name of the current user.",
+          "descriptionHtml": "<p>First name of the current user.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "last_name": {
+        "type": "string",
+        "description": "Last name of the current user.",
+        "details": {
+          "description": "Last name of the current user.",
+          "descriptionHtml": "<p>Last name of the current user.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "projects_limit": {
+        "type": "integer",
+        "format": "int64",
+        "description": "Maximum number of projects the account is allowed to create under the current plan.",
+        "details": {
+          "description": "Maximum number of projects the account is allowed to create under the current plan.",
+          "descriptionHtml": "<p>Maximum number of projects the account is allowed to create under the current plan.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "branches_limit": {
+        "type": "integer",
+        "format": "int64",
+        "description": "Maximum number of branches allowed for the account under the current plan.",
+        "details": {
+          "description": "Maximum number of branches allowed for the account under the current plan.",
+          "descriptionHtml": "<p>Maximum number of branches allowed for the account under the current plan.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "max_autoscaling_limit": {
+        "type": "number",
+        "format": "double",
+        "description": "The maximum autoscaling limit in Compute Units.\nA value of 0 indicates no limit is configured.\n",
+        "details": {
+          "description": "The maximum autoscaling limit in Compute Units.\nA value of 0 indicates no limit is configured.",
+          "descriptionHtml": "<p>The maximum autoscaling limit in Compute Units.\nA value of 0 indicates no limit is configured.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "compute_seconds_limit": {
+        "type": "integer",
+        "format": "int64",
+        "description": "Maximum Postgres compute time, in seconds, allowed under the account's current plan.",
+        "details": {
+          "description": "Maximum Postgres compute time, in seconds, allowed under the account's current plan.",
+          "descriptionHtml": "<p>Maximum Postgres compute time, in seconds, allowed under the account's current plan.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "plan": {
+        "type": "string",
+        "description": "Current billing plan for the user's account.",
+        "details": {
+          "description": "Current billing plan for the user's account.",
+          "descriptionHtml": "<p>Current billing plan for the user's account.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "active_seconds_limit",
+      "id",
+      "email",
+      "login",
+      "name",
+      "last_name",
+      "image",
+      "projects_limit",
+      "branches_limit",
+      "max_autoscaling_limit",
+      "auth_accounts",
+      "plan"
+    ],
+    "displayOrder": [
+      "active_seconds_limit",
+      "auth_accounts",
+      "email",
+      "id",
+      "image",
+      "login",
+      "name",
+      "last_name",
+      "projects_limit",
+      "branches_limit",
+      "max_autoscaling_limit",
+      "plan",
+      "billing_account",
+      "compute_seconds_limit"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/users/me\" \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.getCurrentUserInfo({\n  client: neon.client\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": {
+    "command": "neon me",
+    "flags": [
+      {
+        "name": "analytics",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "api-key",
+        "type": "string",
+        "required": false,
+        "default": ""
+      },
+      {
+        "name": "color",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "config-dir",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "help",
+        "type": "boolean",
+        "required": false,
+        "alias": "h"
+      },
+      {
+        "name": "output",
+        "type": "string",
+        "required": false,
+        "alias": "o",
+        "enum": [
+          "json",
+          "yaml",
+          "table"
+        ],
+        "default": "table"
+      },
+      {
+        "name": "profile",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "version",
+        "type": "boolean",
+        "required": false,
+        "alias": "v"
+      }
+    ],
+    "positionals": [],
+    "tableOutput": "┌──────────┬──────────────────────┬──────┬────────────────┐\n│ Login    │ Email                │ Name │ Projects Limit │\n├──────────┼──────────────────────┼──────┼────────────────┤\n│ jane-doe │ jane.doe@example.com │ Jane │ 0              │\n└──────────┴──────────────────────┴──────┴────────────────┘\n"
+  },
+  "mcp": {
+    "tool": "list_projects",
+    "description": "List Neon projects in your account. Do not use for projects shared with you (use `list_shared_projects` instead). Supports optional `search` (filter by name or ID) and `limit` (default 10) parameters.",
+    "arguments": [
+      {
+        "name": "cursor",
+        "type": "string",
+        "required": false,
+        "description": "Specify the cursor value from the previous response to retrieve the next batch of projects."
+      },
+      {
+        "name": "limit",
+        "type": "number",
+        "required": false,
+        "description": "Specify a value from 1 to 400 to limit number of projects in the response.",
+        "default": 10
+      },
+      {
+        "name": "search",
+        "type": "string",
+        "required": false,
+        "description": "Search by project name or id. You can specify partial name or id values to filter results."
+      },
+      {
+        "name": "org_id",
+        "type": "string",
+        "required": false,
+        "description": "Search for projects by org_id."
+      }
+    ]
+  },
+  "console": {
+    "breadcrumb": "Account settings → Profile"
+  },
+  "specIndex": 137
+}

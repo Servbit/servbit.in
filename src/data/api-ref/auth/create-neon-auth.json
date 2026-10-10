@@ -1,0 +1,351 @@
+{
+  "id": "create-neon-auth",
+  "operationId": "createNeonAuth",
+  "method": "POST",
+  "path": "/projects/{project_id}/branches/{branch_id}/auth",
+  "tag": "auth",
+  "tagDisplay": "Authentication",
+  "stability": "beta",
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Enable Neon Auth for the branch",
+  "description": "Enables Neon Auth for the specified branch by connecting it to an authentication provider.\nCreating the integration provisions the `neon_auth` schema in the branch database, which stores user identity data synchronized from the provider.\n",
+  "descriptionHtml": "<p>Enables Neon Auth for the specified branch by connecting it to an authentication provider.\nCreating the integration provisions the <code>neon_auth</code> schema in the branch database, which stores user identity data synchronized from the provider.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "branch_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon branch ID",
+      "descriptionHtml": "<p>The Neon branch ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": {
+    "required": true,
+    "properties": {
+      "auth_provider": {
+        "description": "Authentication provider integrated with this Neon Auth configuration. `better_auth` integrates with Better Auth (the current, recommended provider). `stack` integrates with Stack Auth (deprecated). `mock` is a simulated provider for local development and testing only.",
+        "type": "string",
+        "enum": [
+          "mock",
+          "stack",
+          "better_auth"
+        ],
+        "details": {
+          "description": "Authentication provider integrated with this Neon Auth configuration. `better_auth` integrates with Better Auth (the current, recommended provider). `stack` integrates with Stack Auth (deprecated). `mock` is a simulated provider for local development and testing only.",
+          "descriptionHtml": "<p>Authentication provider integrated with this Neon Auth configuration. <code>better_auth</code> integrates with Better Auth (the current, recommended provider). <code>stack</code> integrates with Stack Auth (deprecated). <code>mock</code> is a simulated provider for local development and testing only.</p>",
+          "example": null,
+          "values": [
+            "mock",
+            "stack",
+            "better_auth"
+          ]
+        }
+      },
+      "database_name": {
+        "type": "string",
+        "description": "Name of the database to enable Neon Auth on. When omitted, the integration uses the project's default database.",
+        "details": {
+          "description": "Name of the database to enable Neon Auth on. When omitted, the integration uses the project's default database.",
+          "descriptionHtml": "<p>Name of the database to enable Neon Auth on. When omitted, the integration uses the project's default database.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "auth_provider"
+    ],
+    "displayOrder": [
+      "auth_provider",
+      "database_name"
+    ],
+    "sections": null,
+    "seed": null,
+    "labels": null
+  },
+  "response": {
+    "status": "201",
+    "description": "Enables Neon Auth integration for the branch",
+    "descriptionHtml": "<p>Enables Neon Auth integration for the branch</p>",
+    "example": {
+      "auth_provider": "better_auth",
+      "auth_provider_project_id": "00000000-0000-0000-0000-000000000000",
+      "pub_client_key": "",
+      "secret_server_key": "<secret_server_key>",
+      "jwks_url": "https://ep-cool-darkness-a5b6c7d8.neonauth.c-4.us-east-2.aws.neon.tech/neondb/auth/.well-known/jwks.json",
+      "schema_name": "neon_auth",
+      "table_name": "users_sync",
+      "base_url": "https://ep-cool-darkness-a5b6c7d8.neonauth.c-4.us-east-2.aws.neon.tech/neondb/auth"
+    },
+    "properties": {
+      "auth_provider": {
+        "description": "Authentication provider integrated with this Neon Auth configuration. `better_auth` integrates with Better Auth (the current, recommended provider). `stack` integrates with Stack Auth (deprecated). `mock` is a simulated provider for local development and testing only.",
+        "type": "string",
+        "enum": [
+          "mock",
+          "stack",
+          "better_auth"
+        ],
+        "details": {
+          "description": "Authentication provider integrated with this Neon Auth configuration. `better_auth` integrates with Better Auth (the current, recommended provider). `stack` integrates with Stack Auth (deprecated). `mock` is a simulated provider for local development and testing only.",
+          "descriptionHtml": "<p>Authentication provider integrated with this Neon Auth configuration. <code>better_auth</code> integrates with Better Auth (the current, recommended provider). <code>stack</code> integrates with Stack Auth (deprecated). <code>mock</code> is a simulated provider for local development and testing only.</p>",
+          "example": null,
+          "values": [
+            "mock",
+            "stack",
+            "better_auth"
+          ]
+        }
+      },
+      "auth_provider_project_id": {
+        "type": "string",
+        "description": "Project ID assigned by the auth provider for this integration.",
+        "details": {
+          "description": "Project ID assigned by the auth provider for this integration.",
+          "descriptionHtml": "<p>Project ID assigned by the auth provider for this integration.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "pub_client_key": {
+        "type": "string",
+        "description": "Publishable SDK key from the auth provider. Populated only for Stack Auth (deprecated); empty for Better Auth.",
+        "details": {
+          "description": "Publishable SDK key from the auth provider. Populated only for Stack Auth (deprecated); empty for Better Auth.",
+          "descriptionHtml": "<p>Publishable SDK key from the auth provider. Populated only for Stack Auth (deprecated); empty for Better Auth.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "secret_server_key": {
+        "type": "string",
+        "description": "Secret server-side SDK key from the auth provider. Populated only for Stack Auth (deprecated); empty for Better Auth. Treat as a credential.",
+        "details": {
+          "description": "Secret server-side SDK key from the auth provider. Populated only for Stack Auth (deprecated); empty for Better Auth. Treat as a credential.",
+          "descriptionHtml": "<p>Secret server-side SDK key from the auth provider. Populated only for Stack Auth (deprecated); empty for Better Auth. Treat as a credential.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "jwks_url": {
+        "type": "string",
+        "description": "URL of the provider's JWKS endpoint used to verify JWTs.",
+        "details": {
+          "description": "URL of the provider's JWKS endpoint used to verify JWTs.",
+          "descriptionHtml": "<p>URL of the provider's JWKS endpoint used to verify JWTs.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "schema_name": {
+        "type": "string",
+        "description": "Postgres schema containing the auth integration tables. Defaults to `neon_auth`.",
+        "details": {
+          "description": "Postgres schema containing the auth integration tables. Defaults to `neon_auth`.",
+          "descriptionHtml": "<p>Postgres schema containing the auth integration tables. Defaults to <code>neon_auth</code>.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "table_name": {
+        "type": "string",
+        "description": "Postgres table in the integration schema where synced user records are stored.",
+        "details": {
+          "description": "Postgres table in the integration schema where synced user records are stored.",
+          "descriptionHtml": "<p>Postgres table in the integration schema where synced user records are stored.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "base_url": {
+        "type": "string",
+        "description": "Base URL of the Neon Auth service for this integration. Set as the NEON_AUTH_BASE_URL environment variable in your application.",
+        "details": {
+          "description": "Base URL of the Neon Auth service for this integration. Set as the NEON_AUTH_BASE_URL environment variable in your application.",
+          "descriptionHtml": "<p>Base URL of the Neon Auth service for this integration. Set as the NEON_AUTH_BASE_URL environment variable in your application.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "auth_provider",
+      "auth_provider_project_id",
+      "pub_client_key",
+      "secret_server_key",
+      "jwks_url",
+      "schema_name",
+      "table_name"
+    ],
+    "displayOrder": [
+      "auth_provider",
+      "auth_provider_project_id",
+      "pub_client_key",
+      "secret_server_key",
+      "jwks_url",
+      "schema_name",
+      "table_name",
+      "base_url"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/auth\" \\\n  -X POST \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.createNeonAuth({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    branch_id: process.env.BRANCH_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": {
+    "command": "neon neon-auth enable",
+    "flags": [
+      {
+        "name": "analytics",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "api-key",
+        "type": "string",
+        "required": false,
+        "default": ""
+      },
+      {
+        "name": "color",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "config-dir",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "context-file",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "help",
+        "type": "boolean",
+        "required": false,
+        "alias": "h"
+      },
+      {
+        "name": "output",
+        "type": "string",
+        "required": false,
+        "alias": "o",
+        "enum": [
+          "json",
+          "yaml",
+          "table"
+        ],
+        "default": "table"
+      },
+      {
+        "name": "profile",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "version",
+        "type": "boolean",
+        "required": false,
+        "alias": "v"
+      },
+      {
+        "name": "branch",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "project-id",
+        "type": "string",
+        "required": false,
+        "apiEquiv": "project_id",
+        "apiEquivIn": "parameter"
+      },
+      {
+        "name": "database-name",
+        "type": "string",
+        "required": false,
+        "apiEquiv": "database_name",
+        "apiEquivIn": "body"
+      }
+    ],
+    "positionals": []
+  },
+  "mcp": {
+    "tool": "provision_neon_auth",
+    "description": "Provisions Neon Auth for a Neon branch. Neon Auth is a managed authentication service built on Better Auth, fully integrated with Lakebase Postgres and the rest of the Neon backend primitives. <workflow> The tool will: 1. Create the `neon_auth` schema in your database to store users, sessions, project configs and organizations 2. Set up secure Auth related APIs for your branch 3. Deploy an auth service in the same region as your Neon compute for low-latency requests 4. Return the Auth URL specific to your branch, along with credentials for your application </workflow> <key_features> - Branch-compatible: Auth data (users, sessions, config) branches with your database - Google and GitHub OAuth included out of the box - Works with RLS: JWTs are validated by the Data API for authenticated queries - Better Auth compatible: Exposes the same APIs and schema as Better Auth </key_features>",
+    "arguments": [
+      {
+        "name": "projectId",
+        "type": "string",
+        "required": true,
+        "description": "The ID of the project to provision Neon Auth for"
+      },
+      {
+        "name": "branchId",
+        "type": "string",
+        "required": false,
+        "description": "An optional ID of the branch to provision Neon Auth for. If not provided, the default branch is used."
+      },
+      {
+        "name": "databaseName",
+        "type": "string",
+        "required": false,
+        "description": "The database name to provision Neon Auth for. If not provided, the default database is used."
+      }
+    ]
+  },
+  "console": {
+    "breadcrumb": "Projects → Auth"
+  },
+  "specIndex": 31
+}

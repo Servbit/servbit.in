@@ -1,0 +1,644 @@
+{
+  "id": "create-project-branch-database",
+  "operationId": "createProjectBranchDatabase",
+  "method": "POST",
+  "path": "/projects/{project_id}/branches/{branch_id}/databases",
+  "tag": "branches",
+  "tagDisplay": "Branches",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Create database",
+  "description": "Creates a database in the specified branch.\nA branch can have multiple databases.\nFor related information, see [Manage databases](https://neon.com/docs/manage/databases/).\n",
+  "descriptionHtml": "<p>Creates a database in the specified branch.\nA branch can have multiple databases.\nFor related information, see <a href=\"https://neon.com/docs/manage/databases/\">Manage databases</a>.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "branch_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The branch ID",
+      "descriptionHtml": "<p>The branch ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": {
+    "required": true,
+    "properties": {
+      "database": {
+        "type": "object",
+        "description": "Configuration for the new Postgres database.",
+        "required": [
+          "name",
+          "owner_name"
+        ],
+        "properties": {
+          "name": {
+            "description": "Name of the database to create.\n",
+            "type": "string",
+            "details": {
+              "description": "Name of the database to create.",
+              "descriptionHtml": "<p>Name of the database to create.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "owner_name": {
+            "description": "The name of the role that owns the database\n",
+            "type": "string",
+            "details": {
+              "description": "The name of the role that owns the database",
+              "descriptionHtml": "<p>The name of the role that owns the database</p>",
+              "example": null,
+              "values": null
+            }
+          }
+        },
+        "details": {
+          "description": "Configuration for the new Postgres database.",
+          "descriptionHtml": "<p>Configuration for the new Postgres database.</p>",
+          "example": null,
+          "values": null
+        },
+        "displayOrder": [
+          "name",
+          "owner_name"
+        ]
+      }
+    },
+    "requiredFields": [
+      "database"
+    ],
+    "displayOrder": [
+      "database"
+    ],
+    "sections": null,
+    "seed": null,
+    "labels": null
+  },
+  "response": {
+    "status": "201",
+    "description": "Created a database in the specified branch",
+    "descriptionHtml": "<p>Created a database in the specified branch</p>",
+    "example": {
+      "database": {
+        "id": 1000000,
+        "branch_id": "br-young-forest-a5b6c7d8",
+        "name": "my-database-2",
+        "owner_name": "alex",
+        "created_at": "2025-01-15T10:30:00Z",
+        "updated_at": "2025-01-15T10:30:00Z"
+      },
+      "operations": [
+        {
+          "id": "00000000-0000-0000-0000-000000000000",
+          "project_id": "aged-wildflower-123456",
+          "branch_id": "br-young-forest-a5b6c7d8",
+          "endpoint_id": "ep-cool-darkness-a5b6c7d8",
+          "action": "apply_config",
+          "status": "running",
+          "failures_count": 0,
+          "created_at": "2025-01-15T10:30:00Z",
+          "updated_at": "2025-01-15T10:30:00Z",
+          "total_duration_ms": 0
+        }
+      ]
+    },
+    "properties": {
+      "database": {
+        "description": "Database object returned by the operation.",
+        "type": "object",
+        "required": [
+          "id",
+          "branch_id",
+          "name",
+          "owner_name",
+          "created_at",
+          "updated_at"
+        ],
+        "properties": {
+          "id": {
+            "description": "The database ID\n",
+            "type": "integer",
+            "format": "int64",
+            "details": {
+              "description": "The database ID",
+              "descriptionHtml": "<p>The database ID</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "branch_id": {
+            "description": "The ID of the branch this database belongs to.",
+            "type": "string",
+            "pattern": "^[a-z0-9-]{1,60}$",
+            "details": {
+              "description": "The ID of the branch this database belongs to.",
+              "descriptionHtml": "<p>The ID of the branch this database belongs to.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "name": {
+            "description": "The database name\n",
+            "type": "string",
+            "details": {
+              "description": "The database name",
+              "descriptionHtml": "<p>The database name</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "owner_name": {
+            "description": "The name of role that owns the database\n",
+            "type": "string",
+            "details": {
+              "description": "The name of role that owns the database",
+              "descriptionHtml": "<p>The name of role that owns the database</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "created_at": {
+            "description": "A timestamp indicating when the database was created\n",
+            "type": "string",
+            "format": "date-time",
+            "details": {
+              "description": "A timestamp indicating when the database was created",
+              "descriptionHtml": "<p>A timestamp indicating when the database was created</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "updated_at": {
+            "description": "A timestamp indicating when the database was last updated\n",
+            "type": "string",
+            "format": "date-time",
+            "details": {
+              "description": "A timestamp indicating when the database was last updated",
+              "descriptionHtml": "<p>A timestamp indicating when the database was last updated</p>",
+              "example": null,
+              "values": null
+            }
+          }
+        },
+        "example": {
+          "id": 834686,
+          "branch_id": "br-wispy-meadow-118737",
+          "name": "neondb",
+          "owner_name": "casey",
+          "created_at": "2022-11-30T18:25:15Z",
+          "updated_at": "2022-11-30T18:25:15Z"
+        },
+        "details": {
+          "description": "Database object returned by the operation.",
+          "descriptionHtml": "<p>Database object returned by the operation.</p>",
+          "example": "{\n  \"id\": 834686,\n  \"branch_id\": \"br-wispy-meadow-118737\",\n  \"name\": \"neondb\",\n  \"owner_name\": \"casey\",\n  \"created_at\": \"2022-11-30T18:25:15Z\",\n  \"updated_at\": \"2022-11-30T18:25:15Z\"\n}",
+          "values": null
+        },
+        "displayOrder": [
+          "id",
+          "branch_id",
+          "name",
+          "owner_name",
+          "created_at",
+          "updated_at"
+        ]
+      },
+      "operations": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "An asynchronous action Neon performs on your resources (for example, starting a compute or creating a branch). Fields such as `action`, `status`, and `total_duration_ms` describe the operation and its progress.",
+          "required": [
+            "id",
+            "project_id",
+            "action",
+            "status",
+            "failures_count",
+            "created_at",
+            "updated_at",
+            "total_duration_ms"
+          ],
+          "properties": {
+            "id": {
+              "description": "The operation ID",
+              "type": "string",
+              "format": "uuid",
+              "details": {
+                "description": "The operation ID",
+                "descriptionHtml": "<p>The operation ID</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "project_id": {
+              "description": "The ID of the project this operation ran on.",
+              "type": "string",
+              "pattern": "^[a-z0-9-]{1,60}$",
+              "details": {
+                "description": "The ID of the project this operation ran on.",
+                "descriptionHtml": "<p>The ID of the project this operation ran on.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "branch_id": {
+              "description": "The ID of the branch this operation ran on.",
+              "type": "string",
+              "pattern": "^[a-z0-9-]{1,60}$",
+              "details": {
+                "description": "The ID of the branch this operation ran on.",
+                "descriptionHtml": "<p>The ID of the branch this operation ran on.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "endpoint_id": {
+              "description": "The ID of the compute endpoint this operation ran on.",
+              "type": "string",
+              "pattern": "^[a-z0-9-]{1,60}$",
+              "details": {
+                "description": "The ID of the compute endpoint this operation ran on.",
+                "descriptionHtml": "<p>The ID of the compute endpoint this operation ran on.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "action": {
+              "description": "The action performed by the operation",
+              "type": "string",
+              "enum": [
+                "create_compute",
+                "create_timeline",
+                "start_compute",
+                "suspend_compute",
+                "apply_config",
+                "check_availability",
+                "delete_timeline",
+                "create_branch",
+                "import_data",
+                "tenant_ignore",
+                "tenant_attach",
+                "tenant_detach",
+                "tenant_detach_safekeepers",
+                "tenant_attach_safekeepers",
+                "tenant_reattach",
+                "replace_safekeeper",
+                "disable_maintenance",
+                "apply_storage_config",
+                "prepare_secondary_pageserver",
+                "switch_pageserver",
+                "detach_parent_branch",
+                "timeline_archive",
+                "timeline_unarchive",
+                "start_reserved_compute",
+                "sync_dbs_and_roles_from_compute",
+                "apply_schema_from_branch",
+                "timeline_mark_invisible",
+                "timeline_update_protected_config",
+                "prewarm_replica",
+                "promote_replica",
+                "set_storage_non_dirty",
+                "swap_binding_id",
+                "finalize_migration",
+                "mark_migration_prepared",
+                "update_catalog",
+                "epc_sync"
+              ],
+              "details": {
+                "description": "The action performed by the operation",
+                "descriptionHtml": "<p>The action performed by the operation</p>",
+                "example": null,
+                "values": [
+                  "create_compute",
+                  "create_timeline",
+                  "start_compute",
+                  "suspend_compute",
+                  "apply_config",
+                  "check_availability",
+                  "delete_timeline",
+                  "create_branch",
+                  "import_data",
+                  "tenant_ignore",
+                  "tenant_attach",
+                  "tenant_detach",
+                  "tenant_detach_safekeepers",
+                  "tenant_attach_safekeepers",
+                  "tenant_reattach",
+                  "replace_safekeeper",
+                  "disable_maintenance",
+                  "apply_storage_config",
+                  "prepare_secondary_pageserver",
+                  "switch_pageserver",
+                  "detach_parent_branch",
+                  "timeline_archive",
+                  "timeline_unarchive",
+                  "start_reserved_compute",
+                  "sync_dbs_and_roles_from_compute",
+                  "apply_schema_from_branch",
+                  "timeline_mark_invisible",
+                  "timeline_update_protected_config",
+                  "prewarm_replica",
+                  "promote_replica",
+                  "set_storage_non_dirty",
+                  "swap_binding_id",
+                  "finalize_migration",
+                  "mark_migration_prepared",
+                  "update_catalog",
+                  "epc_sync"
+                ]
+              }
+            },
+            "status": {
+              "description": "Current lifecycle state of the operation. On `failed`, see `failures_count` and `retry_at` for retry detail.",
+              "type": "string",
+              "enum": [
+                "scheduling",
+                "running",
+                "finished",
+                "failed",
+                "error",
+                "cancelling",
+                "cancelled",
+                "skipped"
+              ],
+              "details": {
+                "description": "Current lifecycle state of the operation. On `failed`, see `failures_count` and `retry_at` for retry detail.",
+                "descriptionHtml": "<p>Current lifecycle state of the operation. On <code>failed</code>, see <code>failures_count</code> and <code>retry_at</code> for retry detail.</p>",
+                "example": null,
+                "values": [
+                  "scheduling",
+                  "running",
+                  "finished",
+                  "failed",
+                  "error",
+                  "cancelling",
+                  "cancelled",
+                  "skipped"
+                ]
+              }
+            },
+            "error": {
+              "description": "Human-readable message describing why the operation failed.",
+              "type": "string",
+              "details": {
+                "description": "Human-readable message describing why the operation failed.",
+                "descriptionHtml": "<p>Human-readable message describing why the operation failed.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "failures_count": {
+              "description": "The number of times the operation failed",
+              "type": "integer",
+              "format": "int32",
+              "details": {
+                "description": "The number of times the operation failed",
+                "descriptionHtml": "<p>The number of times the operation failed</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "retry_at": {
+              "description": "A timestamp indicating when the operation was last retried",
+              "type": "string",
+              "format": "date-time",
+              "details": {
+                "description": "A timestamp indicating when the operation was last retried",
+                "descriptionHtml": "<p>A timestamp indicating when the operation was last retried</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "created_at": {
+              "description": "A timestamp indicating when the operation was created",
+              "type": "string",
+              "format": "date-time",
+              "details": {
+                "description": "A timestamp indicating when the operation was created",
+                "descriptionHtml": "<p>A timestamp indicating when the operation was created</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "updated_at": {
+              "description": "A timestamp indicating when the operation status was last updated",
+              "type": "string",
+              "format": "date-time",
+              "details": {
+                "description": "A timestamp indicating when the operation status was last updated",
+                "descriptionHtml": "<p>A timestamp indicating when the operation status was last updated</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "total_duration_ms": {
+              "description": "The total duration of the operation in milliseconds",
+              "type": "integer",
+              "format": "int32",
+              "details": {
+                "description": "The total duration of the operation in milliseconds",
+                "descriptionHtml": "<p>The total duration of the operation in milliseconds</p>",
+                "example": null,
+                "values": null
+              }
+            }
+          },
+          "example": {
+            "id": "d8ac46eb-a757-42b1-9907-f78322ee394e",
+            "project_id": "spring-example-302709",
+            "branch_id": "br-wispy-meadow-118737",
+            "endpoint_id": "ep-silent-smoke-806639",
+            "action": "start_compute",
+            "status": "finished",
+            "failures_count": 0,
+            "created_at": "2022-11-15T20:02:00Z",
+            "updated_at": "2022-11-15T20:02:02Z",
+            "total_duration_ms": 200
+          },
+          "displayOrder": [
+            "id",
+            "project_id",
+            "action",
+            "status",
+            "failures_count",
+            "created_at",
+            "updated_at",
+            "total_duration_ms",
+            "branch_id",
+            "endpoint_id",
+            "error",
+            "retry_at"
+          ]
+        }
+      }
+    },
+    "requiredFields": [
+      "database",
+      "operations"
+    ],
+    "displayOrder": [
+      "database",
+      "operations"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/databases\" \\\n  -X POST \\\n  -H \"Authorization: Bearer $NEON_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"database\":{\"name\":\"mydb\",\"owner_name\":\"casey\"}}'",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.createProjectBranchDatabase({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    branch_id: process.env.BRANCH_ID\n  },\n  body: {\n    database: {\n      name: \"mydb\",\n      owner_name: \"casey\"\n    }\n  }\n});",
+    "bodyExample": {
+      "database": {
+        "name": "mydb",
+        "owner_name": "casey"
+      }
+    },
+    "representative": {
+      "body": {
+        "database": {
+          "name": "mydb",
+          "owner_name": "casey"
+        }
+      },
+      "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/databases\" \\\n  -X POST \\\n  -H \"Authorization: Bearer $NEON_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"database\":{\"name\":\"mydb\",\"owner_name\":\"casey\"}}'",
+      "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.createProjectBranchDatabase({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    branch_id: process.env.BRANCH_ID\n  },\n  body: {\n    database: {\n      name: \"mydb\",\n      owner_name: \"casey\"\n    }\n  }\n});"
+    }
+  },
+  "cli": {
+    "command": "neon databases create",
+    "flags": [
+      {
+        "name": "analytics",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "api-key",
+        "type": "string",
+        "required": false,
+        "default": ""
+      },
+      {
+        "name": "color",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "config-dir",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "context-file",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "help",
+        "type": "boolean",
+        "required": false,
+        "alias": "h"
+      },
+      {
+        "name": "output",
+        "type": "string",
+        "required": false,
+        "alias": "o",
+        "enum": [
+          "json",
+          "yaml",
+          "table"
+        ],
+        "default": "table"
+      },
+      {
+        "name": "profile",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "version",
+        "type": "boolean",
+        "required": false,
+        "alias": "v"
+      },
+      {
+        "name": "branch",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "project-id",
+        "type": "string",
+        "required": false,
+        "apiEquiv": "project_id",
+        "apiEquivIn": "parameter"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "apiEquiv": "database.name",
+        "apiEquivIn": "body"
+      },
+      {
+        "name": "owner-name",
+        "type": "string",
+        "required": false,
+        "apiEquiv": "database.owner_name",
+        "apiEquivIn": "body"
+      }
+    ],
+    "positionals": [],
+    "tableOutput": "┌─────────────┬────────────┬──────────────────────┐\n│ Name        │ Owner Name │ Created At           │\n├─────────────┼────────────┼──────────────────────┤\n│ my-database │ alex       │ 2025-01-15T10:30:00Z │\n└─────────────┴────────────┴──────────────────────┘\n"
+  },
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": "Projects → Branches → Roles & Databases"
+  },
+  "specIndex": 93
+}

@@ -1,0 +1,842 @@
+{
+  "id": "get-neon-auth-plugin-configs",
+  "operationId": "getNeonAuthPluginConfigs",
+  "method": "GET",
+  "path": "/projects/{project_id}/branches/{branch_id}/auth/plugins",
+  "tag": "auth",
+  "tagDisplay": "Authentication",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Retrieve Neon Auth plugin configurations",
+  "description": "Returns all plugin configurations for Neon Auth in a single response.\nThis endpoint aggregates organization, email provider, email and password,\nOAuth providers, and localhost settings.\n",
+  "descriptionHtml": "<p>Returns all plugin configurations for Neon Auth in a single response.\nThis endpoint aggregates organization, email provider, email and password,\nOAuth providers, and localhost settings.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "branch_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon branch ID",
+      "descriptionHtml": "<p>The Neon branch ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": null,
+  "response": {
+    "status": "200",
+    "description": "Returns all plugin configurations",
+    "descriptionHtml": "<p>Returns all plugin configurations</p>",
+    "example": {
+      "organization": {
+        "enabled": true,
+        "organization_limit": 10,
+        "membership_limit": 100,
+        "creator_role": "owner",
+        "send_invitation_email": false
+      },
+      "magic_link": {
+        "enabled": false,
+        "expires_in": 5,
+        "disable_sign_up": false
+      },
+      "phone_number": {
+        "enabled": false,
+        "otp_expires_in": 300
+      },
+      "email_provider": {
+        "type": "shared"
+      },
+      "email_and_password": {
+        "enabled": true,
+        "email_verification_method": "otp",
+        "require_email_verification": false,
+        "auto_sign_in_after_verification": true,
+        "send_verification_email_on_sign_up": false,
+        "send_verification_email_on_sign_in": false,
+        "disable_sign_up": false
+      },
+      "oauth_providers": [
+        {
+          "id": "google",
+          "type": "shared"
+        }
+      ],
+      "allow_localhost": true
+    },
+    "properties": {
+      "organization": {
+        "description": "Configuration for the Neon Auth organization plugin, which enables user organizations within the authentication system. This is distinct from a Neon platform organization.",
+        "type": "object",
+        "required": [
+          "enabled",
+          "organization_limit",
+          "membership_limit",
+          "creator_role",
+          "send_invitation_email"
+        ],
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "description": "Whether the organization plugin is enabled.",
+            "default": true,
+            "details": {
+              "description": "Whether the organization plugin is enabled.",
+              "descriptionHtml": "<p>Whether the organization plugin is enabled.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "organization_limit": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "default": 10,
+            "description": "Maximum organizations a user can belong to (created or joined). At the limit, the user cannot create or join more.",
+            "details": {
+              "description": "Maximum organizations a user can belong to (created or joined). At the limit, the user cannot create or join more.",
+              "descriptionHtml": "<p>Maximum organizations a user can belong to (created or joined). At the limit, the user cannot create or join more.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "membership_limit": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "default": 100,
+            "description": "Maximum number of members per organization.",
+            "details": {
+              "description": "Maximum number of members per organization.",
+              "descriptionHtml": "<p>Maximum number of members per organization.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "creator_role": {
+            "type": "string",
+            "description": "Role of the organization's creator. `owner`: full control, including deleting the org and transferring ownership. `admin`: manage members and settings only.",
+            "default": "owner",
+            "enum": [
+              "admin",
+              "owner"
+            ],
+            "details": {
+              "description": "Role of the organization's creator. `owner`: full control, including deleting the org and transferring ownership. `admin`: manage members and settings only.",
+              "descriptionHtml": "<p>Role of the organization's creator. <code>owner</code>: full control, including deleting the org and transferring ownership. <code>admin</code>: manage members and settings only.</p>",
+              "example": null,
+              "values": [
+                "admin",
+                "owner"
+              ]
+            }
+          },
+          "send_invitation_email": {
+            "type": "boolean",
+            "description": "Whether to send invitation emails when inviting members to an organization.",
+            "default": false,
+            "details": {
+              "description": "Whether to send invitation emails when inviting members to an organization.",
+              "descriptionHtml": "<p>Whether to send invitation emails when inviting members to an organization.</p>",
+              "example": null,
+              "values": null
+            }
+          }
+        },
+        "details": {
+          "description": "Configuration for the Neon Auth organization plugin, which enables user organizations within the authentication system. This is distinct from a Neon platform organization.",
+          "descriptionHtml": "<p>Configuration for the Neon Auth organization plugin, which enables user organizations within the authentication system. This is distinct from a Neon platform organization.</p>",
+          "example": null,
+          "values": null
+        },
+        "displayOrder": [
+          "enabled",
+          "organization_limit",
+          "membership_limit",
+          "creator_role",
+          "send_invitation_email"
+        ]
+      },
+      "magic_link": {
+        "description": "Configuration for passwordless magic-link email authentication.",
+        "type": "object",
+        "required": [
+          "enabled",
+          "expires_in",
+          "disable_sign_up"
+        ],
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "description": "Whether the magic link plugin is enabled.",
+            "default": false,
+            "details": {
+              "description": "Whether the magic link plugin is enabled.",
+              "descriptionHtml": "<p>Whether the magic link plugin is enabled.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "expires_in": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 5,
+            "maximum": 1440,
+            "default": 5,
+            "description": "Minutes until the magic link expires.",
+            "details": {
+              "description": "Minutes until the magic link expires.",
+              "descriptionHtml": "<p>Minutes until the magic link expires.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "disable_sign_up": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether to disable sign-up via magic link.",
+            "details": {
+              "description": "Whether to disable sign-up via magic link.",
+              "descriptionHtml": "<p>Whether to disable sign-up via magic link.</p>",
+              "example": null,
+              "values": null
+            }
+          }
+        },
+        "details": {
+          "description": "Configuration for passwordless magic-link email authentication.",
+          "descriptionHtml": "<p>Configuration for passwordless magic-link email authentication.</p>",
+          "example": null,
+          "values": null
+        },
+        "displayOrder": [
+          "enabled",
+          "expires_in",
+          "disable_sign_up"
+        ]
+      },
+      "phone_number": {
+        "description": "Configuration for the phone number authentication plugin.",
+        "type": "object",
+        "required": [
+          "enabled"
+        ],
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "description": "Whether the phone number plugin is enabled.",
+            "default": false,
+            "details": {
+              "description": "Whether the phone number plugin is enabled.",
+              "descriptionHtml": "<p>Whether the phone number plugin is enabled.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "otp_expires_in": {
+            "type": "integer",
+            "description": "Time in seconds before the OTP expires",
+            "default": 300,
+            "minimum": 60,
+            "maximum": 600,
+            "details": {
+              "description": "Time in seconds before the OTP expires",
+              "descriptionHtml": "<p>Time in seconds before the OTP expires</p>",
+              "example": null,
+              "values": null
+            }
+          }
+        },
+        "details": {
+          "description": "Configuration for the phone number authentication plugin.",
+          "descriptionHtml": "<p>Configuration for the phone number authentication plugin.</p>",
+          "example": null,
+          "values": null
+        },
+        "displayOrder": [
+          "enabled",
+          "otp_expires_in"
+        ]
+      },
+      "email_provider": {
+        "description": "Email server configuration used to send authentication emails.",
+        "type": "object",
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "standard": "#/components/schemas/StandardEmailServerResponse",
+            "shared": "#/components/schemas/SharedEmailServer"
+          }
+        },
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "host",
+              "port",
+              "username",
+              "password",
+              "sender_email",
+              "sender_name"
+            ],
+            "x-sensitive": [
+              "host",
+              "password",
+              "username"
+            ],
+            "properties": {
+              "host": {
+                "type": "string",
+                "description": "Hostname of the email server."
+              },
+              "port": {
+                "type": "integer",
+                "description": "TCP port of the SMTP server. Common values: 25 (SMTP), 465 (SMTPS), 587 (submission)."
+              },
+              "username": {
+                "type": "string",
+                "description": "Username for authenticating with the SMTP server."
+              },
+              "password": {
+                "type": "string",
+                "description": "On GET, returned redacted (empty) for ordinary callers, while callers with project-credential read permission receive the stored password — do not assume this field is empty. Update (PATCH) responses always return it redacted (empty) regardless of permission. Provide a value on update to set or rotate the password."
+              },
+              "sender_email": {
+                "type": "string",
+                "description": "Email address used as the From address on outgoing auth emails."
+              },
+              "sender_name": {
+                "type": "string",
+                "description": "Display name shown as the sender in outgoing emails."
+              }
+            }
+          },
+          {
+            "type": "object",
+            "properties": {
+              "sender_email": {
+                "type": "string",
+                "description": "Email address used as the sender for outgoing messages from this shared email server."
+              },
+              "sender_name": {
+                "type": "string",
+                "description": "Display name shown as the sender in outgoing emails."
+              }
+            }
+          }
+        ],
+        "details": {
+          "description": "Email server configuration used to send authentication emails.",
+          "descriptionHtml": "<p>Email server configuration used to send authentication emails.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "email_and_password": {
+        "description": "Configuration for email and password authentication.",
+        "type": "object",
+        "required": [
+          "enabled",
+          "email_verification_method",
+          "require_email_verification",
+          "auto_sign_in_after_verification",
+          "send_verification_email_on_sign_up",
+          "send_verification_email_on_sign_in",
+          "disable_sign_up"
+        ],
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "description": "Whether email and password authentication is enabled",
+            "details": {
+              "description": "Whether email and password authentication is enabled",
+              "descriptionHtml": "<p>Whether email and password authentication is enabled</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "email_verification_method": {
+            "description": "Controls how email addresses are verified during sign-up or sign-in.\n- `link`: sends a verification link to the user's email address\n- `otp`: sends a one-time password to the user's email address\n",
+            "type": "string",
+            "enum": [
+              "link",
+              "otp"
+            ],
+            "details": {
+              "description": "Controls how email addresses are verified during sign-up or sign-in.\n- `link`: sends a verification link to the user's email address\n- `otp`: sends a one-time password to the user's email address",
+              "descriptionHtml": "<p>Controls how email addresses are verified during sign-up or sign-in.</p>\n<ul>\n<li><code>link</code>: sends a verification link to the user's email address</li>\n<li><code>otp</code>: sends a one-time password to the user's email address</li>\n</ul>",
+              "example": null,
+              "values": [
+                "link",
+                "otp"
+              ]
+            }
+          },
+          "require_email_verification": {
+            "type": "boolean",
+            "description": "Whether email verification is required before users can sign in",
+            "details": {
+              "description": "Whether email verification is required before users can sign in",
+              "descriptionHtml": "<p>Whether email verification is required before users can sign in</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "auto_sign_in_after_verification": {
+            "type": "boolean",
+            "description": "Whether users are automatically signed in after verifying their email",
+            "details": {
+              "description": "Whether users are automatically signed in after verifying their email",
+              "descriptionHtml": "<p>Whether users are automatically signed in after verifying their email</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "send_verification_email_on_sign_up": {
+            "type": "boolean",
+            "description": "Whether to send a verification email when users sign up",
+            "details": {
+              "description": "Whether to send a verification email when users sign up",
+              "descriptionHtml": "<p>Whether to send a verification email when users sign up</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "send_verification_email_on_sign_in": {
+            "type": "boolean",
+            "description": "Whether to send a verification email when users sign in",
+            "details": {
+              "description": "Whether to send a verification email when users sign in",
+              "descriptionHtml": "<p>Whether to send a verification email when users sign in</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "disable_sign_up": {
+            "type": "boolean",
+            "description": "Whether to disable new user sign ups",
+            "details": {
+              "description": "Whether to disable new user sign ups",
+              "descriptionHtml": "<p>Whether to disable new user sign ups</p>",
+              "example": null,
+              "values": null
+            }
+          }
+        },
+        "details": {
+          "description": "Configuration for email and password authentication.",
+          "descriptionHtml": "<p>Configuration for email and password authentication.</p>",
+          "example": null,
+          "values": null
+        },
+        "displayOrder": [
+          "enabled",
+          "email_verification_method",
+          "require_email_verification",
+          "auto_sign_in_after_verification",
+          "send_verification_email_on_sign_up",
+          "send_verification_email_on_sign_in",
+          "disable_sign_up"
+        ]
+      },
+      "oauth_providers": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "id",
+            "type"
+          ],
+          "x-sensitive": [
+            "client_secret"
+          ],
+          "properties": {
+            "id": {
+              "description": "The OAuth provider's ID.",
+              "type": "string",
+              "enum": [
+                "google",
+                "github",
+                "microsoft",
+                "vercel"
+              ],
+              "details": {
+                "description": "The OAuth provider's ID.",
+                "descriptionHtml": "<p>The OAuth provider's ID.</p>",
+                "example": null,
+                "values": [
+                  "google",
+                  "github",
+                  "microsoft",
+                  "vercel"
+                ]
+              }
+            },
+            "type": {
+              "description": "OAuth provider key type. `standard` uses your own OAuth credentials. `shared` uses Neon-managed keys intended for development only; they display Neon branding on the OAuth consent screen and must not be used in production.",
+              "type": "string",
+              "enum": [
+                "standard",
+                "shared"
+              ],
+              "details": {
+                "description": "OAuth provider key type. `standard` uses your own OAuth credentials. `shared` uses Neon-managed keys intended for development only; they display Neon branding on the OAuth consent screen and must not be used in production.",
+                "descriptionHtml": "<p>OAuth provider key type. <code>standard</code> uses your own OAuth credentials. <code>shared</code> uses Neon-managed keys intended for development only; they display Neon branding on the OAuth consent screen and must not be used in production.</p>",
+                "example": null,
+                "values": [
+                  "standard",
+                  "shared"
+                ]
+              }
+            },
+            "client_id": {
+              "type": "string",
+              "description": "Public identifier for the OAuth application, issued by the provider when the application is registered.",
+              "details": {
+                "description": "Public identifier for the OAuth application, issued by the provider when the application is registered.",
+                "descriptionHtml": "<p>Public identifier for the OAuth application, issued by the provider when the application is registered.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "client_secret": {
+              "type": "string",
+              "description": "OAuth client secret for the provider.",
+              "details": {
+                "description": "OAuth client secret for the provider.",
+                "descriptionHtml": "<p>OAuth client secret for the provider.</p>",
+                "example": null,
+                "values": null
+              }
+            }
+          },
+          "displayOrder": [
+            "id",
+            "type",
+            "client_id",
+            "client_secret"
+          ]
+        },
+        "description": "OAuth provider configurations enabled for this auth setup.",
+        "details": {
+          "description": "OAuth provider configurations enabled for this auth setup.",
+          "descriptionHtml": "<p>OAuth provider configurations enabled for this auth setup.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "allow_localhost": {
+        "type": "boolean",
+        "description": "Permits authentication requests from localhost origins when true. Intended for local development; disable in production environments.",
+        "details": {
+          "description": "Permits authentication requests from localhost origins when true. Intended for local development; disable in production environments.",
+          "descriptionHtml": "<p>Permits authentication requests from localhost origins when true. Intended for local development; disable in production environments.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [],
+    "displayOrder": [
+      "organization",
+      "magic_link",
+      "phone_number",
+      "email_provider",
+      "email_and_password",
+      "oauth_providers",
+      "allow_localhost"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/auth/plugins\" \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.getNeonAuthPluginConfigs({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    branch_id: process.env.BRANCH_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": {
+    "commands": [
+      {
+        "command": "neon neon-auth plugins list",
+        "covers": [],
+        "flags": [
+          {
+            "name": "analytics",
+            "type": "boolean",
+            "required": false,
+            "default": true
+          },
+          {
+            "name": "api-key",
+            "type": "string",
+            "required": false,
+            "default": ""
+          },
+          {
+            "name": "color",
+            "type": "boolean",
+            "required": false,
+            "default": true
+          },
+          {
+            "name": "config-dir",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "context-file",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "help",
+            "type": "boolean",
+            "required": false,
+            "alias": "h"
+          },
+          {
+            "name": "output",
+            "type": "string",
+            "required": false,
+            "alias": "o",
+            "enum": [
+              "json",
+              "yaml",
+              "table"
+            ],
+            "default": "table"
+          },
+          {
+            "name": "profile",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "version",
+            "type": "boolean",
+            "required": false,
+            "alias": "v"
+          },
+          {
+            "name": "branch",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "project-id",
+            "type": "string",
+            "required": false,
+            "apiEquiv": "project_id",
+            "apiEquivIn": "parameter"
+          }
+        ],
+        "positionals": []
+      },
+      {
+        "command": "neon neon-auth plugins get <plugin-name>",
+        "covers": [],
+        "flags": [
+          {
+            "name": "analytics",
+            "type": "boolean",
+            "required": false,
+            "default": true
+          },
+          {
+            "name": "api-key",
+            "type": "string",
+            "required": false,
+            "default": ""
+          },
+          {
+            "name": "color",
+            "type": "boolean",
+            "required": false,
+            "default": true
+          },
+          {
+            "name": "config-dir",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "context-file",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "help",
+            "type": "boolean",
+            "required": false,
+            "alias": "h"
+          },
+          {
+            "name": "output",
+            "type": "string",
+            "required": false,
+            "alias": "o",
+            "enum": [
+              "json",
+              "yaml",
+              "table"
+            ],
+            "default": "table"
+          },
+          {
+            "name": "profile",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "version",
+            "type": "boolean",
+            "required": false,
+            "alias": "v"
+          },
+          {
+            "name": "branch",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "project-id",
+            "type": "string",
+            "required": false,
+            "apiEquiv": "project_id",
+            "apiEquivIn": "parameter"
+          }
+        ],
+        "positionals": [
+          {
+            "display": "<plugin-name>",
+            "apiEquiv": "branch_id"
+          }
+        ]
+      },
+      {
+        "command": "neon neon-auth config organization get",
+        "covers": [],
+        "flags": [
+          {
+            "name": "analytics",
+            "type": "boolean",
+            "required": false,
+            "default": true
+          },
+          {
+            "name": "api-key",
+            "type": "string",
+            "required": false,
+            "default": ""
+          },
+          {
+            "name": "color",
+            "type": "boolean",
+            "required": false,
+            "default": true
+          },
+          {
+            "name": "config-dir",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "context-file",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "help",
+            "type": "boolean",
+            "required": false,
+            "alias": "h"
+          },
+          {
+            "name": "output",
+            "type": "string",
+            "required": false,
+            "alias": "o",
+            "enum": [
+              "json",
+              "yaml",
+              "table"
+            ],
+            "default": "table"
+          },
+          {
+            "name": "profile",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "version",
+            "type": "boolean",
+            "required": false,
+            "alias": "v"
+          },
+          {
+            "name": "branch",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "project-id",
+            "type": "string",
+            "required": false,
+            "apiEquiv": "project_id",
+            "apiEquivIn": "parameter"
+          }
+        ],
+        "positionals": []
+      }
+    ],
+    "uncovered": []
+  },
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": "Projects → Auth → Plugins"
+  },
+  "specIndex": 67
+}

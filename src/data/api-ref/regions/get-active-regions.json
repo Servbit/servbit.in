@@ -1,0 +1,224 @@
+{
+  "id": "get-active-regions",
+  "operationId": "getActiveRegions",
+  "method": "GET",
+  "path": "/regions",
+  "tag": "regions",
+  "tagDisplay": "Regions",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "List supported regions",
+  "description": "Lists supported Neon regions.\n\n**Note:** Not all regions are available to all organizations. Pass the `org_id`\nparameter to get an accurate list of regions available to your organization.\n",
+  "descriptionHtml": "<p>Lists supported Neon regions.</p>\n<p><strong>Note:</strong> Not all regions are available to all organizations. Pass the <code>org_id</code>\nparameter to get an accurate list of regions available to your organization.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "org_id",
+      "type": "string",
+      "in": "query",
+      "required": false,
+      "description": "Organization ID. When provided, returns only regions available to this organization.\nRecommended for accurate region availability.\n",
+      "descriptionHtml": "<p>Organization ID. When provided, returns only regions available to this organization.\nRecommended for accurate region availability.</p>\n",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": null,
+  "response": {
+    "status": "200",
+    "description": "The list of active regions",
+    "descriptionHtml": "<p>The list of active regions</p>",
+    "example": {
+      "regions": [
+        {
+          "region_id": "aws-us-east-2",
+          "name": "AWS US East 2 (Ohio)",
+          "default": false,
+          "geo_lat": "39.96",
+          "geo_long": "-83"
+        },
+        {
+          "region_id": "aws-us-east-1",
+          "name": "AWS US East 1 (N. Virginia)",
+          "default": true,
+          "geo_lat": "38.13",
+          "geo_long": "-78.45"
+        },
+        {
+          "region_id": "aws-us-west-2",
+          "name": "AWS US West 2 (Oregon)",
+          "default": false,
+          "geo_lat": "46.15",
+          "geo_long": "-123.88"
+        },
+        {
+          "region_id": "aws-eu-central-1",
+          "name": "AWS Europe Central 1 (Frankfurt)",
+          "default": false,
+          "geo_lat": "50",
+          "geo_long": "8"
+        },
+        {
+          "region_id": "aws-eu-west-2",
+          "name": "AWS Europe West 2 (London)",
+          "default": false,
+          "geo_lat": "51.5",
+          "geo_long": "0.12"
+        },
+        {
+          "region_id": "aws-ap-southeast-1",
+          "name": "AWS Asia Pacific 1 (Singapore)",
+          "default": false,
+          "geo_lat": "1.37",
+          "geo_long": "103.8"
+        },
+        {
+          "region_id": "aws-ap-southeast-2",
+          "name": "AWS Asia Pacific 2 (Sydney)",
+          "default": false,
+          "geo_lat": "-33.85",
+          "geo_long": "151.2"
+        },
+        {
+          "region_id": "aws-sa-east-1",
+          "name": "AWS South America East 1 (São Paulo)",
+          "default": false,
+          "geo_lat": "-23.49",
+          "geo_long": "-46.81"
+        }
+      ]
+    },
+    "properties": {
+      "regions": {
+        "type": "array",
+        "description": "The list of active regions",
+        "items": {
+          "type": "object",
+          "required": [
+            "region_id",
+            "name",
+            "default",
+            "geo_lat",
+            "geo_long"
+          ],
+          "properties": {
+            "region_id": {
+              "type": "string",
+              "description": "Cloud region where the resource's Postgres compute and storage reside (for example, `aws-us-east-1`). Valid values are returned by `GET /regions`.",
+              "example": "aws-us-east-1",
+              "details": {
+                "description": "Cloud region where the resource's Postgres compute and storage reside (for example, `aws-us-east-1`). Valid values are returned by `GET /regions`.",
+                "descriptionHtml": "<p>Cloud region where the resource's Postgres compute and storage reside (for example, <code>aws-us-east-1</code>). Valid values are returned by <code>GET /regions</code>.</p>",
+                "example": "aws-us-east-1",
+                "values": null
+              }
+            },
+            "name": {
+              "type": "string",
+              "description": "A short description of the region.",
+              "details": {
+                "description": "A short description of the region.",
+                "descriptionHtml": "<p>A short description of the region.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "default": {
+              "type": "boolean",
+              "description": "True if this region is selected by default when no region is specified during project creation.",
+              "details": {
+                "description": "True if this region is selected by default when no region is specified during project creation.",
+                "descriptionHtml": "<p>True if this region is selected by default when no region is specified during project creation.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "geo_lat": {
+              "type": "string",
+              "description": "The geographical latitude (approximate) for the region. Empty if unknown.",
+              "details": {
+                "description": "The geographical latitude (approximate) for the region. Empty if unknown.",
+                "descriptionHtml": "<p>The geographical latitude (approximate) for the region. Empty if unknown.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "geo_long": {
+              "type": "string",
+              "description": "The geographical longitude (approximate) for the region. Empty if unknown.",
+              "details": {
+                "description": "The geographical longitude (approximate) for the region. Empty if unknown.",
+                "descriptionHtml": "<p>The geographical longitude (approximate) for the region. Empty if unknown.</p>",
+                "example": null,
+                "values": null
+              }
+            }
+          },
+          "displayOrder": [
+            "region_id",
+            "name",
+            "default",
+            "geo_lat",
+            "geo_long"
+          ]
+        },
+        "details": {
+          "description": "The list of active regions",
+          "descriptionHtml": "<p>The list of active regions</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "regions"
+    ],
+    "displayOrder": [
+      "regions"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/regions\" \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.getActiveRegions({\n  client: neon.client\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": null
+  },
+  "specIndex": 136
+}

@@ -1,0 +1,629 @@
+{
+  "id": "get-consumption-history-per-project",
+  "operationId": "getConsumptionHistoryPerProject",
+  "method": "GET",
+  "path": "/consumption_history/projects",
+  "tag": "consumption",
+  "tagDisplay": "Consumption",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Retrieve project consumption metrics (legacy plans)",
+  "description": "Retrieves consumption metrics for Scale, Business, and Enterprise plan projects. History begins at the time of upgrade.\nResults are ordered by time in ascending order (oldest to newest).\nIssuing a call to this API does not wake a project's compute endpoint.\n",
+  "descriptionHtml": "<p>Retrieves consumption metrics for Scale, Business, and Enterprise plan projects. History begins at the time of upgrade.\nResults are ordered by time in ascending order (oldest to newest).\nIssuing a call to this API does not wake a project's compute endpoint.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "cursor",
+      "type": "string",
+      "in": "query",
+      "required": false,
+      "description": "Specify the cursor value from the previous response to get the next batch of projects.",
+      "descriptionHtml": "<p>Specify the cursor value from the previous response to get the next batch of projects.</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "limit",
+      "type": "integer",
+      "in": "query",
+      "required": false,
+      "description": "Specify a value from 1 to 100 to limit number of projects in the response.",
+      "descriptionHtml": "<p>Specify a value from 1 to 100 to limit number of projects in the response.</p>",
+      "default": 10,
+      "example": null
+    },
+    {
+      "name": "project_ids",
+      "type": "array",
+      "in": "query",
+      "required": false,
+      "description": "Specify a list of project IDs to filter the response.\nIf omitted, the response will contain all projects.\nA list of project IDs can be specified as an array of parameter values or as a comma-separated list in a single parameter value.\n- As an array of parameter values: `project_ids=cold-poetry-09157238%20&project_ids=quiet-snow-71788278`\n- As a comma-separated list in a single parameter value: `project_ids=cold-poetry-09157238,quiet-snow-71788278`\n",
+      "descriptionHtml": "<p>Specify a list of project IDs to filter the response.\nIf omitted, the response will contain all projects.\nA list of project IDs can be specified as an array of parameter values or as a comma-separated list in a single parameter value.</p>\n<ul>\n<li>As an array of parameter values: <code>project_ids=cold-poetry-09157238%20&amp;project_ids=quiet-snow-71788278</code></li>\n<li>As a comma-separated list in a single parameter value: <code>project_ids=cold-poetry-09157238,quiet-snow-71788278</code></li>\n</ul>\n",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "from",
+      "type": "string",
+      "in": "query",
+      "required": true,
+      "description": "Specify the start `date-time` for the consumption period.\nThe `date-time` value is rounded according to the specified `granularity`.\nFor example, `2024-03-15T15:30:00Z` for `daily` granularity will be rounded to `2024-03-15T00:00:00Z`.\nThe specified `date-time` value must respect the specified `granularity`:\n- For `hourly`, consumption metrics are limited to the last 168 hours.\n- For `daily`, consumption metrics are limited to the last 60 days.\n- For `monthly`, consumption metrics are limited to the last year.\n\nThe consumption history is available starting from `March 1, 2024, at 00:00:00 UTC`.\n",
+      "descriptionHtml": "<p>Specify the start <code>date-time</code> for the consumption period.\nThe <code>date-time</code> value is rounded according to the specified <code>granularity</code>.\nFor example, <code>2024-03-15T15:30:00Z</code> for <code>daily</code> granularity will be rounded to <code>2024-03-15T00:00:00Z</code>.\nThe specified <code>date-time</code> value must respect the specified <code>granularity</code>:</p>\n<ul>\n<li>For <code>hourly</code>, consumption metrics are limited to the last 168 hours.</li>\n<li>For <code>daily</code>, consumption metrics are limited to the last 60 days.</li>\n<li>For <code>monthly</code>, consumption metrics are limited to the last year.</li>\n</ul>\n<p>The consumption history is available starting from <code>March 1, 2024, at 00:00:00 UTC</code>.</p>\n",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "to",
+      "type": "string",
+      "in": "query",
+      "required": true,
+      "description": "Specify the end `date-time` for the consumption period.\nThe `date-time` value is rounded according to the specified granularity.\nFor example, `2024-03-15T15:30:00Z` for `daily` granularity will be rounded to `2024-03-15T00:00:00Z`.\nThe specified `date-time` value must respect the specified `granularity`:\n- For `hourly`, consumption metrics are limited to the last 168 hours.\n- For `daily`, consumption metrics are limited to the last 60 days.\n- For `monthly`, consumption metrics are limited to the last year.\n",
+      "descriptionHtml": "<p>Specify the end <code>date-time</code> for the consumption period.\nThe <code>date-time</code> value is rounded according to the specified granularity.\nFor example, <code>2024-03-15T15:30:00Z</code> for <code>daily</code> granularity will be rounded to <code>2024-03-15T00:00:00Z</code>.\nThe specified <code>date-time</code> value must respect the specified <code>granularity</code>:</p>\n<ul>\n<li>For <code>hourly</code>, consumption metrics are limited to the last 168 hours.</li>\n<li>For <code>daily</code>, consumption metrics are limited to the last 60 days.</li>\n<li>For <code>monthly</code>, consumption metrics are limited to the last year.</li>\n</ul>\n",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "granularity",
+      "type": "string",
+      "in": "query",
+      "required": true,
+      "description": "Specify the granularity of consumption metrics.\nHourly, daily, and monthly metrics are available for the last 168 hours, 60 days,\nand 1 year, respectively.\n",
+      "descriptionHtml": "<p>Specify the granularity of consumption metrics.\nHourly, daily, and monthly metrics are available for the last 168 hours, 60 days,\nand 1 year, respectively.</p>\n",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "org_id",
+      "type": "string",
+      "in": "query",
+      "required": false,
+      "description": "Specify the organization for which the project consumption metrics should be returned.\nIf this parameter is not provided, the endpoint will return the metrics for the\nauthenticated user's projects.\n",
+      "descriptionHtml": "<p>Specify the organization for which the project consumption metrics should be returned.\nIf this parameter is not provided, the endpoint will return the metrics for the\nauthenticated user's projects.</p>\n",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "include_v1_metrics",
+      "type": "boolean",
+      "in": "query",
+      "required": false,
+      "description": "The field is deprecated and no longer has any effect: the only metric it used to add\n(`data_storage_bytes_hour`) is retired and always returns 0. Please use `metrics` instead.\nIf `metrics` is specified, this field is ignored.\n",
+      "descriptionHtml": "<p>The field is deprecated and no longer has any effect: the only metric it used to add\n(<code>data_storage_bytes_hour</code>) is retired and always returns 0. Please use <code>metrics</code> instead.\nIf <code>metrics</code> is specified, this field is ignored.</p>\n",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "metrics",
+      "type": "array",
+      "in": "query",
+      "required": false,
+      "description": "Specify a list of metrics to include in the response.\nIf omitted, active_time, compute_time, written_data are returned.\nPossible values:\n- `active_time_seconds`\n- `compute_time_seconds`\n- `written_data_bytes`\n- `synthetic_storage_size_bytes` (deprecated: always returns 0; use the consumption history v2 endpoints instead)\n- `data_storage_bytes_hour` (deprecated: always returns 0; use the consumption history v2 endpoints instead)\n- `logical_size_bytes`\n- `logical_size_bytes_hour`\n\nA list of metrics can be specified as an array of parameter values or as a comma-separated list in a single parameter value.\n- As an array of parameter values: `metrics=cpu_seconds&metrics=ram_bytes`\n- As a comma-separated list in a single parameter value: `metrics=cpu_seconds,ram_bytes`\n",
+      "descriptionHtml": "<p>Specify a list of metrics to include in the response.\nIf omitted, active_time, compute_time, written_data are returned.\nPossible values:</p>\n<ul>\n<li><code>active_time_seconds</code></li>\n<li><code>compute_time_seconds</code></li>\n<li><code>written_data_bytes</code></li>\n<li><code>synthetic_storage_size_bytes</code> (deprecated: always returns 0; use the consumption history v2 endpoints instead)</li>\n<li><code>data_storage_bytes_hour</code> (deprecated: always returns 0; use the consumption history v2 endpoints instead)</li>\n<li><code>logical_size_bytes</code></li>\n<li><code>logical_size_bytes_hour</code></li>\n</ul>\n<p>A list of metrics can be specified as an array of parameter values or as a comma-separated list in a single parameter value.</p>\n<ul>\n<li>As an array of parameter values: <code>metrics=cpu_seconds&amp;metrics=ram_bytes</code></li>\n<li>As a comma-separated list in a single parameter value: <code>metrics=cpu_seconds,ram_bytes</code></li>\n</ul>\n",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": null,
+  "response": {
+    "status": "200",
+    "description": "Returned project consumption metrics for the Neon account",
+    "descriptionHtml": "<p>Returned project consumption metrics for the Neon account</p>",
+    "example": {
+      "projects": [
+        {
+          "project_id": "quiet-river-000270",
+          "periods": [
+            {
+              "period_id": "00000000-0000-0000-0000-000000000000",
+              "period_plan": "scale",
+              "period_start": "2025-01-15T10:30:00Z",
+              "period_end": "2025-01-15T11:00:00Z",
+              "consumption": [
+                {
+                  "timeframe_start": "2025-01-15T11:30:00Z",
+                  "timeframe_end": "2025-01-15T11:00:00Z",
+                  "active_time_seconds": 72,
+                  "compute_time_seconds": 72,
+                  "written_data_bytes": 0,
+                  "synthetic_storage_size_bytes": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "project_id": "quiet-river-000271",
+          "periods": [
+            {
+              "period_id": "00000000-0000-0000-0000-000000000000",
+              "period_plan": "scale",
+              "period_start": "2025-01-15T10:30:00Z",
+              "period_end": "2025-01-15T11:00:00Z",
+              "consumption": [
+                {
+                  "timeframe_start": "2025-01-15T11:30:00Z",
+                  "timeframe_end": "2025-01-15T11:00:00Z",
+                  "active_time_seconds": 84,
+                  "compute_time_seconds": 84,
+                  "written_data_bytes": 0,
+                  "synthetic_storage_size_bytes": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "project_id": "quiet-river-000272",
+          "periods": [
+            {
+              "period_id": "00000000-0000-0000-0000-000000000000",
+              "period_plan": "scale",
+              "period_start": "2025-01-15T10:30:00Z",
+              "period_end": "2025-01-15T11:00:00Z",
+              "consumption": [
+                {
+                  "timeframe_start": "2025-01-15T11:30:00Z",
+                  "timeframe_end": "2025-01-15T11:00:00Z",
+                  "active_time_seconds": 84,
+                  "compute_time_seconds": 84,
+                  "written_data_bytes": 0,
+                  "synthetic_storage_size_bytes": 0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "pagination": {
+        "cursor": "quiet-river-000270"
+      }
+    },
+    "properties": {
+      "projects": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "project_id": {
+              "description": "The Neon project ID. Returned as `id` from `GET /projects`.",
+              "type": "string",
+              "pattern": "^[a-z0-9-]{1,60}$",
+              "details": {
+                "description": "The Neon project ID. Returned as `id` from `GET /projects`.",
+                "descriptionHtml": "<p>The Neon project ID. Returned as <code>id</code> from <code>GET /projects</code>.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "periods": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "period_id": {
+                    "description": "The ID assigned to the specified billing period.",
+                    "type": "string",
+                    "format": "uuid",
+                    "details": {
+                      "description": "The ID assigned to the specified billing period.",
+                      "descriptionHtml": "<p>The ID assigned to the specified billing period.</p>",
+                      "example": null,
+                      "values": null
+                    }
+                  },
+                  "period_plan": {
+                    "description": "The billing plan applicable during the billing period.",
+                    "type": "string",
+                    "details": {
+                      "description": "The billing plan applicable during the billing period.",
+                      "descriptionHtml": "<p>The billing plan applicable during the billing period.</p>",
+                      "example": null,
+                      "values": null
+                    }
+                  },
+                  "period_start": {
+                    "description": "The start date-time of the billing period.\n",
+                    "type": "string",
+                    "format": "date-time",
+                    "details": {
+                      "description": "The start date-time of the billing period.",
+                      "descriptionHtml": "<p>The start date-time of the billing period.</p>",
+                      "example": null,
+                      "values": null
+                    }
+                  },
+                  "period_end": {
+                    "description": "The end date-time of the billing period, available for the past periods only.\n",
+                    "type": "string",
+                    "format": "date-time",
+                    "details": {
+                      "description": "The end date-time of the billing period, available for the past periods only.",
+                      "descriptionHtml": "<p>The end date-time of the billing period, available for the past periods only.</p>",
+                      "example": null,
+                      "values": null
+                    }
+                  },
+                  "consumption": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "timeframe_start": {
+                          "description": "The specified start date-time for the reported consumption.\n",
+                          "type": "string",
+                          "format": "date-time",
+                          "details": {
+                            "description": "The specified start date-time for the reported consumption.",
+                            "descriptionHtml": "<p>The specified start date-time for the reported consumption.</p>",
+                            "example": null,
+                            "values": null
+                          }
+                        },
+                        "timeframe_end": {
+                          "description": "The specified end date-time for the reported consumption.\n",
+                          "type": "string",
+                          "format": "date-time",
+                          "details": {
+                            "description": "The specified end date-time for the reported consumption.",
+                            "descriptionHtml": "<p>The specified end date-time for the reported consumption.</p>",
+                            "example": null,
+                            "values": null
+                          }
+                        },
+                        "active_time_seconds": {
+                          "description": "Seconds. The amount of time the compute endpoints have been active.\n",
+                          "type": "integer",
+                          "format": "uint64",
+                          "details": {
+                            "description": "Seconds. The amount of time the compute endpoints have been active.",
+                            "descriptionHtml": "<p>Seconds. The amount of time the compute endpoints have been active.</p>",
+                            "example": null,
+                            "values": null
+                          }
+                        },
+                        "compute_time_seconds": {
+                          "description": "Seconds. The number of CPU seconds used by compute endpoints, including compute endpoints that have been deleted.\n",
+                          "type": "integer",
+                          "format": "uint64",
+                          "details": {
+                            "description": "Seconds. The number of CPU seconds used by compute endpoints, including compute endpoints that have been deleted.",
+                            "descriptionHtml": "<p>Seconds. The number of CPU seconds used by compute endpoints, including compute endpoints that have been deleted.</p>",
+                            "example": null,
+                            "values": null
+                          }
+                        },
+                        "written_data_bytes": {
+                          "description": "Bytes. The amount of written data for all branches.\n",
+                          "type": "integer",
+                          "format": "uint64",
+                          "details": {
+                            "description": "Bytes. The amount of written data for all branches.",
+                            "descriptionHtml": "<p>Bytes. The amount of written data for all branches.</p>",
+                            "example": null,
+                            "values": null
+                          }
+                        },
+                        "synthetic_storage_size_bytes": {
+                          "description": "Deprecated: always returns 0. Use the consumption history v2 endpoints (`/consumption_history/v2/projects`, `/consumption_history/v2/branches`) instead.\nBytes. The space occupied in Postgres storage. Synthetic Postgres storage size combines the logical data size and Write-Ahead Log (WAL) size for all branches.\n",
+                          "deprecated": true,
+                          "type": "integer",
+                          "format": "uint64",
+                          "details": {
+                            "description": "Deprecated: always returns 0. Use the consumption history v2 endpoints (`/consumption_history/v2/projects`, `/consumption_history/v2/branches`) instead.\nBytes. The space occupied in Postgres storage. Synthetic Postgres storage size combines the logical data size and Write-Ahead Log (WAL) size for all branches.",
+                            "descriptionHtml": "<p>Deprecated: always returns 0. Use the consumption history v2 endpoints (<code>/consumption_history/v2/projects</code>, <code>/consumption_history/v2/branches</code>) instead.\nBytes. The space occupied in Postgres storage. Synthetic Postgres storage size combines the logical data size and Write-Ahead Log (WAL) size for all branches.</p>",
+                            "example": null,
+                            "values": null
+                          }
+                        },
+                        "data_storage_bytes_hour": {
+                          "description": "Deprecated: always returns 0. Use the consumption history v2 endpoints (`/consumption_history/v2/projects`, `/consumption_history/v2/branches`) instead.\nBytes-Hour. The amount of Postgres storage consumed hourly.\n",
+                          "deprecated": true,
+                          "type": "integer",
+                          "format": "uint64",
+                          "details": {
+                            "description": "Deprecated: always returns 0. Use the consumption history v2 endpoints (`/consumption_history/v2/projects`, `/consumption_history/v2/branches`) instead.\nBytes-Hour. The amount of Postgres storage consumed hourly.",
+                            "descriptionHtml": "<p>Deprecated: always returns 0. Use the consumption history v2 endpoints (<code>/consumption_history/v2/projects</code>, <code>/consumption_history/v2/branches</code>) instead.\nBytes-Hour. The amount of Postgres storage consumed hourly.</p>",
+                            "example": null,
+                            "values": null
+                          }
+                        },
+                        "logical_size_bytes": {
+                          "description": "Bytes. The amount of logical size consumed.\n",
+                          "type": "integer",
+                          "format": "uint64",
+                          "details": {
+                            "description": "Bytes. The amount of logical size consumed.",
+                            "descriptionHtml": "<p>Bytes. The amount of logical size consumed.</p>",
+                            "example": null,
+                            "values": null
+                          }
+                        },
+                        "logical_size_bytes_hour": {
+                          "description": "Bytes-Hour. The amount of logical size consumed hourly.\n",
+                          "type": "integer",
+                          "format": "uint64",
+                          "details": {
+                            "description": "Bytes-Hour. The amount of logical size consumed hourly.",
+                            "descriptionHtml": "<p>Bytes-Hour. The amount of logical size consumed hourly.</p>",
+                            "example": null,
+                            "values": null
+                          }
+                        }
+                      },
+                      "required": [
+                        "timeframe_start",
+                        "timeframe_end",
+                        "active_time_seconds",
+                        "compute_time_seconds",
+                        "written_data_bytes",
+                        "synthetic_storage_size_bytes",
+                        "data_storage_bytes_hour"
+                      ],
+                      "displayOrder": [
+                        "timeframe_start",
+                        "timeframe_end",
+                        "active_time_seconds",
+                        "compute_time_seconds",
+                        "written_data_bytes",
+                        "synthetic_storage_size_bytes",
+                        "data_storage_bytes_hour",
+                        "logical_size_bytes",
+                        "logical_size_bytes_hour"
+                      ]
+                    },
+                    "description": "Consumption metric records for the billing period.",
+                    "details": {
+                      "description": "Consumption metric records for the billing period.",
+                      "descriptionHtml": "<p>Consumption metric records for the billing period.</p>",
+                      "example": null,
+                      "values": null
+                    }
+                  }
+                },
+                "required": [
+                  "period_id",
+                  "period_plan",
+                  "period_start",
+                  "consumption"
+                ],
+                "example": {
+                  "period_id": "79ec829f-1828-4006-ac82-9f1828a0067d",
+                  "period_plan": "scale",
+                  "period_start": "2024-03-01T00:00:00Z",
+                  "consumption": [
+                    {
+                      "timeframe_start": "2024-03-22T00:00:00Z",
+                      "timeframe_end": "2024-03-23T00:00:00Z",
+                      "active_time_seconds": 27853,
+                      "compute_time_seconds": 18346,
+                      "written_data_bytes": 1073741824,
+                      "synthetic_storage_size_bytes": 0,
+                      "data_storage_bytes_hour": 0
+                    },
+                    {
+                      "timeframe_start": "2024-03-23T00:00:00Z",
+                      "timeframe_end": "2024-03-24T00:00:00Z",
+                      "active_time_seconds": 17498,
+                      "compute_time_seconds": 3378,
+                      "written_data_bytes": 5741824,
+                      "synthetic_storage_size_bytes": 0,
+                      "data_storage_bytes_hour": 0
+                    }
+                  ]
+                },
+                "displayOrder": [
+                  "period_id",
+                  "period_plan",
+                  "period_start",
+                  "consumption",
+                  "period_end"
+                ]
+              },
+              "description": "Consumption periods for the project, each covering a discrete billing interval.",
+              "details": {
+                "description": "Consumption periods for the project, each covering a discrete billing interval.",
+                "descriptionHtml": "<p>Consumption periods for the project, each covering a discrete billing interval.</p>",
+                "example": null,
+                "values": null
+              }
+            }
+          },
+          "required": [
+            "project_id",
+            "periods"
+          ],
+          "displayOrder": [
+            "project_id",
+            "periods"
+          ]
+        },
+        "description": "Per-project consumption history records included in the response.",
+        "details": {
+          "description": "Per-project consumption history records included in the response.",
+          "descriptionHtml": "<p>Per-project consumption history records included in the response.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "pagination": {
+        "description": "Cursor-based pagination. The `cursor` value reflects the endpoint's sort field (for example, an ID or timestamp), so pass it back unchanged.",
+        "type": "object",
+        "required": [
+          "cursor"
+        ],
+        "properties": {
+          "cursor": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Cursor marking the last item in this response. Pass it unchanged as the `cursor` query parameter to fetch the next page.",
+            "details": {
+              "description": "Cursor marking the last item in this response. Pass it unchanged as the `cursor` query parameter to fetch the next page.",
+              "descriptionHtml": "<p>Cursor marking the last item in this response. Pass it unchanged as the <code>cursor</code> query parameter to fetch the next page.</p>",
+              "example": null,
+              "values": null
+            }
+          }
+        },
+        "example": {
+          "cursor": "2022-12-07T00:45:05.262011Z"
+        },
+        "details": {
+          "description": "Cursor-based pagination. The `cursor` value reflects the endpoint's sort field (for example, an ID or timestamp), so pass it back unchanged.",
+          "descriptionHtml": "<p>Cursor-based pagination. The <code>cursor</code> value reflects the endpoint's sort field (for example, an ID or timestamp), so pass it back unchanged.</p>",
+          "example": "{\n  \"cursor\": \"2022-12-07T00:45:05.262011Z\"\n}",
+          "values": null
+        },
+        "displayOrder": [
+          "cursor"
+        ]
+      }
+    },
+    "requiredFields": [
+      "projects"
+    ],
+    "displayOrder": [
+      "projects",
+      "pagination"
+    ]
+  },
+  "errors": [
+    {
+      "status": "403",
+      "description": "This endpoint is not available. It is only supported with Scale, Business, and Enterprise plan accounts.",
+      "descriptionHtml": "<p>This endpoint is not available. It is only supported with Scale, Business, and Enterprise plan accounts.</p>",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    },
+    {
+      "status": "404",
+      "description": "Account is not a member of the organization specified by `org_id`.",
+      "descriptionHtml": "<p>Account is not a member of the organization specified by <code>org_id</code>.</p>",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    },
+    {
+      "status": "406",
+      "description": "The specified `date-time` range is outside the boundaries of the specified `granularity`.\nAdjust your `from` and `to` values or select a different `granularity`.\n",
+      "descriptionHtml": "<p>The specified <code>date-time</code> range is outside the boundaries of the specified <code>granularity</code>.\nAdjust your <code>from</code> and <code>to</code> values or select a different <code>granularity</code>.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    },
+    {
+      "status": "429",
+      "description": "Too many requests",
+      "descriptionHtml": "<p>Too many requests</p>",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    },
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/consumption_history/projects?from=$FROM&to=$TO&granularity=$GRANULARITY\" \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.getConsumptionHistoryPerProject({\n  client: neon.client,\n  query: {\n    from: process.env.FROM,\n    to: process.env.TO,\n    granularity: process.env.GRANULARITY\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": null
+  },
+  "specIndex": 114
+}

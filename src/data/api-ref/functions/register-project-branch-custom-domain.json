@@ -1,0 +1,239 @@
+{
+  "id": "register-project-branch-custom-domain",
+  "operationId": "registerProjectBranchCustomDomain",
+  "method": "POST",
+  "path": "/projects/{project_id}/branches/{branch_id}/custom-domains",
+  "tag": "functions",
+  "tagDisplay": "Functions",
+  "stability": "beta",
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Register a custom domain on a branch",
+  "description": "Registers a customer-owned domain (for example `dashboard.acme.com`) on the\nbranch and points it at a target entity, chosen by `entity_type` +\n`entity_id`. In v1 only `entity_type: function` is supported (an\nunsupported type is rejected with `400`), where `entity_id` is the function\nslug and the function must already exist on the branch (else `404`).\n\nThe response includes the `cname_target` the customer must point their\ndomain at with a CNAME record; the domain goes live only once that DNS\nresolves and a certificate is issued on the first request. A domain already\nregistered to another resource is rejected with `409` and no detail about\nthe owner. Re-registering the same domain for the same entity is idempotent.\n\n**Note**: This endpoint is currently in Beta.\n",
+  "descriptionHtml": "<p>Registers a customer-owned domain (for example <code>dashboard.acme.com</code>) on the\nbranch and points it at a target entity, chosen by <code>entity_type</code> +\n<code>entity_id</code>. In v1 only <code>entity_type: function</code> is supported (an\nunsupported type is rejected with <code>400</code>), where <code>entity_id</code> is the function\nslug and the function must already exist on the branch (else <code>404</code>).</p>\n<p>The response includes the <code>cname_target</code> the customer must point their\ndomain at with a CNAME record; the domain goes live only once that DNS\nresolves and a certificate is issued on the first request. A domain already\nregistered to another resource is rejected with <code>409</code> and no detail about\nthe owner. Re-registering the same domain for the same entity is idempotent.</p>\n<p><strong>Note</strong>: This endpoint is currently in Beta.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "branch_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon branch ID",
+      "descriptionHtml": "<p>The Neon branch ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": {
+    "required": true,
+    "properties": {
+      "domain": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 254,
+        "description": "The custom domain to register (for example `dashboard.acme.com`).\nCase-insensitive; normalized to lowercase (a trailing root dot is\nstripped, so the 254-char bound admits a fully-qualified name whose\nnormalized form is 253 chars). Neon-managed and internal hostnames are\nrejected.\n",
+        "details": {
+          "description": "The custom domain to register (for example `dashboard.acme.com`).\nCase-insensitive; normalized to lowercase (a trailing root dot is\nstripped, so the 254-char bound admits a fully-qualified name whose\nnormalized form is 253 chars). Neon-managed and internal hostnames are\nrejected.",
+          "descriptionHtml": "<p>The custom domain to register (for example <code>dashboard.acme.com</code>).\nCase-insensitive; normalized to lowercase (a trailing root dot is\nstripped, so the 254-char bound admits a fully-qualified name whose\nnormalized form is 253 chars). Neon-managed and internal hostnames are\nrejected.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "entity_type": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 32,
+        "example": "function",
+        "description": "The kind of branch entity to point the domain at. v1 supports only\n`function`; any other value is rejected with `invalid_entity_type`.\n",
+        "details": {
+          "description": "The kind of branch entity to point the domain at. v1 supports only\n`function`; any other value is rejected with `invalid_entity_type`.",
+          "descriptionHtml": "<p>The kind of branch entity to point the domain at. v1 supports only\n<code>function</code>; any other value is rejected with <code>invalid_entity_type</code>.</p>",
+          "example": "function",
+          "values": null
+        }
+      },
+      "entity_id": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 255,
+        "description": "The target entity's identifier within the branch. For `function` this\nis the function slug (which must already exist on the branch).\n",
+        "details": {
+          "description": "The target entity's identifier within the branch. For `function` this\nis the function slug (which must already exist on the branch).",
+          "descriptionHtml": "<p>The target entity's identifier within the branch. For <code>function</code> this\nis the function slug (which must already exist on the branch).</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "domain",
+      "entity_type",
+      "entity_id"
+    ],
+    "displayOrder": [
+      "domain",
+      "entity_type",
+      "entity_id"
+    ],
+    "sections": null,
+    "seed": null,
+    "labels": null
+  },
+  "response": {
+    "status": "201",
+    "description": "The registered custom domain",
+    "descriptionHtml": "<p>The registered custom domain</p>",
+    "example": null,
+    "properties": {
+      "domain": {
+        "type": "string",
+        "description": "The registered custom domain (normalized, lowercase).",
+        "details": {
+          "description": "The registered custom domain (normalized, lowercase).",
+          "descriptionHtml": "<p>The registered custom domain (normalized, lowercase).</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "entity_type": {
+        "type": "string",
+        "description": "The kind of branch entity the domain targets. Possible values:\n`function` (v1 supports only `function`). Not an `enum`: new values may\nship in later spec versions — treat any undocumented value as unknown.\n",
+        "details": {
+          "description": "The kind of branch entity the domain targets. Possible values:\n`function` (v1 supports only `function`). Not an `enum`: new values may\nship in later spec versions — treat any undocumented value as unknown.",
+          "descriptionHtml": "<p>The kind of branch entity the domain targets. Possible values:\n<code>function</code> (v1 supports only <code>function</code>). Not an <code>enum</code>: new values may\nship in later spec versions — treat any undocumented value as unknown.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "entity_id": {
+        "type": "string",
+        "description": "The target entity's identifier within the branch. For `function` this\nis the function slug.\n",
+        "details": {
+          "description": "The target entity's identifier within the branch. For `function` this\nis the function slug.",
+          "descriptionHtml": "<p>The target entity's identifier within the branch. For <code>function</code> this\nis the function slug.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "cname_target": {
+        "type": "string",
+        "description": "The hostname the customer must point their custom domain at with a\nCNAME record. Empty when the serving region has no custom-domains\nfront door configured. This is the activation input: point DNS here\nand the domain goes live (see `status`) once a certificate is issued\non the first request.\n",
+        "details": {
+          "description": "The hostname the customer must point their custom domain at with a\nCNAME record. Empty when the serving region has no custom-domains\nfront door configured. This is the activation input: point DNS here\nand the domain goes live (see `status`) once a certificate is issued\non the first request.",
+          "descriptionHtml": "<p>The hostname the customer must point their custom domain at with a\nCNAME record. Empty when the serving region has no custom-domains\nfront door configured. This is the activation input: point DNS here\nand the domain goes live (see <code>status</code>) once a certificate is issued\non the first request.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "status": {
+        "type": "string",
+        "description": "The domain's current validity, computed by a background check:\n`pending` (still converging — point your CNAME at `cname_target` and\nwait), `active` (live: DNS resolves to the edge, the CA is authorized,\nand routing is published), or `error` (a fixable problem — see\n`status_reason`). Not an `enum`: treat any undocumented value as\nunknown. May be absent briefly right after registration.\n",
+        "details": {
+          "description": "The domain's current validity, computed by a background check:\n`pending` (still converging — point your CNAME at `cname_target` and\nwait), `active` (live: DNS resolves to the edge, the CA is authorized,\nand routing is published), or `error` (a fixable problem — see\n`status_reason`). Not an `enum`: treat any undocumented value as\nunknown. May be absent briefly right after registration.",
+          "descriptionHtml": "<p>The domain's current validity, computed by a background check:\n<code>pending</code> (still converging — point your CNAME at <code>cname_target</code> and\nwait), <code>active</code> (live: DNS resolves to the edge, the CA is authorized,\nand routing is published), or <code>error</code> (a fixable problem — see\n<code>status_reason</code>). Not an <code>enum</code>: treat any undocumented value as\nunknown. May be absent briefly right after registration.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "dns_status": {
+        "type": "string",
+        "description": "The DNS + CAA portion of the check: `pending` (no records yet), `ok`\n(resolves to our edge and the CA is authorized), `misconfigured` (your\nCNAME does not resolve to our edge), or `caa_blocked` (your CAA records\nforbid Let's Encrypt). Not an `enum`.\n",
+        "details": {
+          "description": "The DNS + CAA portion of the check: `pending` (no records yet), `ok`\n(resolves to our edge and the CA is authorized), `misconfigured` (your\nCNAME does not resolve to our edge), or `caa_blocked` (your CAA records\nforbid Let's Encrypt). Not an `enum`.",
+          "descriptionHtml": "<p>The DNS + CAA portion of the check: <code>pending</code> (no records yet), <code>ok</code>\n(resolves to our edge and the CA is authorized), <code>misconfigured</code> (your\nCNAME does not resolve to our edge), or <code>caa_blocked</code> (your CAA records\nforbid Let's Encrypt). Not an <code>enum</code>.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "binding_status": {
+        "type": "string",
+        "description": "Whether Neon's internal routing for the domain is published:\n`pending`, `present`, or `missing`. `missing` is an internal fault\nsurfaced for support. Not an `enum`.\n",
+        "details": {
+          "description": "Whether Neon's internal routing for the domain is published:\n`pending`, `present`, or `missing`. `missing` is an internal fault\nsurfaced for support. Not an `enum`.",
+          "descriptionHtml": "<p>Whether Neon's internal routing for the domain is published:\n<code>pending</code>, <code>present</code>, or <code>missing</code>. <code>missing</code> is an internal fault\nsurfaced for support. Not an <code>enum</code>.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "status_reason": {
+        "type": "string",
+        "description": "A short, stable machine-readable reason for a non-active `status`\n(e.g. `cname-not-pointing-at-edge`, `caa-blocks-lets-encrypt`,\n`binding-missing`), suitable for keying an actionable hint. Empty when\nactive or pending.\n",
+        "details": {
+          "description": "A short, stable machine-readable reason for a non-active `status`\n(e.g. `cname-not-pointing-at-edge`, `caa-blocks-lets-encrypt`,\n`binding-missing`), suitable for keying an actionable hint. Empty when\nactive or pending.",
+          "descriptionHtml": "<p>A short, stable machine-readable reason for a non-active <code>status</code>\n(e.g. <code>cname-not-pointing-at-edge</code>, <code>caa-blocks-lets-encrypt</code>,\n<code>binding-missing</code>), suitable for keying an actionable hint. Empty when\nactive or pending.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "domain",
+      "entity_type",
+      "entity_id",
+      "cname_target"
+    ],
+    "displayOrder": [
+      "domain",
+      "entity_type",
+      "entity_id",
+      "cname_target",
+      "status",
+      "dns_status",
+      "binding_status",
+      "status_reason"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/custom-domains\" \\\n  -X POST \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.registerProjectBranchCustomDomain({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    branch_id: process.env.BRANCH_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": null
+  },
+  "specIndex": 177
+}

@@ -1,0 +1,176 @@
+{
+  "id": "get-organization-member",
+  "operationId": "getOrganizationMember",
+  "method": "GET",
+  "path": "/organizations/{org_id}/members/{member_id}",
+  "tag": "organizations",
+  "tagDisplay": "Organizations",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Retrieve organization member details",
+  "description": "Retrieves information about the specified organization member.\n",
+  "descriptionHtml": "<p>Retrieves information about the specified organization member.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "org_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon organization ID",
+      "descriptionHtml": "<p>The Neon organization ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "member_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon organization member ID",
+      "descriptionHtml": "<p>The Neon organization member ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": null,
+  "response": {
+    "status": "200",
+    "description": "Returned information about the organization member",
+    "descriptionHtml": "<p>Returned information about the organization member</p>",
+    "example": {
+      "id": "d57833f2-d308-4ede-9d2e-468d9d013d1b",
+      "user_id": "b107d689-6dd2-4c9a-8b9e-0b25e457cf56",
+      "org_id": "my-organization-morning-bread-81040908",
+      "role": "admin",
+      "joined_at": "2024-02-23T17:42:25Z"
+    },
+    "properties": {
+      "id": {
+        "type": "string",
+        "format": "uuid",
+        "description": "The organization member's ID.",
+        "details": {
+          "description": "The organization member's ID.",
+          "descriptionHtml": "<p>The organization member's ID.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "user_id": {
+        "type": "string",
+        "format": "uuid",
+        "description": "The Neon user ID.",
+        "details": {
+          "description": "The Neon user ID.",
+          "descriptionHtml": "<p>The Neon user ID.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "org_id": {
+        "description": "The Neon organization ID. Returned as `id` from `GET /users/me/organizations`.",
+        "example": "org-cool-darkness-12345678",
+        "type": "string",
+        "pattern": "^[a-z0-9-]{1,60}$",
+        "details": {
+          "description": "The Neon organization ID. Returned as `id` from `GET /users/me/organizations`.",
+          "descriptionHtml": "<p>The Neon organization ID. Returned as <code>id</code> from <code>GET /users/me/organizations</code>.</p>",
+          "example": "org-cool-darkness-12345678",
+          "values": null
+        }
+      },
+      "role": {
+        "description": "Organization member's role. `admin`: full administrative access. `editor` (and its legacy alias `member`): standard access governed by project permissions. `viewer` and `collaborator`: additional scoped project roles. Some values may not be available for all organizations.",
+        "type": "string",
+        "enum": [
+          "admin",
+          "member",
+          "editor",
+          "viewer",
+          "collaborator"
+        ],
+        "details": {
+          "description": "Organization member's role. `admin`: full administrative access. `editor` (and its legacy alias `member`): standard access governed by project permissions. `viewer` and `collaborator`: additional scoped project roles. Some values may not be available for all organizations.",
+          "descriptionHtml": "<p>Organization member's role. <code>admin</code>: full administrative access. <code>editor</code> (and its legacy alias <code>member</code>): standard access governed by project permissions. <code>viewer</code> and <code>collaborator</code>: additional scoped project roles. Some values may not be available for all organizations.</p>",
+          "example": null,
+          "values": [
+            "admin",
+            "member",
+            "editor",
+            "viewer",
+            "collaborator"
+          ]
+        }
+      },
+      "joined_at": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Timestamp when the user joined the organization.",
+        "details": {
+          "description": "Timestamp when the user joined the organization.",
+          "descriptionHtml": "<p>Timestamp when the user joined the organization.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "id",
+      "user_id",
+      "org_id",
+      "role"
+    ],
+    "displayOrder": [
+      "id",
+      "user_id",
+      "org_id",
+      "role",
+      "joined_at"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/organizations/$ORG_ID/members/$MEMBER_ID\" \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.getOrganizationMember({\n  client: neon.client,\n  path: {\n    org_id: process.env.ORG_ID,\n    member_id: process.env.MEMBER_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": null
+  },
+  "specIndex": 125
+}

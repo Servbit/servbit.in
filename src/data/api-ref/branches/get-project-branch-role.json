@@ -1,0 +1,225 @@
+{
+  "id": "get-project-branch-role",
+  "operationId": "getProjectBranchRole",
+  "method": "GET",
+  "path": "/projects/{project_id}/branches/{branch_id}/roles/{role_name}",
+  "tag": "branches",
+  "tagDisplay": "Branches",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Retrieve role details",
+  "description": "Retrieves details about the specified role.\nIn Neon, the terms \"role\" and \"user\" are synonymous.\nFor related information, see [Manage roles](https://neon.com/docs/manage/roles/).\n",
+  "descriptionHtml": "<p>Retrieves details about the specified role.\nIn Neon, the terms &quot;role&quot; and &quot;user&quot; are synonymous.\nFor related information, see <a href=\"https://neon.com/docs/manage/roles/\">Manage roles</a>.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "branch_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The branch ID",
+      "descriptionHtml": "<p>The branch ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "role_name",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The role name",
+      "descriptionHtml": "<p>The role name</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": null,
+  "response": {
+    "status": "200",
+    "description": "Returned details for the specified role",
+    "descriptionHtml": "<p>Returned details for the specified role</p>",
+    "example": {
+      "role": {
+        "branch_id": "br-young-forest-a5b6c7d8",
+        "name": "alex",
+        "protected": false,
+        "authentication_method": "password",
+        "created_at": "2025-01-15T10:30:00Z",
+        "updated_at": "2025-01-15T10:30:00Z"
+      }
+    },
+    "properties": {
+      "role": {
+        "description": "Role details for the requested database role. The `password` field is included in the response when a role is created or its password is reset, and is not returned in subsequent read requests. Store it securely at that time.",
+        "type": "object",
+        "required": [
+          "branch_id",
+          "name",
+          "created_at",
+          "updated_at"
+        ],
+        "x-sensitive": [
+          "password"
+        ],
+        "properties": {
+          "branch_id": {
+            "description": "The ID of the branch this role belongs to.",
+            "type": "string",
+            "pattern": "^[a-z0-9-]{1,60}$",
+            "details": {
+              "description": "The ID of the branch this role belongs to.",
+              "descriptionHtml": "<p>The ID of the branch this role belongs to.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "name": {
+            "description": "Postgres role name within the branch.\n",
+            "type": "string",
+            "details": {
+              "description": "Postgres role name within the branch.",
+              "descriptionHtml": "<p>Postgres role name within the branch.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "password": {
+            "description": "The role password\n",
+            "type": "string",
+            "details": {
+              "description": "The role password",
+              "descriptionHtml": "<p>The role password</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "protected": {
+            "description": "Whether or not the role is system-protected\n",
+            "type": "boolean",
+            "details": {
+              "description": "Whether or not the role is system-protected",
+              "descriptionHtml": "<p>Whether or not the role is system-protected</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "authentication_method": {
+            "description": "Authentication method configured for this role: `password`, `oauth`, `oidc`, or `no_login`.\n",
+            "type": "string",
+            "example": "password",
+            "details": {
+              "description": "Authentication method configured for this role: `password`, `oauth`, `oidc`, or `no_login`.",
+              "descriptionHtml": "<p>Authentication method configured for this role: <code>password</code>, <code>oauth</code>, <code>oidc</code>, or <code>no_login</code>.</p>",
+              "example": "password",
+              "values": null
+            }
+          },
+          "created_at": {
+            "description": "A timestamp indicating when the role was created\n",
+            "type": "string",
+            "format": "date-time",
+            "details": {
+              "description": "A timestamp indicating when the role was created",
+              "descriptionHtml": "<p>A timestamp indicating when the role was created</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "updated_at": {
+            "description": "A timestamp indicating when the role was last updated\n",
+            "type": "string",
+            "format": "date-time",
+            "details": {
+              "description": "A timestamp indicating when the role was last updated",
+              "descriptionHtml": "<p>A timestamp indicating when the role was last updated</p>",
+              "example": null,
+              "values": null
+            }
+          }
+        },
+        "example": {
+          "branch_id": "br-wispy-meadow-118737",
+          "name": "casey",
+          "protected": false,
+          "created_at": "2022-11-23T17:42:25Z",
+          "updated_at": "2022-11-23T17:42:25Z"
+        },
+        "details": {
+          "description": "Role details for the requested database role. The `password` field is included in the response when a role is created or its password is reset, and is not returned in subsequent read requests. Store it securely at that time.",
+          "descriptionHtml": "<p>Role details for the requested database role. The <code>password</code> field is included in the response when a role is created or its password is reset, and is not returned in subsequent read requests. Store it securely at that time.</p>",
+          "example": "{\n  \"branch_id\": \"br-wispy-meadow-118737\",\n  \"name\": \"casey\",\n  \"protected\": false,\n  \"created_at\": \"2022-11-23T17:42:25Z\",\n  \"updated_at\": \"2022-11-23T17:42:25Z\"\n}",
+          "values": null
+        },
+        "displayOrder": [
+          "branch_id",
+          "name",
+          "created_at",
+          "updated_at",
+          "password",
+          "protected",
+          "authentication_method"
+        ]
+      }
+    },
+    "requiredFields": [
+      "role"
+    ],
+    "displayOrder": [
+      "role"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/roles/$ROLE_NAME\" \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.getProjectBranchRole({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    branch_id: process.env.BRANCH_ID,\n    role_name: process.env.ROLE_NAME\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": null
+  },
+  "specIndex": 99
+}

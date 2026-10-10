@@ -1,0 +1,284 @@
+{
+  "id": "get-project-advisor-security-issues",
+  "operationId": "getProjectAdvisorSecurityIssues",
+  "method": "GET",
+  "path": "/projects/{project_id}/advisors",
+  "tag": "dataapi",
+  "tagDisplay": "Data API",
+  "stability": "alpha",
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Get advisor issues",
+  "description": "Analyzes the database for security and performance issues.\nReturns a list of issues categorized by severity (ERROR, WARN, INFO).\n\nRequires read access to the project and Data API enabled.\n",
+  "descriptionHtml": "<p>Analyzes the database for security and performance issues.\nReturns a list of issues categorized by severity (ERROR, WARN, INFO).</p>\n<p>Requires read access to the project and Data API enabled.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "Neon project ID",
+      "descriptionHtml": "<p>Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "branch_id",
+      "type": "string",
+      "in": "query",
+      "required": false,
+      "description": "Branch ID to analyze. If not specified, the project's default branch is used.",
+      "descriptionHtml": "<p>Branch ID to analyze. If not specified, the project's default branch is used.</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "database_name",
+      "type": "string",
+      "in": "query",
+      "required": false,
+      "description": "Database name to analyze. Required if branch has multiple databases.",
+      "descriptionHtml": "<p>Database name to analyze. Required if branch has multiple databases.</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "category",
+      "type": "string",
+      "in": "query",
+      "required": false,
+      "description": "Filter issues by category",
+      "descriptionHtml": "<p>Filter issues by category</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "min_severity",
+      "type": "string",
+      "in": "query",
+      "required": false,
+      "description": "Minimum severity level to include. For example, WARN returns WARN and ERROR issues, excluding INFO.",
+      "descriptionHtml": "<p>Minimum severity level to include. For example, WARN returns WARN and ERROR issues, excluding INFO.</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": null,
+  "response": {
+    "status": "200",
+    "description": "Successfully retrieved security advisor issues",
+    "descriptionHtml": "<p>Successfully retrieved security advisor issues</p>",
+    "example": {
+      "issues": []
+    },
+    "properties": {
+      "issues": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "name",
+            "title",
+            "level",
+            "facing",
+            "categories",
+            "description",
+            "detail",
+            "remediation",
+            "metadata",
+            "cache_key"
+          ],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Unique identifier for the issue type",
+              "example": "rls_disabled_in_public",
+              "details": {
+                "description": "Unique identifier for the issue type",
+                "descriptionHtml": "<p>Unique identifier for the issue type</p>",
+                "example": "rls_disabled_in_public",
+                "values": null
+              }
+            },
+            "title": {
+              "type": "string",
+              "description": "Human-readable title",
+              "example": "RLS Disabled in Public",
+              "details": {
+                "description": "Human-readable title",
+                "descriptionHtml": "<p>Human-readable title</p>",
+                "example": "RLS Disabled in Public",
+                "values": null
+              }
+            },
+            "level": {
+              "type": "string",
+              "description": "Severity level of the issue",
+              "example": "ERROR",
+              "details": {
+                "description": "Severity level of the issue",
+                "descriptionHtml": "<p>Severity level of the issue</p>",
+                "example": "ERROR",
+                "values": null
+              }
+            },
+            "facing": {
+              "type": "string",
+              "description": "Whether this issue affects external API exposure or is internal only",
+              "enum": [
+                "EXTERNAL",
+                "INTERNAL"
+              ],
+              "example": "EXTERNAL",
+              "details": {
+                "description": "Whether this issue affects external API exposure or is internal only",
+                "descriptionHtml": "<p>Whether this issue affects external API exposure or is internal only</p>",
+                "example": "EXTERNAL",
+                "values": [
+                  "EXTERNAL",
+                  "INTERNAL"
+                ]
+              }
+            },
+            "categories": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Category of an advisor issue",
+                "enum": [
+                  "SECURITY",
+                  "PERFORMANCE"
+                ]
+              },
+              "description": "Categories this issue belongs to",
+              "example": [
+                "SECURITY"
+              ],
+              "details": {
+                "description": "Categories this issue belongs to",
+                "descriptionHtml": "<p>Categories this issue belongs to</p>",
+                "example": "[\n  \"SECURITY\"\n]",
+                "values": null
+              }
+            },
+            "description": {
+              "type": "string",
+              "description": "Detailed description of what this check detects",
+              "details": {
+                "description": "Detailed description of what this check detects",
+                "descriptionHtml": "<p>Detailed description of what this check detects</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "detail": {
+              "type": "string",
+              "description": "Specific details about this instance of the issue",
+              "example": "Table `public.users` is public, but RLS has not been enabled.",
+              "details": {
+                "description": "Specific details about this instance of the issue",
+                "descriptionHtml": "<p>Specific details about this instance of the issue</p>",
+                "example": "Table `public.users` is public, but RLS has not been enabled.",
+                "values": null
+              }
+            },
+            "remediation": {
+              "type": "string",
+              "description": "URL to documentation on how to fix this issue",
+              "example": "https://neon.com/docs/data-api/database-advisor",
+              "details": {
+                "description": "URL to documentation on how to fix this issue",
+                "descriptionHtml": "<p>URL to documentation on how to fix this issue</p>",
+                "example": "https://neon.com/docs/data-api/database-advisor",
+                "values": null
+              }
+            },
+            "metadata": {
+              "type": "object",
+              "description": "Additional context-specific metadata",
+              "additionalProperties": true,
+              "details": {
+                "description": "Additional context-specific metadata",
+                "descriptionHtml": "<p>Additional context-specific metadata</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "cache_key": {
+              "type": "string",
+              "description": "Unique key for caching this issue result",
+              "details": {
+                "description": "Unique key for caching this issue result",
+                "descriptionHtml": "<p>Unique key for caching this issue result</p>",
+                "example": null,
+                "values": null
+              }
+            }
+          },
+          "displayOrder": [
+            "name",
+            "title",
+            "level",
+            "facing",
+            "categories",
+            "description",
+            "detail",
+            "remediation",
+            "metadata",
+            "cache_key"
+          ]
+        }
+      }
+    },
+    "requiredFields": [
+      "issues"
+    ],
+    "displayOrder": [
+      "issues"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/advisors\" \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.getProjectAdvisorSecurityIssues({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": "Projects → Monitoring → Data API Advisors"
+  },
+  "specIndex": 0
+}

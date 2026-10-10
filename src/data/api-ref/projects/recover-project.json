@@ -1,0 +1,1692 @@
+{
+  "id": "recover-project",
+  "operationId": "recoverProject",
+  "method": "POST",
+  "path": "/projects/{project_id}/recover",
+  "tag": "projects",
+  "tagDisplay": "Projects",
+  "stability": "beta",
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Recover a deleted project",
+  "description": "Recovers a deleted project within the 7-day deletion recovery period.\nRestores branches, endpoints, settings, and connection strings.\nSome integrations require manual reconfiguration after recovery.\nTo list recoverable projects, use `GET /projects?recoverable=true`.\n",
+  "descriptionHtml": "<p>Recovers a deleted project within the 7-day deletion recovery period.\nRestores branches, endpoints, settings, and connection strings.\nSome integrations require manual reconfiguration after recovery.\nTo list recoverable projects, use <code>GET /projects?recoverable=true</code>.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": null,
+  "response": {
+    "status": "200",
+    "description": "Returned the recovered project",
+    "descriptionHtml": "<p>Returned the recovered project</p>",
+    "example": {
+      "project": {
+        "data_storage_bytes_hour": 0,
+        "data_transfer_bytes": 0,
+        "written_data_bytes": 0,
+        "compute_time_seconds": 0,
+        "active_time_seconds": 0,
+        "cpu_used_sec": 0,
+        "id": "misty-meadow-000017",
+        "platform_id": "aws",
+        "region_id": "aws-us-east-2",
+        "name": "my-project-17",
+        "slug": "misty-meadow-000017",
+        "provisioner": "k8s-neonvm",
+        "default_endpoint_settings": {
+          "autoscaling_limit_min_cu": 1,
+          "autoscaling_limit_max_cu": 1,
+          "suspend_timeout_seconds": 0
+        },
+        "settings": {
+          "allowed_ips": {
+            "ips": [],
+            "protected_branches_only": false
+          },
+          "enable_logical_replication": false,
+          "maintenance_window": {
+            "weekdays": [
+              7
+            ],
+            "start_time": "09:00",
+            "end_time": "10:00"
+          },
+          "block_public_connections": false,
+          "block_vpc_connections": false,
+          "hipaa": false
+        },
+        "pg_version": 17,
+        "proxy_host": "c-4.us-east-2.aws.neon.tech",
+        "branch_logical_size_limit": 16777216,
+        "branch_logical_size_limit_bytes": 17592186044416,
+        "store_passwords": true,
+        "creation_source": "console",
+        "history_retention_seconds": 86400,
+        "created_at": "2025-01-15T10:30:00Z",
+        "updated_at": "2025-01-15T11:00:00Z",
+        "synthetic_storage_size": 0,
+        "consumption_period_start": "2025-01-15T11:30:00Z",
+        "consumption_period_end": "2025-01-15T11:30:00Z",
+        "owner_id": "org-spring-garden-12345"
+      },
+      "branches": [
+        {
+          "id": "br-young-forest-a5b6c7d8",
+          "project_id": "misty-meadow-000017",
+          "name": "main",
+          "slug": "br-young-forest-a5b6c7d8",
+          "project_slug": "misty-meadow-000017",
+          "current_state": "ready",
+          "state_changed_at": "2025-01-15T11:00:00Z",
+          "creation_source": "console",
+          "primary": true,
+          "default": true,
+          "protected": false,
+          "cpu_used_sec": 0,
+          "compute_time_seconds": 0,
+          "active_time_seconds": 0,
+          "written_data_bytes": 0,
+          "data_transfer_bytes": 0,
+          "created_at": "2025-01-15T10:30:00Z",
+          "updated_at": "2025-01-15T12:00:00Z",
+          "init_source": "parent-data"
+        }
+      ]
+    },
+    "properties": {
+      "project": {
+        "description": "Full details of the project, including configuration, consumption metrics, and ownership.",
+        "type": "object",
+        "required": [
+          "consumption_period_end",
+          "consumption_period_start",
+          "active_time_seconds",
+          "compute_time_seconds",
+          "written_data_bytes",
+          "data_transfer_bytes",
+          "data_storage_bytes_hour",
+          "id",
+          "platform_id",
+          "region_id",
+          "name",
+          "pg_version",
+          "proxy_host",
+          "branch_logical_size_limit",
+          "branch_logical_size_limit_bytes",
+          "store_passwords",
+          "cpu_used_sec",
+          "provisioner",
+          "creation_source",
+          "history_retention_seconds",
+          "created_at",
+          "updated_at",
+          "owner_id"
+        ],
+        "properties": {
+          "data_storage_bytes_hour": {
+            "description": "Deprecated: always returns 0. Use the consumption history v2 endpoints (`/consumption_history/v2/projects`, `/consumption_history/v2/branches`) instead.\nBytes-Hour. Project consumed that much Postgres storage hourly during the billing period. The value has some lag.\nThe value is reset at the beginning of each billing period.\n",
+            "deprecated": true,
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "details": {
+              "description": "Deprecated: always returns 0. Use the consumption history v2 endpoints (`/consumption_history/v2/projects`, `/consumption_history/v2/branches`) instead.\nBytes-Hour. Project consumed that much Postgres storage hourly during the billing period. The value has some lag.\nThe value is reset at the beginning of each billing period.",
+              "descriptionHtml": "<p>Deprecated: always returns 0. Use the consumption history v2 endpoints (<code>/consumption_history/v2/projects</code>, <code>/consumption_history/v2/branches</code>) instead.\nBytes-Hour. Project consumed that much Postgres storage hourly during the billing period. The value has some lag.\nThe value is reset at the beginning of each billing period.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "data_transfer_bytes": {
+            "description": "Bytes. Egress traffic from the Neon cloud to the client for given project over the billing period.\nIncludes deleted endpoints. The value has some lag. The value is reset at the beginning of each billing period.\n",
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "details": {
+              "description": "Bytes. Egress traffic from the Neon cloud to the client for given project over the billing period.\nIncludes deleted endpoints. The value has some lag. The value is reset at the beginning of each billing period.",
+              "descriptionHtml": "<p>Bytes. Egress traffic from the Neon cloud to the client for given project over the billing period.\nIncludes deleted endpoints. The value has some lag. The value is reset at the beginning of each billing period.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "written_data_bytes": {
+            "description": "Bytes. Amount of WAL that travelled through Postgres storage for given project across all branches.\nThe value has some lag. The value is reset at the beginning of each billing period.\n",
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "details": {
+              "description": "Bytes. Amount of WAL that travelled through Postgres storage for given project across all branches.\nThe value has some lag. The value is reset at the beginning of each billing period.",
+              "descriptionHtml": "<p>Bytes. Amount of WAL that travelled through Postgres storage for given project across all branches.\nThe value has some lag. The value is reset at the beginning of each billing period.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "compute_time_seconds": {
+            "description": "Seconds. The number of CPU seconds used by the project's compute endpoints, including compute endpoints that have been deleted.\nThe value has some lag. The value is reset at the beginning of each billing period.\nExamples:\n1. An endpoint that uses 1 CPU for 1 second is equal to `compute_time=1`.\n2. An endpoint that uses 2 CPUs simultaneously for 1 second is equal to `compute_time=2`.\n",
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "details": {
+              "description": "Seconds. The number of CPU seconds used by the project's compute endpoints, including compute endpoints that have been deleted.\nThe value has some lag. The value is reset at the beginning of each billing period.\nExamples:\n1. An endpoint that uses 1 CPU for 1 second is equal to `compute_time=1`.\n2. An endpoint that uses 2 CPUs simultaneously for 1 second is equal to `compute_time=2`.",
+              "descriptionHtml": "<p>Seconds. The number of CPU seconds used by the project's compute endpoints, including compute endpoints that have been deleted.\nThe value has some lag. The value is reset at the beginning of each billing period.\nExamples:</p>\n<ol>\n<li>An endpoint that uses 1 CPU for 1 second is equal to <code>compute_time=1</code>.</li>\n<li>An endpoint that uses 2 CPUs simultaneously for 1 second is equal to <code>compute_time=2</code>.</li>\n</ol>",
+              "example": null,
+              "values": null
+            }
+          },
+          "active_time_seconds": {
+            "description": "Seconds. Control plane observed endpoints of this project being active this amount of wall-clock time.\nThe value has some lag.\nThe value is reset at the beginning of each billing period.\n",
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "details": {
+              "description": "Seconds. Control plane observed endpoints of this project being active this amount of wall-clock time.\nThe value has some lag.\nThe value is reset at the beginning of each billing period.",
+              "descriptionHtml": "<p>Seconds. Control plane observed endpoints of this project being active this amount of wall-clock time.\nThe value has some lag.\nThe value is reset at the beginning of each billing period.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "cpu_used_sec": {
+            "description": "Deprecated. Use `compute_time_seconds` instead.\n",
+            "type": "integer",
+            "format": "int64",
+            "deprecated": true,
+            "details": {
+              "description": "Deprecated. Use `compute_time_seconds` instead.",
+              "descriptionHtml": "<p>Deprecated. Use <code>compute_time_seconds</code> instead.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "id": {
+            "description": "The Neon project ID. Use as the `project_id` path parameter in other endpoints.",
+            "type": "string",
+            "pattern": "^[a-z0-9-]{1,60}$",
+            "details": {
+              "description": "The Neon project ID. Use as the `project_id` path parameter in other endpoints.",
+              "descriptionHtml": "<p>The Neon project ID. Use as the <code>project_id</code> path parameter in other endpoints.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "platform_id": {
+            "description": "The cloud platform identifier. Currently, only AWS is supported, for which the identifier is `aws`.\n",
+            "type": "string",
+            "details": {
+              "description": "The cloud platform identifier. Currently, only AWS is supported, for which the identifier is `aws`.",
+              "descriptionHtml": "<p>The cloud platform identifier. Currently, only AWS is supported, for which the identifier is <code>aws</code>.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "region_id": {
+            "description": "Cloud region where the resource's Postgres compute and storage reside (for example, `aws-us-east-1`). Valid values are returned by `GET /regions`.\n",
+            "type": "string",
+            "example": "aws-us-east-1",
+            "details": {
+              "description": "Cloud region where the resource's Postgres compute and storage reside (for example, `aws-us-east-1`). Valid values are returned by `GET /regions`.",
+              "descriptionHtml": "<p>Cloud region where the resource's Postgres compute and storage reside (for example, <code>aws-us-east-1</code>). Valid values are returned by <code>GET /regions</code>.</p>",
+              "example": "aws-us-east-1",
+              "values": null
+            }
+          },
+          "name": {
+            "description": "The project name\n",
+            "type": "string",
+            "details": {
+              "description": "The project name",
+              "descriptionHtml": "<p>The project name</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "provisioner": {
+            "description": "Compute provisioner. `k8s-neonvm` (default) supports Autoscaling; `k8s-pod` is fixed-size compute. Also `docker` and `serverless-platform`.",
+            "type": "string",
+            "example": "k8s-neonvm",
+            "details": {
+              "description": "Compute provisioner. `k8s-neonvm` (default) supports Autoscaling; `k8s-pod` is fixed-size compute. Also `docker` and `serverless-platform`.",
+              "descriptionHtml": "<p>Compute provisioner. <code>k8s-neonvm</code> (default) supports Autoscaling; <code>k8s-pod</code> is fixed-size compute. Also <code>docker</code> and <code>serverless-platform</code>.</p>",
+              "example": "k8s-neonvm",
+              "values": null
+            }
+          },
+          "default_endpoint_settings": {
+            "type": "object",
+            "description": "A collection of settings for a Neon endpoint",
+            "properties": {
+              "pg_settings": {
+                "description": "A raw representation of Postgres settings",
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "details": {
+                  "description": "A raw representation of Postgres settings",
+                  "descriptionHtml": "<p>A raw representation of Postgres settings</p>",
+                  "example": null,
+                  "values": null
+                }
+              },
+              "pgbouncer_settings": {
+                "deprecated": true,
+                "x-sunset": "2026-06-20",
+                "description": "Deprecated. Use the endpoint-level connection pooler configuration instead. Removal scheduled for June 20, 2026.\n",
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "details": {
+                  "description": "Deprecated. Use the endpoint-level connection pooler configuration instead. Removal scheduled for June 20, 2026.",
+                  "descriptionHtml": "<p>Deprecated. Use the endpoint-level connection pooler configuration instead. Removal scheduled for June 20, 2026.</p>",
+                  "example": null,
+                  "values": null
+                }
+              },
+              "autoscaling_limit_min_cu": {
+                "description": "Minimum number of Compute Units for this endpoint. At least 0.25 and no greater than `autoscaling_limit_max_cu`.\n",
+                "type": "number",
+                "minimum": 0.25,
+                "details": {
+                  "description": "Minimum number of Compute Units for this endpoint. At least 0.25 and no greater than `autoscaling_limit_max_cu`.",
+                  "descriptionHtml": "<p>Minimum number of Compute Units for this endpoint. At least 0.25 and no greater than <code>autoscaling_limit_max_cu</code>.</p>",
+                  "example": null,
+                  "values": null
+                }
+              },
+              "autoscaling_limit_max_cu": {
+                "description": "Default maximum number of Compute Units for endpoints created under this account. At least 0.25.\n",
+                "type": "number",
+                "minimum": 0.25,
+                "details": {
+                  "description": "Default maximum number of Compute Units for endpoints created under this account. At least 0.25.",
+                  "descriptionHtml": "<p>Default maximum number of Compute Units for endpoints created under this account. At least 0.25.</p>",
+                  "example": null,
+                  "values": null
+                }
+              },
+              "suspend_timeout_seconds": {
+                "description": "Scale-to-zero idle timeout, in seconds, before the compute suspends. `0` uses the plan default; `-1` disables scale-to-zero (never suspends). Minimum is plan-dependent (Scale: 60); maximum 604800 (one week). Free cannot change it; Launch can only enable or disable; Scale can set any value.",
+                "type": "integer",
+                "format": "int64",
+                "minimum": -1,
+                "maximum": 604800,
+                "details": {
+                  "description": "Scale-to-zero idle timeout, in seconds, before the compute suspends. `0` uses the plan default; `-1` disables scale-to-zero (never suspends). Minimum is plan-dependent (Scale: 60); maximum 604800 (one week). Free cannot change it; Launch can only enable or disable; Scale can set any value.",
+                  "descriptionHtml": "<p>Scale-to-zero idle timeout, in seconds, before the compute suspends. <code>0</code> uses the plan default; <code>-1</code> disables scale-to-zero (never suspends). Minimum is plan-dependent (Scale: 60); maximum 604800 (one week). Free cannot change it; Launch can only enable or disable; Scale can set any value.</p>",
+                  "example": null,
+                  "values": null
+                }
+              }
+            },
+            "details": {
+              "description": "A collection of settings for a Neon endpoint",
+              "descriptionHtml": "<p>A collection of settings for a Neon endpoint</p>",
+              "example": null,
+              "values": null
+            },
+            "displayOrder": [
+              "pg_settings",
+              "pgbouncer_settings",
+              "autoscaling_limit_min_cu",
+              "autoscaling_limit_max_cu",
+              "suspend_timeout_seconds"
+            ]
+          },
+          "settings": {
+            "description": "Project-level settings, for example `quota`, `allowed_ips`, `enable_logical_replication`, and `maintenance_window`.",
+            "type": "object",
+            "properties": {
+              "quota": {
+                "type": "object",
+                "description": "Per-project consumption quotas. If a quota is exceeded, all active computes\nare automatically suspended and cannot be started via API calls or incoming connections.\n\nThe exception is `logical_size_bytes`, which is enforced per branch.\nIf a branch exceeds its `logical_size_bytes` quota, computes can still be started,\nbut write operations will fail—allowing data to be deleted to free up space.\nComputes on other branches are not affected.\n\nSetting `logical_size_bytes` overrides any lower value set by the `neon.max_cluster_size` Postgres setting.\n\nQuotas are enforced using per-project consumption metrics with the same names.\nThese metrics reset at the start of each billing period. `logical_size_bytes`\nis also an exception—it reflects the total data stored in a branch and does not reset.\n\nA zero or empty quota value means “unlimited.”\n",
+                "properties": {
+                  "active_time_seconds": {
+                    "description": "The total amount of wall-clock time allowed to be spent by the project's compute endpoints.\n",
+                    "type": "integer",
+                    "format": "int64",
+                    "minimum": 0,
+                    "details": {
+                      "description": "The total amount of wall-clock time allowed to be spent by the project's compute endpoints.",
+                      "descriptionHtml": "<p>The total amount of wall-clock time allowed to be spent by the project's compute endpoints.</p>",
+                      "example": null,
+                      "values": null
+                    }
+                  },
+                  "compute_time_seconds": {
+                    "description": "The total amount of CPU seconds allowed to be spent by the project's compute endpoints.\n",
+                    "type": "integer",
+                    "format": "int64",
+                    "minimum": 0,
+                    "details": {
+                      "description": "The total amount of CPU seconds allowed to be spent by the project's compute endpoints.",
+                      "descriptionHtml": "<p>The total amount of CPU seconds allowed to be spent by the project's compute endpoints.</p>",
+                      "example": null,
+                      "values": null
+                    }
+                  },
+                  "written_data_bytes": {
+                    "description": "Total amount of data written to all of a project's branches.\n",
+                    "type": "integer",
+                    "format": "int64",
+                    "minimum": 0,
+                    "details": {
+                      "description": "Total amount of data written to all of a project's branches.",
+                      "descriptionHtml": "<p>Total amount of data written to all of a project's branches.</p>",
+                      "example": null,
+                      "values": null
+                    }
+                  },
+                  "data_transfer_bytes": {
+                    "description": "Total amount of data transferred from all of a project's branches using the proxy.\n",
+                    "type": "integer",
+                    "format": "int64",
+                    "minimum": 0,
+                    "details": {
+                      "description": "Total amount of data transferred from all of a project's branches using the proxy.",
+                      "descriptionHtml": "<p>Total amount of data transferred from all of a project's branches using the proxy.</p>",
+                      "example": null,
+                      "values": null
+                    }
+                  },
+                  "logical_size_bytes": {
+                    "description": "Limit on the logical size of every project's branch.\n\nIf a branch exceeds its `logical_size_bytes` quota, computes can still be started,\nbut write operations will fail—allowing data to be deleted to free up space.\nComputes on other branches are not affected.\n\nSetting `logical_size_bytes` overrides any lower value set by the `neon.max_cluster_size` Postgres setting.\n",
+                    "type": "integer",
+                    "format": "int64",
+                    "minimum": 0,
+                    "details": {
+                      "description": "Limit on the logical size of every project's branch.\n\nIf a branch exceeds its `logical_size_bytes` quota, computes can still be started,\nbut write operations will fail—allowing data to be deleted to free up space.\nComputes on other branches are not affected.\n\nSetting `logical_size_bytes` overrides any lower value set by the `neon.max_cluster_size` Postgres setting.",
+                      "descriptionHtml": "<p>Limit on the logical size of every project's branch.</p>\n<p>If a branch exceeds its <code>logical_size_bytes</code> quota, computes can still be started,\nbut write operations will fail—allowing data to be deleted to free up space.\nComputes on other branches are not affected.</p>\n<p>Setting <code>logical_size_bytes</code> overrides any lower value set by the <code>neon.max_cluster_size</code> Postgres setting.</p>",
+                      "example": null,
+                      "values": null
+                    }
+                  }
+                },
+                "details": {
+                  "description": "Per-project consumption quotas. If a quota is exceeded, all active computes\nare automatically suspended and cannot be started via API calls or incoming connections.\n\nThe exception is `logical_size_bytes`, which is enforced per branch.\nIf a branch exceeds its `logical_size_bytes` quota, computes can still be started,\nbut write operations will fail—allowing data to be deleted to free up space.\nComputes on other branches are not affected.\n\nSetting `logical_size_bytes` overrides any lower value set by the `neon.max_cluster_size` Postgres setting.\n\nQuotas are enforced using per-project consumption metrics with the same names.\nThese metrics reset at the start of each billing period. `logical_size_bytes`\nis also an exception—it reflects the total data stored in a branch and does not reset.\n\nA zero or empty quota value means “unlimited.”",
+                  "descriptionHtml": "<p>Per-project consumption quotas. If a quota is exceeded, all active computes\nare automatically suspended and cannot be started via API calls or incoming connections.</p>\n<p>The exception is <code>logical_size_bytes</code>, which is enforced per branch.\nIf a branch exceeds its <code>logical_size_bytes</code> quota, computes can still be started,\nbut write operations will fail—allowing data to be deleted to free up space.\nComputes on other branches are not affected.</p>\n<p>Setting <code>logical_size_bytes</code> overrides any lower value set by the <code>neon.max_cluster_size</code> Postgres setting.</p>\n<p>Quotas are enforced using per-project consumption metrics with the same names.\nThese metrics reset at the start of each billing period. <code>logical_size_bytes</code>\nis also an exception—it reflects the total data stored in a branch and does not reset.</p>\n<p>A zero or empty quota value means “unlimited.”</p>",
+                  "example": null,
+                  "values": null
+                },
+                "displayOrder": [
+                  "active_time_seconds",
+                  "compute_time_seconds",
+                  "written_data_bytes",
+                  "data_transfer_bytes",
+                  "logical_size_bytes"
+                ]
+              },
+              "allowed_ips": {
+                "description": "A list of IP addresses that are allowed to connect to the compute endpoint.\nIf the list is empty or not set, all IP addresses are allowed.\nIf protected_branches_only is true, the list will be applied only to protected branches.\n",
+                "type": "object",
+                "properties": {
+                  "ips": {
+                    "description": "A list of IP addresses that are allowed to connect to the endpoint.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "description": "A list of IP addresses that are allowed to connect to the endpoint.",
+                      "descriptionHtml": "<p>A list of IP addresses that are allowed to connect to the endpoint.</p>",
+                      "example": null,
+                      "values": null
+                    }
+                  },
+                  "protected_branches_only": {
+                    "description": "If true, the list will be applied only to protected branches.",
+                    "type": "boolean",
+                    "details": {
+                      "description": "If true, the list will be applied only to protected branches.",
+                      "descriptionHtml": "<p>If true, the list will be applied only to protected branches.</p>",
+                      "example": null,
+                      "values": null
+                    }
+                  }
+                },
+                "details": {
+                  "description": "A list of IP addresses that are allowed to connect to the compute endpoint.\nIf the list is empty or not set, all IP addresses are allowed.\nIf protected_branches_only is true, the list will be applied only to protected branches.",
+                  "descriptionHtml": "<p>A list of IP addresses that are allowed to connect to the compute endpoint.\nIf the list is empty or not set, all IP addresses are allowed.\nIf protected_branches_only is true, the list will be applied only to protected branches.</p>",
+                  "example": null,
+                  "values": null
+                },
+                "displayOrder": [
+                  "ips",
+                  "protected_branches_only"
+                ]
+              },
+              "enable_logical_replication": {
+                "description": "Sets wal_level=logical for all compute endpoints in this project.\nAll active endpoints will be suspended.\nOnce enabled, logical replication cannot be disabled.\n",
+                "type": "boolean",
+                "details": {
+                  "description": "Sets wal_level=logical for all compute endpoints in this project.\nAll active endpoints will be suspended.\nOnce enabled, logical replication cannot be disabled.",
+                  "descriptionHtml": "<p>Sets wal_level=logical for all compute endpoints in this project.\nAll active endpoints will be suspended.\nOnce enabled, logical replication cannot be disabled.</p>",
+                  "example": null,
+                  "values": null
+                }
+              },
+              "maintenance_window": {
+                "description": "A maintenance window is a time period during which Neon may perform maintenance on the project's infrastructure.\nDuring this time, the project's compute endpoints may be unavailable and existing connections can be\ninterrupted.\n",
+                "type": "object",
+                "required": [
+                  "weekdays",
+                  "start_time",
+                  "end_time"
+                ],
+                "properties": {
+                  "weekdays": {
+                    "description": "A list of weekdays when the maintenance window is active.\nEncoded as ints, where 1 - Monday, and 7 - Sunday.\n",
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    },
+                    "details": {
+                      "description": "A list of weekdays when the maintenance window is active.\nEncoded as ints, where 1 - Monday, and 7 - Sunday.",
+                      "descriptionHtml": "<p>A list of weekdays when the maintenance window is active.\nEncoded as ints, where 1 - Monday, and 7 - Sunday.</p>",
+                      "example": null,
+                      "values": null
+                    }
+                  },
+                  "start_time": {
+                    "description": "Start time of the maintenance window, in the format of \"HH:MM\". Uses UTC.\n",
+                    "type": "string",
+                    "details": {
+                      "description": "Start time of the maintenance window, in the format of \"HH:MM\". Uses UTC.",
+                      "descriptionHtml": "<p>Start time of the maintenance window, in the format of &quot;HH:MM&quot;. Uses UTC.</p>",
+                      "example": null,
+                      "values": null
+                    }
+                  },
+                  "end_time": {
+                    "description": "End time of the maintenance window, in the format of \"HH:MM\". Uses UTC.\n",
+                    "type": "string",
+                    "details": {
+                      "description": "End time of the maintenance window, in the format of \"HH:MM\". Uses UTC.",
+                      "descriptionHtml": "<p>End time of the maintenance window, in the format of &quot;HH:MM&quot;. Uses UTC.</p>",
+                      "example": null,
+                      "values": null
+                    }
+                  }
+                },
+                "details": {
+                  "description": "A maintenance window is a time period during which Neon may perform maintenance on the project's infrastructure.\nDuring this time, the project's compute endpoints may be unavailable and existing connections can be\ninterrupted.",
+                  "descriptionHtml": "<p>A maintenance window is a time period during which Neon may perform maintenance on the project's infrastructure.\nDuring this time, the project's compute endpoints may be unavailable and existing connections can be\ninterrupted.</p>",
+                  "example": null,
+                  "values": null
+                },
+                "displayOrder": [
+                  "weekdays",
+                  "start_time",
+                  "end_time"
+                ]
+              },
+              "block_public_connections": {
+                "description": "When set, connections from the public internet\nare disallowed. This supersedes the AllowedIPs list.\nThis parameter is under active development and its semantics may change in the future.\n",
+                "type": "boolean",
+                "details": {
+                  "description": "When set, connections from the public internet\nare disallowed. This supersedes the AllowedIPs list.\nThis parameter is under active development and its semantics may change in the future.",
+                  "descriptionHtml": "<p>When set, connections from the public internet\nare disallowed. This supersedes the AllowedIPs list.\nThis parameter is under active development and its semantics may change in the future.</p>",
+                  "example": null,
+                  "values": null
+                }
+              },
+              "block_vpc_connections": {
+                "description": "When set, connections using VPC endpoints are disallowed.\nThis parameter is under active development and its semantics may change in the future.\n",
+                "type": "boolean",
+                "details": {
+                  "description": "When set, connections using VPC endpoints are disallowed.\nThis parameter is under active development and its semantics may change in the future.",
+                  "descriptionHtml": "<p>When set, connections using VPC endpoints are disallowed.\nThis parameter is under active development and its semantics may change in the future.</p>",
+                  "example": null,
+                  "values": null
+                }
+              },
+              "audit_log_level": {
+                "description": "Audit logging level, set only on HIPAA-enabled organizations (absent otherwise). Values: `base`, `extended`, `full`; HIPAA defaults to `extended`. Cannot be lowered back to `base` once `extended` or `full`.",
+                "type": "string",
+                "enum": [
+                  "base",
+                  "extended",
+                  "full"
+                ],
+                "details": {
+                  "description": "Audit logging level, set only on HIPAA-enabled organizations (absent otherwise). Values: `base`, `extended`, `full`; HIPAA defaults to `extended`. Cannot be lowered back to `base` once `extended` or `full`.",
+                  "descriptionHtml": "<p>Audit logging level, set only on HIPAA-enabled organizations (absent otherwise). Values: <code>base</code>, <code>extended</code>, <code>full</code>; HIPAA defaults to <code>extended</code>. Cannot be lowered back to <code>base</code> once <code>extended</code> or <code>full</code>.</p>",
+                  "example": null,
+                  "values": [
+                    "base",
+                    "extended",
+                    "full"
+                  ]
+                }
+              },
+              "hipaa": {
+                "type": "boolean",
+                "description": "Enables HIPAA compliance mode for the project, including audit logging.",
+                "details": {
+                  "description": "Enables HIPAA compliance mode for the project, including audit logging.",
+                  "descriptionHtml": "<p>Enables HIPAA compliance mode for the project, including audit logging.</p>",
+                  "example": null,
+                  "values": null
+                }
+              },
+              "preload_libraries": {
+                "description": "The shared libraries to preload into the project's compute instances.\n",
+                "type": "object",
+                "properties": {
+                  "use_defaults": {
+                    "type": "boolean",
+                    "description": "When true, the project's preload libraries include the platform default set in addition to any libraries listed in `enabled_libraries`.",
+                    "details": {
+                      "description": "When true, the project's preload libraries include the platform default set in addition to any libraries listed in `enabled_libraries`.",
+                      "descriptionHtml": "<p>When true, the project's preload libraries include the platform default set in addition to any libraries listed in <code>enabled_libraries</code>.</p>",
+                      "example": null,
+                      "values": null
+                    }
+                  },
+                  "enabled_libraries": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Names of shared preload libraries to enable for the project.",
+                    "details": {
+                      "description": "Names of shared preload libraries to enable for the project.",
+                      "descriptionHtml": "<p>Names of shared preload libraries to enable for the project.</p>",
+                      "example": null,
+                      "values": null
+                    }
+                  }
+                },
+                "details": {
+                  "description": "The shared libraries to preload into the project's compute instances.",
+                  "descriptionHtml": "<p>The shared libraries to preload into the project's compute instances.</p>",
+                  "example": null,
+                  "values": null
+                },
+                "displayOrder": [
+                  "use_defaults",
+                  "enabled_libraries"
+                ]
+              }
+            },
+            "details": {
+              "description": "Project-level settings, for example `quota`, `allowed_ips`, `enable_logical_replication`, and `maintenance_window`.",
+              "descriptionHtml": "<p>Project-level settings, for example <code>quota</code>, <code>allowed_ips</code>, <code>enable_logical_replication</code>, and <code>maintenance_window</code>.</p>",
+              "example": null,
+              "values": null
+            },
+            "displayOrder": [
+              "block_public_connections",
+              "block_vpc_connections",
+              "quota",
+              "allowed_ips",
+              "enable_logical_replication",
+              "maintenance_window",
+              "audit_log_level",
+              "hipaa",
+              "preload_libraries"
+            ]
+          },
+          "pg_version": {
+            "description": "The major Postgres version number. Supported versions are `14`, `15`, `16`, `17`, and `18`. `19` is rolling out and is accepted only in regions where it is enabled; requesting it elsewhere returns an error.",
+            "type": "integer",
+            "minimum": 14,
+            "maximum": 19,
+            "default": 18,
+            "example": 18,
+            "details": {
+              "description": "The major Postgres version number. Supported versions are `14`, `15`, `16`, `17`, and `18`. `19` is rolling out and is accepted only in regions where it is enabled; requesting it elsewhere returns an error.",
+              "descriptionHtml": "<p>The major Postgres version number. Supported versions are <code>14</code>, <code>15</code>, <code>16</code>, <code>17</code>, and <code>18</code>. <code>19</code> is rolling out and is accepted only in regions where it is enabled; requesting it elsewhere returns an error.</p>",
+              "example": "18",
+              "values": null
+            }
+          },
+          "proxy_host": {
+            "description": "The proxy host for the project. This value combines the `region_id`, the `platform_id`, and the Neon domain (`neon.tech`).\n",
+            "type": "string",
+            "details": {
+              "description": "The proxy host for the project. This value combines the `region_id`, the `platform_id`, and the Neon domain (`neon.tech`).",
+              "descriptionHtml": "<p>The proxy host for the project. This value combines the <code>region_id</code>, the <code>platform_id</code>, and the Neon domain (<code>neon.tech</code>).</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "branch_logical_size_limit": {
+            "description": "The logical size limit for a branch. The value is in MiB.\n",
+            "type": "integer",
+            "format": "int64",
+            "details": {
+              "description": "The logical size limit for a branch. The value is in MiB.",
+              "descriptionHtml": "<p>The logical size limit for a branch. The value is in MiB.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "branch_logical_size_limit_bytes": {
+            "description": "The logical size limit for a branch. The value is in B.\n",
+            "type": "integer",
+            "format": "int64",
+            "details": {
+              "description": "The logical size limit for a branch. The value is in B.",
+              "descriptionHtml": "<p>The logical size limit for a branch. The value is in B.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "store_passwords": {
+            "description": "Whether or not passwords are stored for roles in the Neon project. Storing passwords facilitates access to Neon features that require authorization.\n",
+            "type": "boolean",
+            "details": {
+              "description": "Whether or not passwords are stored for roles in the Neon project. Storing passwords facilitates access to Neon features that require authorization.",
+              "descriptionHtml": "<p>Whether or not passwords are stored for roles in the Neon project. Storing passwords facilitates access to Neon features that require authorization.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "maintenance_starts_at": {
+            "description": "A timestamp indicating when project maintenance begins. If set, the project is placed into maintenance mode at this time.\n",
+            "type": "string",
+            "format": "date-time",
+            "details": {
+              "description": "A timestamp indicating when project maintenance begins. If set, the project is placed into maintenance mode at this time.",
+              "descriptionHtml": "<p>A timestamp indicating when project maintenance begins. If set, the project is placed into maintenance mode at this time.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "creation_source": {
+            "description": "The project creation source\n",
+            "type": "string",
+            "details": {
+              "description": "The project creation source",
+              "descriptionHtml": "<p>The project creation source</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "history_retention_seconds": {
+            "description": "The number of seconds to retain the shared history for all branches in this project.\n",
+            "type": "integer",
+            "format": "int32",
+            "details": {
+              "description": "The number of seconds to retain the shared history for all branches in this project.",
+              "descriptionHtml": "<p>The number of seconds to retain the shared history for all branches in this project.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "created_at": {
+            "description": "A timestamp indicating when the project was created\n",
+            "type": "string",
+            "format": "date-time",
+            "details": {
+              "description": "A timestamp indicating when the project was created",
+              "descriptionHtml": "<p>A timestamp indicating when the project was created</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "updated_at": {
+            "description": "A timestamp indicating when the project was last updated\n",
+            "type": "string",
+            "format": "date-time",
+            "details": {
+              "description": "A timestamp indicating when the project was last updated",
+              "descriptionHtml": "<p>A timestamp indicating when the project was last updated</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "synthetic_storage_size": {
+            "description": "Deprecated: always returns 0. Use the consumption history v2 endpoints (`/consumption_history/v2/projects`, `/consumption_history/v2/branches`) instead.\nThe current space occupied by the project in Postgres storage, in bytes. Synthetic Postgres storage size combines the logical data size and Write-Ahead Log (WAL) size for all branches in a project.\n",
+            "deprecated": true,
+            "type": "integer",
+            "format": "int64",
+            "details": {
+              "description": "Deprecated: always returns 0. Use the consumption history v2 endpoints (`/consumption_history/v2/projects`, `/consumption_history/v2/branches`) instead.\nThe current space occupied by the project in Postgres storage, in bytes. Synthetic Postgres storage size combines the logical data size and Write-Ahead Log (WAL) size for all branches in a project.",
+              "descriptionHtml": "<p>Deprecated: always returns 0. Use the consumption history v2 endpoints (<code>/consumption_history/v2/projects</code>, <code>/consumption_history/v2/branches</code>) instead.\nThe current space occupied by the project in Postgres storage, in bytes. Synthetic Postgres storage size combines the logical data size and Write-Ahead Log (WAL) size for all branches in a project.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "consumption_period_start": {
+            "description": "A date-time indicating when Neon Cloud started measuring consumption for current consumption period.\n",
+            "type": "string",
+            "format": "date-time",
+            "details": {
+              "description": "A date-time indicating when Neon Cloud started measuring consumption for current consumption period.",
+              "descriptionHtml": "<p>A date-time indicating when Neon Cloud started measuring consumption for current consumption period.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "consumption_period_end": {
+            "description": "A date-time indicating when Neon Cloud plans to stop measuring consumption for current consumption period.\n",
+            "type": "string",
+            "format": "date-time",
+            "details": {
+              "description": "A date-time indicating when Neon Cloud plans to stop measuring consumption for current consumption period.",
+              "descriptionHtml": "<p>A date-time indicating when Neon Cloud plans to stop measuring consumption for current consumption period.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "quota_reset_at": {
+            "deprecated": true,
+            "description": "Deprecated. Use the `consumption_period_end` field instead. A timestamp indicating when the project quota resets.\n",
+            "type": "string",
+            "format": "date-time",
+            "details": {
+              "description": "Deprecated. Use the `consumption_period_end` field instead. A timestamp indicating when the project quota resets.",
+              "descriptionHtml": "<p>Deprecated. Use the <code>consumption_period_end</code> field instead. A timestamp indicating when the project quota resets.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "owner_id": {
+            "type": "string",
+            "description": "ID of the organization that owns the project.",
+            "example": "org-cool-darkness-12345678",
+            "details": {
+              "description": "ID of the organization that owns the project.",
+              "descriptionHtml": "<p>ID of the organization that owns the project.</p>",
+              "example": "org-cool-darkness-12345678",
+              "values": null
+            }
+          },
+          "owner": {
+            "description": "Ownership details for the project, including the owner's name and email.",
+            "type": "object",
+            "required": [
+              "email",
+              "name",
+              "branches_limit",
+              "subscription_type"
+            ],
+            "x-sensitive": [
+              "email",
+              "name"
+            ],
+            "properties": {
+              "email": {
+                "description": "Email address of the project owner.",
+                "type": "string",
+                "format": "email",
+                "minLength": 1,
+                "maxLength": 256,
+                "details": {
+                  "description": "Email address of the project owner.",
+                  "descriptionHtml": "<p>Email address of the project owner.</p>",
+                  "example": null,
+                  "values": null
+                }
+              },
+              "name": {
+                "type": "string",
+                "description": "Display name of the project owner.",
+                "details": {
+                  "description": "Display name of the project owner.",
+                  "descriptionHtml": "<p>Display name of the project owner.</p>",
+                  "example": null,
+                  "values": null
+                }
+              },
+              "branches_limit": {
+                "type": "integer",
+                "description": "Maximum number of branches the owner is allowed to create across their projects.",
+                "details": {
+                  "description": "Maximum number of branches the owner is allowed to create across their projects.",
+                  "descriptionHtml": "<p>Maximum number of branches the owner is allowed to create across their projects.</p>",
+                  "example": null,
+                  "values": null
+                }
+              },
+              "subscription_type": {
+                "type": "string",
+                "description": "Type of subscription to Neon Cloud.\nNotice that for users without billing account this will be \"UNKNOWN\"\n",
+                "enum": [
+                  "UNKNOWN",
+                  "direct_sales",
+                  "direct_sales_v3",
+                  "aws_marketplace",
+                  "free_v2",
+                  "free_v3",
+                  "launch",
+                  "launch_v3",
+                  "scale",
+                  "scale_v3",
+                  "business",
+                  "vercel_pg_legacy"
+                ],
+                "details": {
+                  "description": "Type of subscription to Neon Cloud.\nNotice that for users without billing account this will be \"UNKNOWN\"",
+                  "descriptionHtml": "<p>Type of subscription to Neon Cloud.\nNotice that for users without billing account this will be &quot;UNKNOWN&quot;</p>",
+                  "example": null,
+                  "values": [
+                    "UNKNOWN",
+                    "direct_sales",
+                    "direct_sales_v3",
+                    "aws_marketplace",
+                    "free_v2",
+                    "free_v3",
+                    "launch",
+                    "launch_v3",
+                    "scale",
+                    "scale_v3",
+                    "business",
+                    "vercel_pg_legacy"
+                  ]
+                }
+              }
+            },
+            "details": {
+              "description": "Ownership details for the project, including the owner's name and email.",
+              "descriptionHtml": "<p>Ownership details for the project, including the owner's name and email.</p>",
+              "example": null,
+              "values": null
+            },
+            "displayOrder": [
+              "email",
+              "name",
+              "branches_limit",
+              "subscription_type"
+            ]
+          },
+          "compute_last_active_at": {
+            "description": "The most recent time when any endpoint of this project was active.\n\nOmitted when observed no activity for endpoints of this project.\n",
+            "type": "string",
+            "format": "date-time",
+            "details": {
+              "description": "The most recent time when any endpoint of this project was active.\n\nOmitted when observed no activity for endpoints of this project.",
+              "descriptionHtml": "<p>The most recent time when any endpoint of this project was active.</p>\n<p>Omitted when observed no activity for endpoints of this project.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "org_id": {
+            "description": "The Neon organization ID. Returned as `id` from `GET /users/me/organizations`.",
+            "example": "org-cool-darkness-12345678",
+            "type": "string",
+            "pattern": "^[a-z0-9-]{1,60}$",
+            "details": {
+              "description": "The Neon organization ID. Returned as `id` from `GET /users/me/organizations`.",
+              "descriptionHtml": "<p>The Neon organization ID. Returned as <code>id</code> from <code>GET /users/me/organizations</code>.</p>",
+              "example": "org-cool-darkness-12345678",
+              "values": null
+            }
+          },
+          "maintenance_scheduled_for": {
+            "description": "A timestamp indicating when project update begins. If set, computes might experience a brief restart around this time.\n",
+            "type": "string",
+            "format": "date-time",
+            "details": {
+              "description": "A timestamp indicating when project update begins. If set, computes might experience a brief restart around this time.",
+              "descriptionHtml": "<p>A timestamp indicating when project update begins. If set, computes might experience a brief restart around this time.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "hipaa_enabled_at": {
+            "description": "A timestamp indicating when HIPAA was enabled for this project",
+            "type": "string",
+            "format": "date-time",
+            "details": {
+              "description": "A timestamp indicating when HIPAA was enabled for this project",
+              "descriptionHtml": "<p>A timestamp indicating when HIPAA was enabled for this project</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "effective_project_permission": {
+            "type": "string",
+            "properties": {},
+            "required": [],
+            "enum": [
+              "VIEWER",
+              "EDITOR",
+              "ADMIN"
+            ],
+            "description": "The caller's effective permission for a project when\nper-project permissions are enabled. `VIEWER` grants read access,\n`EDITOR` adds update access, and `ADMIN` grants full management.\nOmitted for personal projects, flag-off organizations, and non-user\nsubjects.\n",
+            "details": {
+              "description": "The caller's effective permission for a project when\nper-project permissions are enabled. `VIEWER` grants read access,\n`EDITOR` adds update access, and `ADMIN` grants full management.\nOmitted for personal projects, flag-off organizations, and non-user\nsubjects.",
+              "descriptionHtml": "<p>The caller's effective permission for a project when\nper-project permissions are enabled. <code>VIEWER</code> grants read access,\n<code>EDITOR</code> adds update access, and <code>ADMIN</code> grants full management.\nOmitted for personal projects, flag-off organizations, and non-user\nsubjects.</p>",
+              "example": null,
+              "values": [
+                "VIEWER",
+                "EDITOR",
+                "ADMIN"
+              ]
+            }
+          }
+        },
+        "example": {
+          "id": "spring-example-302709",
+          "platform_id": "aws",
+          "region_id": "aws-us-east-2",
+          "name": "spring-example-302709",
+          "provisioner": "k8s-pod",
+          "pg_version": 15,
+          "proxy_host": "us-east-2.aws.neon.tech",
+          "store_passwords": true,
+          "creation_source": "console",
+          "history_retention_seconds": 604800,
+          "created_at": "2022-12-13T01:30:55Z",
+          "updated_at": "2022-12-13T01:30:55Z",
+          "owner": {
+            "name": "John Smith",
+            "email": "some@email.com",
+            "branches_limit": 10,
+            "subscription_type": "scale"
+          },
+          "org_id": "org-morning-bread-81040908",
+          "owner_id": "629982cc-de05-43db-ae16-28f2399c4910",
+          "data_storage_bytes_hour": 2831928,
+          "branch_logical_size_limit": 10,
+          "branch_logical_size_limit_bytes": 10485760,
+          "data_transfer_bytes": 1000,
+          "written_data_bytes": 193990002,
+          "compute_time_seconds": 2485760,
+          "active_time_seconds": 621440,
+          "cpu_used_sec": 155350,
+          "consumption_period_start": "2022-11-01T00:00:00Z",
+          "consumption_period_end": "2022-12-01T00:00:00Z"
+        },
+        "details": {
+          "description": "Full details of the project, including configuration, consumption metrics, and ownership.",
+          "descriptionHtml": "<p>Full details of the project, including configuration, consumption metrics, and ownership.</p>",
+          "example": "{\n  \"id\": \"spring-example-302709\",\n  \"platform_id\": \"aws\",\n  \"region_id\": \"aws-us-east-2\",\n  \"name\": \"spring-example-302709\",\n  \"provisioner\": \"k8s-pod\",\n  \"pg_version\": 15,\n  \"proxy_host\": \"us-east-2.aws.neon.tech\",\n  \"store_passwords\": true,\n  \"creation_source\": \"console\",\n  \"history_retention_seconds\": 604800,\n  \"created_at\": \"2022-12-13T01:30:55Z\",\n  \"updated_at\": \"2022-12-13T01:30:55Z\",\n  \"owner\": {\n    \"name\": \"John Smith\",\n    \"email\": \"some@email.com\",\n    \"branches_limit\": 10,\n    \"subscription_type\": \"scale\"\n  },\n  \"org_id\": \"org-morning-bread-81040908\",\n  \"owner_id\": \"629982cc-de05-43db-ae16-28f2399c4910\",\n  \"data_storage_bytes_hour\": 2831928,\n  \"branch_logical_size_limit\": 10,\n  \"branch_logical_size_limit_bytes\": 10485760,\n  \"data_transfer_bytes\": 1000,\n  \"written_data_bytes\": 193990002,\n  \"compute_time_seconds\": 2485760,\n  \"active_time_seconds\": 621440,\n  \"cpu_used_sec\": 155350,\n  \"consumption_period_start\": \"2022-11-01T00:00:00Z\",\n  \"consumption_period_end\": \"2022-12-01T00:00:00Z\"\n}",
+          "values": null
+        },
+        "displayOrder": [
+          "data_storage_bytes_hour",
+          "data_transfer_bytes",
+          "written_data_bytes",
+          "compute_time_seconds",
+          "active_time_seconds",
+          "cpu_used_sec",
+          "id",
+          "platform_id",
+          "region_id",
+          "name",
+          "provisioner",
+          "pg_version",
+          "proxy_host",
+          "branch_logical_size_limit",
+          "branch_logical_size_limit_bytes",
+          "store_passwords",
+          "creation_source",
+          "history_retention_seconds",
+          "created_at",
+          "updated_at",
+          "consumption_period_start",
+          "consumption_period_end",
+          "owner_id",
+          "default_endpoint_settings",
+          "settings",
+          "synthetic_storage_size",
+          "owner",
+          "org_id",
+          "maintenance_scheduled_for",
+          "effective_project_permission",
+          "maintenance_starts_at",
+          "quota_reset_at",
+          "compute_last_active_at",
+          "hipaa_enabled_at"
+        ]
+      },
+      "branches": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "id",
+            "project_id",
+            "name",
+            "current_state",
+            "state_changed_at",
+            "creation_source",
+            "created_at",
+            "updated_at",
+            "default",
+            "protected",
+            "cpu_used_sec",
+            "active_time_seconds",
+            "compute_time_seconds",
+            "written_data_bytes",
+            "data_transfer_bytes"
+          ],
+          "properties": {
+            "id": {
+              "description": "The branch ID. This value is generated when a branch is created. A `branch_id` value has a `br` prefix. For example: `br-small-term-683261`.\n",
+              "type": "string",
+              "pattern": "^[a-z0-9-]{1,60}$",
+              "details": {
+                "description": "The branch ID. This value is generated when a branch is created. A `branch_id` value has a `br` prefix. For example: `br-small-term-683261`.",
+                "descriptionHtml": "<p>The branch ID. This value is generated when a branch is created. A <code>branch_id</code> value has a <code>br</code> prefix. For example: <code>br-small-term-683261</code>.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "project_id": {
+              "description": "The ID of the project this branch belongs to.",
+              "type": "string",
+              "pattern": "^[a-z0-9-]{1,60}$",
+              "details": {
+                "description": "The ID of the project this branch belongs to.",
+                "descriptionHtml": "<p>The ID of the project this branch belongs to.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "parent_id": {
+              "description": "The `branch_id` of the parent branch\n",
+              "type": "string",
+              "pattern": "^[a-z0-9-]{1,60}$",
+              "details": {
+                "description": "The `branch_id` of the parent branch",
+                "descriptionHtml": "<p>The <code>branch_id</code> of the parent branch</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "parent_lsn": {
+              "description": "The Log Sequence Number (LSN) on the parent branch from which this branch was created.\nWhen restoring a branch using the `POST /projects/{project_id}/branches/{branch_id}/restore` endpoint,\nthis value isn’t finalized until all operations related to the restore have completed successfully.\n",
+              "type": "string",
+              "details": {
+                "description": "The Log Sequence Number (LSN) on the parent branch from which this branch was created.\nWhen restoring a branch using the `POST /projects/{project_id}/branches/{branch_id}/restore` endpoint,\nthis value isn’t finalized until all operations related to the restore have completed successfully.",
+                "descriptionHtml": "<p>The Log Sequence Number (LSN) on the parent branch from which this branch was created.\nWhen restoring a branch using the <code>POST /projects/{project_id}/branches/{branch_id}/restore</code> endpoint,\nthis value isn’t finalized until all operations related to the restore have completed successfully.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "parent_timestamp": {
+              "description": "The point in time on the parent branch from which this branch was created.\nWhen restoring a branch using the `POST /projects/{project_id}/branches/{branch_id}/restore` endpoint,\nthis value isn’t finalized until all operations related to the restore have completed successfully.\nAfter all the operations completed, this value might stay empty.\n",
+              "type": "string",
+              "format": "date-time",
+              "details": {
+                "description": "The point in time on the parent branch from which this branch was created.\nWhen restoring a branch using the `POST /projects/{project_id}/branches/{branch_id}/restore` endpoint,\nthis value isn’t finalized until all operations related to the restore have completed successfully.\nAfter all the operations completed, this value might stay empty.",
+                "descriptionHtml": "<p>The point in time on the parent branch from which this branch was created.\nWhen restoring a branch using the <code>POST /projects/{project_id}/branches/{branch_id}/restore</code> endpoint,\nthis value isn’t finalized until all operations related to the restore have completed successfully.\nAfter all the operations completed, this value might stay empty.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "name": {
+              "description": "The branch name\n",
+              "type": "string",
+              "details": {
+                "description": "The branch name",
+                "descriptionHtml": "<p>The branch name</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "current_state": {
+              "description": "The branch’s state, indicating if it is initializing, ready for use, or archived.\n  * 'init' - the branch is being created but is not available for querying.\n  * 'resetting' - the branch is being reset to a specific point in time or LSN and is not yet available for querying.\n  * 'ready' - the branch is fully operational and ready for querying. Expect normal query response times.\n  * 'archived' - the branch is stored in cost-effective archival Postgres storage. Expect slow query response times.\n",
+              "type": "string",
+              "details": {
+                "description": "The branch’s state, indicating if it is initializing, ready for use, or archived.\n  * 'init' - the branch is being created but is not available for querying.\n  * 'resetting' - the branch is being reset to a specific point in time or LSN and is not yet available for querying.\n  * 'ready' - the branch is fully operational and ready for querying. Expect normal query response times.\n  * 'archived' - the branch is stored in cost-effective archival Postgres storage. Expect slow query response times.",
+                "descriptionHtml": "<p>The branch’s state, indicating if it is initializing, ready for use, or archived.</p>\n<ul>\n<li>'init' - the branch is being created but is not available for querying.</li>\n<li>'resetting' - the branch is being reset to a specific point in time or LSN and is not yet available for querying.</li>\n<li>'ready' - the branch is fully operational and ready for querying. Expect normal query response times.</li>\n<li>'archived' - the branch is stored in cost-effective archival Postgres storage. Expect slow query response times.</li>\n</ul>",
+                "example": null,
+                "values": null
+              }
+            },
+            "pending_state": {
+              "description": "The branch’s state, indicating if it is initializing, ready for use, or archived.\n  * 'init' - the branch is being created but is not available for querying.\n  * 'resetting' - the branch is being reset to a specific point in time or LSN and is not yet available for querying.\n  * 'ready' - the branch is fully operational and ready for querying. Expect normal query response times.\n  * 'archived' - the branch is stored in cost-effective archival Postgres storage. Expect slow query response times.\n",
+              "type": "string",
+              "details": {
+                "description": "The branch’s state, indicating if it is initializing, ready for use, or archived.\n  * 'init' - the branch is being created but is not available for querying.\n  * 'resetting' - the branch is being reset to a specific point in time or LSN and is not yet available for querying.\n  * 'ready' - the branch is fully operational and ready for querying. Expect normal query response times.\n  * 'archived' - the branch is stored in cost-effective archival Postgres storage. Expect slow query response times.",
+                "descriptionHtml": "<p>The branch’s state, indicating if it is initializing, ready for use, or archived.</p>\n<ul>\n<li>'init' - the branch is being created but is not available for querying.</li>\n<li>'resetting' - the branch is being reset to a specific point in time or LSN and is not yet available for querying.</li>\n<li>'ready' - the branch is fully operational and ready for querying. Expect normal query response times.</li>\n<li>'archived' - the branch is stored in cost-effective archival Postgres storage. Expect slow query response times.</li>\n</ul>",
+                "example": null,
+                "values": null
+              }
+            },
+            "state_changed_at": {
+              "description": "A UTC timestamp indicating when the `current_state` began\n",
+              "type": "string",
+              "format": "date-time",
+              "details": {
+                "description": "A UTC timestamp indicating when the `current_state` began",
+                "descriptionHtml": "<p>A UTC timestamp indicating when the <code>current_state</code> began</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "logical_size": {
+              "description": "The logical size of the branch, in bytes\n",
+              "type": "integer",
+              "format": "int64",
+              "details": {
+                "description": "The logical size of the branch, in bytes",
+                "descriptionHtml": "<p>The logical size of the branch, in bytes</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "creation_source": {
+              "description": "The branch creation source\n",
+              "type": "string",
+              "details": {
+                "description": "The branch creation source",
+                "descriptionHtml": "<p>The branch creation source</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "primary": {
+              "deprecated": true,
+              "description": "Deprecated. Use the `default` field. Whether the branch is the project's primary branch.\n",
+              "type": "boolean",
+              "details": {
+                "description": "Deprecated. Use the `default` field. Whether the branch is the project's primary branch.",
+                "descriptionHtml": "<p>Deprecated. Use the <code>default</code> field. Whether the branch is the project's primary branch.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "default": {
+              "description": "Whether the branch is the project's default branch\n",
+              "type": "boolean",
+              "details": {
+                "description": "Whether the branch is the project's default branch",
+                "descriptionHtml": "<p>Whether the branch is the project's default branch</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "protected": {
+              "description": "Whether the branch is protected. Protected branches (and their computes) cannot be deleted, archived, or reset, and block deletion of the project.\n",
+              "type": "boolean",
+              "details": {
+                "description": "Whether the branch is protected. Protected branches (and their computes) cannot be deleted, archived, or reset, and block deletion of the project.",
+                "descriptionHtml": "<p>Whether the branch is protected. Protected branches (and their computes) cannot be deleted, archived, or reset, and block deletion of the project.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "cpu_used_sec": {
+              "deprecated": true,
+              "description": "Deprecated. Use `compute_time_seconds` instead. CPU seconds used by all of the branch's compute endpoints, including deleted ones. This value is reset at the beginning of each billing period.\n",
+              "type": "integer",
+              "format": "int64",
+              "details": {
+                "description": "Deprecated. Use `compute_time_seconds` instead. CPU seconds used by all of the branch's compute endpoints, including deleted ones. This value is reset at the beginning of each billing period.",
+                "descriptionHtml": "<p>Deprecated. Use <code>compute_time_seconds</code> instead. CPU seconds used by all of the branch's compute endpoints, including deleted ones. This value is reset at the beginning of each billing period.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "compute_time_seconds": {
+              "type": "integer",
+              "format": "int64",
+              "description": "Total Postgres compute time consumed by this branch during the current billing period, in CU-seconds (weighted by compute size). Divide by 3600 for CU-hours.",
+              "details": {
+                "description": "Total Postgres compute time consumed by this branch during the current billing period, in CU-seconds (weighted by compute size). Divide by 3600 for CU-hours.",
+                "descriptionHtml": "<p>Total Postgres compute time consumed by this branch during the current billing period, in CU-seconds (weighted by compute size). Divide by 3600 for CU-hours.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "active_time_seconds": {
+              "type": "integer",
+              "format": "int64",
+              "description": "Total time this branch's compute has been active during the current billing period, in seconds (not weighted by compute size). Distinct from `compute_time_seconds`, which is CU-weighted.",
+              "details": {
+                "description": "Total time this branch's compute has been active during the current billing period, in seconds (not weighted by compute size). Distinct from `compute_time_seconds`, which is CU-weighted.",
+                "descriptionHtml": "<p>Total time this branch's compute has been active during the current billing period, in seconds (not weighted by compute size). Distinct from <code>compute_time_seconds</code>, which is CU-weighted.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "written_data_bytes": {
+              "type": "integer",
+              "format": "int64",
+              "description": "Data written by this branch during the current billing period, in bytes.",
+              "details": {
+                "description": "Data written by this branch during the current billing period, in bytes.",
+                "descriptionHtml": "<p>Data written by this branch during the current billing period, in bytes.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "data_transfer_bytes": {
+              "type": "integer",
+              "format": "int64",
+              "description": "Total data transferred out of the branch, in bytes. Used as a consumption metric.",
+              "details": {
+                "description": "Total data transferred out of the branch, in bytes. Used as a consumption metric.",
+                "descriptionHtml": "<p>Total data transferred out of the branch, in bytes. Used as a consumption metric.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "created_at": {
+              "description": "A timestamp indicating when the branch was created\n",
+              "type": "string",
+              "format": "date-time",
+              "details": {
+                "description": "A timestamp indicating when the branch was created",
+                "descriptionHtml": "<p>A timestamp indicating when the branch was created</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "updated_at": {
+              "description": "A timestamp indicating when the branch was last updated\n",
+              "type": "string",
+              "format": "date-time",
+              "details": {
+                "description": "A timestamp indicating when the branch was last updated",
+                "descriptionHtml": "<p>A timestamp indicating when the branch was last updated</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "ttl_interval_seconds": {
+              "description": "The time-to-live (TTL) duration originally configured for the branch, in seconds. This read-only value represents the interval between the time `expires_at` was set and the expiration timestamp itself. It is preserved to ensure the same TTL duration is reapplied when resetting the branch from its parent, and only updates when a new `expires_at` value is set.\n\nAccess to this feature is currently limited to participants in the Early Access Program.\n",
+              "type": "integer",
+              "example": 3600,
+              "details": {
+                "description": "The time-to-live (TTL) duration originally configured for the branch, in seconds. This read-only value represents the interval between the time `expires_at` was set and the expiration timestamp itself. It is preserved to ensure the same TTL duration is reapplied when resetting the branch from its parent, and only updates when a new `expires_at` value is set.\n\nAccess to this feature is currently limited to participants in the Early Access Program.",
+                "descriptionHtml": "<p>The time-to-live (TTL) duration originally configured for the branch, in seconds. This read-only value represents the interval between the time <code>expires_at</code> was set and the expiration timestamp itself. It is preserved to ensure the same TTL duration is reapplied when resetting the branch from its parent, and only updates when a new <code>expires_at</code> value is set.</p>\n<p>Access to this feature is currently limited to participants in the Early Access Program.</p>",
+                "example": "3600",
+                "values": null
+              }
+            },
+            "expires_at": {
+              "description": "The timestamp when the branch is scheduled to expire and be automatically deleted. Must be set by the client following the [RFC 3339, section 5.6](https://tools.ietf.org/html/rfc3339#section-5.6) format with precision up to seconds (such as 2025-06-09T18:02:16Z). Deletion is performed by a background job and may not occur exactly at the specified time.\n\nAccess to this feature is currently limited to participants in the Early Access Program.\n",
+              "type": "string",
+              "format": "date-time",
+              "example": "2025-06-09T18:02:16Z",
+              "details": {
+                "description": "The timestamp when the branch is scheduled to expire and be automatically deleted. Must be set by the client following the [RFC 3339, section 5.6](https://tools.ietf.org/html/rfc3339#section-5.6) format with precision up to seconds (such as 2025-06-09T18:02:16Z). Deletion is performed by a background job and may not occur exactly at the specified time.\n\nAccess to this feature is currently limited to participants in the Early Access Program.",
+                "descriptionHtml": "<p>The timestamp when the branch is scheduled to expire and be automatically deleted. Must be set by the client following the <a href=\"https://tools.ietf.org/html/rfc3339#section-5.6\">RFC 3339, section 5.6</a> format with precision up to seconds (such as 2025-06-09T18:02:16Z). Deletion is performed by a background job and may not occur exactly at the specified time.</p>\n<p>Access to this feature is currently limited to participants in the Early Access Program.</p>",
+                "example": "2025-06-09T18:02:16Z",
+                "values": null
+              }
+            },
+            "last_reset_at": {
+              "description": "A timestamp indicating when the branch was last reset\n",
+              "type": "string",
+              "format": "date-time",
+              "details": {
+                "description": "A timestamp indicating when the branch was last reset",
+                "descriptionHtml": "<p>A timestamp indicating when the branch was last reset</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "created_by": {
+              "description": "The resolved user model that contains details of the user/org/integration/api_key used for branch creation. This field is filled only in listing/get/create/get/update/delete methods, if it is empty when calling other handlers, it does not mean that it is empty in the system.\n",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Display name of the user who created the branch.",
+                  "details": {
+                    "description": "Display name of the user who created the branch.",
+                    "descriptionHtml": "<p>Display name of the user who created the branch.</p>",
+                    "example": null,
+                    "values": null
+                  }
+                },
+                "image": {
+                  "type": "string",
+                  "description": "The URL to the user's avatar image.",
+                  "details": {
+                    "description": "The URL to the user's avatar image.",
+                    "descriptionHtml": "<p>The URL to the user's avatar image.</p>",
+                    "example": null,
+                    "values": null
+                  }
+                }
+              },
+              "details": {
+                "description": "The resolved user model that contains details of the user/org/integration/api_key used for branch creation. This field is filled only in listing/get/create/get/update/delete methods, if it is empty when calling other handlers, it does not mean that it is empty in the system.",
+                "descriptionHtml": "<p>The resolved user model that contains details of the user/org/integration/api_key used for branch creation. This field is filled only in listing/get/create/get/update/delete methods, if it is empty when calling other handlers, it does not mean that it is empty in the system.</p>",
+                "example": null,
+                "values": null
+              },
+              "displayOrder": [
+                "name",
+                "image"
+              ]
+            },
+            "init_source": {
+              "description": "Source of initialization for the branch. `parent-data` (default) copies schema and data from the parent. `parent-schema` copies schema only from the parent. `schema-only` creates a root branch with schema only. `import` initializes from an external import.\n",
+              "type": "string",
+              "example": "parent-data",
+              "details": {
+                "description": "Source of initialization for the branch. `parent-data` (default) copies schema and data from the parent. `parent-schema` copies schema only from the parent. `schema-only` creates a root branch with schema only. `import` initializes from an external import.",
+                "descriptionHtml": "<p>Source of initialization for the branch. <code>parent-data</code> (default) copies schema and data from the parent. <code>parent-schema</code> copies schema only from the parent. <code>schema-only</code> creates a root branch with schema only. <code>import</code> initializes from an external import.</p>",
+                "example": "parent-data",
+                "values": null
+              }
+            },
+            "restore_status": {
+              "description": "Could be `restored`, `finalized` or `detaching`.\nA `restored` branch becomes permanently `finalized` when you call `finalizeRestoreBranch`\nA `restored` or `finalized` branch may begin `detaching` as a one-time performance optimisation, after which it will continue in its original state\n",
+              "type": "string",
+              "details": {
+                "description": "Could be `restored`, `finalized` or `detaching`.\nA `restored` branch becomes permanently `finalized` when you call `finalizeRestoreBranch`\nA `restored` or `finalized` branch may begin `detaching` as a one-time performance optimisation, after which it will continue in its original state",
+                "descriptionHtml": "<p>Could be <code>restored</code>, <code>finalized</code> or <code>detaching</code>.\nA <code>restored</code> branch becomes permanently <code>finalized</code> when you call <code>finalizeRestoreBranch</code>\nA <code>restored</code> or <code>finalized</code> branch may begin <code>detaching</code> as a one-time performance optimisation, after which it will continue in its original state</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "restored_from": {
+              "description": "ID of the snapshot that was the restore source for this branch\n",
+              "type": "string",
+              "details": {
+                "description": "ID of the snapshot that was the restore source for this branch",
+                "descriptionHtml": "<p>ID of the snapshot that was the restore source for this branch</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "restored_as": {
+              "description": "ID of the target branch which was replaced when this branch was restored\n",
+              "type": "string",
+              "details": {
+                "description": "ID of the target branch which was replaced when this branch was restored",
+                "descriptionHtml": "<p>ID of the target branch which was replaced when this branch was restored</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "restricted_actions": {
+              "description": "A list of actions that are currently restricted for this branch and the reason why.\n",
+              "type": "array",
+              "items": {
+                "description": "An action that is currently restricted for the branch and the reason why.\n",
+                "type": "object",
+                "required": [
+                  "name",
+                  "reason"
+                ],
+                "properties": {
+                  "name": {
+                    "description": "The name of a restricted action on a branch. `restore`: the branch cannot be used as a restore target. `delete-rw-endpoint`: the read-write endpoint for the branch cannot be deleted.\n",
+                    "type": "string",
+                    "example": "restore",
+                    "details": {
+                      "description": "The name of a restricted action on a branch. `restore`: the branch cannot be used as a restore target. `delete-rw-endpoint`: the read-write endpoint for the branch cannot be deleted.",
+                      "descriptionHtml": "<p>The name of a restricted action on a branch. <code>restore</code>: the branch cannot be used as a restore target. <code>delete-rw-endpoint</code>: the read-write endpoint for the branch cannot be deleted.</p>",
+                      "example": "restore",
+                      "values": null
+                    }
+                  },
+                  "reason": {
+                    "description": "A human-readable explanation of why the action is restricted.\n",
+                    "type": "string",
+                    "details": {
+                      "description": "A human-readable explanation of why the action is restricted.",
+                      "descriptionHtml": "<p>A human-readable explanation of why the action is restricted.</p>",
+                      "example": null,
+                      "values": null
+                    }
+                  }
+                },
+                "displayOrder": [
+                  "name",
+                  "reason"
+                ]
+              },
+              "details": {
+                "description": "A list of actions that are currently restricted for this branch and the reason why.",
+                "descriptionHtml": "<p>A list of actions that are currently restricted for this branch and the reason why.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "recovery": {
+              "description": "Recovery information for a deleted branch. Only present when listing deleted branches\nwith `include_deleted=true`.\n\nThis is part of the Branch Recovery feature, which is in preview and not available to all users.\n",
+              "type": "object",
+              "required": [
+                "deleted_at",
+                "recoverable_until",
+                "deletion_method"
+              ],
+              "properties": {
+                "deleted_at": {
+                  "description": "Timestamp when the branch was deleted\n",
+                  "type": "string",
+                  "format": "date-time",
+                  "details": {
+                    "description": "Timestamp when the branch was deleted",
+                    "descriptionHtml": "<p>Timestamp when the branch was deleted</p>",
+                    "example": null,
+                    "values": null
+                  }
+                },
+                "recoverable_until": {
+                  "description": "Timestamp when the recovery window expires and the branch will be permanently deleted\n",
+                  "type": "string",
+                  "format": "date-time",
+                  "details": {
+                    "description": "Timestamp when the recovery window expires and the branch will be permanently deleted",
+                    "descriptionHtml": "<p>Timestamp when the recovery window expires and the branch will be permanently deleted</p>",
+                    "example": null,
+                    "values": null
+                  }
+                },
+                "deletion_method": {
+                  "description": "How the branch was deleted: 'user' for manual deletion, 'ttl' for TTL expiration\n",
+                  "type": "string",
+                  "enum": [
+                    "user",
+                    "ttl"
+                  ],
+                  "details": {
+                    "description": "How the branch was deleted: 'user' for manual deletion, 'ttl' for TTL expiration",
+                    "descriptionHtml": "<p>How the branch was deleted: 'user' for manual deletion, 'ttl' for TTL expiration</p>",
+                    "example": null,
+                    "values": [
+                      "user",
+                      "ttl"
+                    ]
+                  }
+                }
+              },
+              "details": {
+                "description": "Recovery information for a deleted branch. Only present when listing deleted branches\nwith `include_deleted=true`.\n\nThis is part of the Branch Recovery feature, which is in preview and not available to all users.",
+                "descriptionHtml": "<p>Recovery information for a deleted branch. Only present when listing deleted branches\nwith <code>include_deleted=true</code>.</p>\n<p>This is part of the Branch Recovery feature, which is in preview and not available to all users.</p>",
+                "example": null,
+                "values": null
+              },
+              "displayOrder": [
+                "deleted_at",
+                "recoverable_until",
+                "deletion_method"
+              ]
+            }
+          },
+          "example": {
+            "id": "br-wispy-meadow-118737",
+            "project_id": "spring-example-302709",
+            "parent_id": "br-aged-salad-637688",
+            "parent_lsn": "0/1DE2850",
+            "name": "dev2",
+            "protected": false,
+            "current_state": "ready",
+            "state_changed_at": "2022-11-30T20:09:48Z",
+            "creation_source": "console",
+            "created_at": "2022-11-30T19:09:48Z",
+            "updated_at": "2022-12-01T19:53:05Z",
+            "default": true,
+            "init_source": "parent-data",
+            "data_transfer_bytes": 72911987,
+            "written_data_bytes": 542998300,
+            "compute_time_seconds": 823880990,
+            "active_time_seconds": 922200,
+            "cpu_used_sec": 461100
+          },
+          "displayOrder": [
+            "id",
+            "project_id",
+            "name",
+            "current_state",
+            "state_changed_at",
+            "creation_source",
+            "default",
+            "protected",
+            "cpu_used_sec",
+            "compute_time_seconds",
+            "active_time_seconds",
+            "written_data_bytes",
+            "data_transfer_bytes",
+            "created_at",
+            "updated_at",
+            "parent_id",
+            "parent_lsn",
+            "parent_timestamp",
+            "pending_state",
+            "logical_size",
+            "primary",
+            "ttl_interval_seconds",
+            "created_by",
+            "init_source",
+            "restore_status",
+            "restored_from",
+            "restored_as",
+            "restricted_actions",
+            "recovery",
+            "expires_at",
+            "last_reset_at"
+          ]
+        },
+        "description": "Branches in the project. Each includes `id`, `name`, `current_state`, and `created_at`.",
+        "details": {
+          "description": "Branches in the project. Each includes `id`, `name`, `current_state`, and `created_at`.",
+          "descriptionHtml": "<p>Branches in the project. Each includes <code>id</code>, <code>name</code>, <code>current_state</code>, and <code>created_at</code>.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "project",
+      "branches"
+    ],
+    "displayOrder": [
+      "project",
+      "branches"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/recover\" \\\n  -X POST \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.recoverProject({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": {
+    "command": "neon projects recover <project_id>",
+    "flags": [
+      {
+        "name": "analytics",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "api-key",
+        "type": "string",
+        "required": false,
+        "default": ""
+      },
+      {
+        "name": "color",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "config-dir",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "context-file",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "help",
+        "type": "boolean",
+        "required": false,
+        "alias": "h"
+      },
+      {
+        "name": "output",
+        "type": "string",
+        "required": false,
+        "alias": "o",
+        "enum": [
+          "json",
+          "yaml",
+          "table"
+        ],
+        "default": "table"
+      },
+      {
+        "name": "profile",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "version",
+        "type": "boolean",
+        "required": false,
+        "alias": "v"
+      }
+    ],
+    "positionals": [
+      {
+        "display": "<project_id>",
+        "apiEquiv": "project_id"
+      }
+    ]
+  },
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": null
+  },
+  "specIndex": 11
+}

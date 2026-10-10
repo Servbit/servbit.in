@@ -1,0 +1,380 @@
+{
+  "id": "update-project-branch-trigger",
+  "operationId": "updateProjectBranchTrigger",
+  "method": "PATCH",
+  "path": "/projects/{project_id}/branches/{branch_id}/triggers/{trigger_id}",
+  "tag": "functions",
+  "tagDisplay": "Functions",
+  "stability": "beta",
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Update a trigger",
+  "description": "Applies a partial update. The required `type` discriminator must identify\nthe existing trigger kind. The supported types are `schedule` and\n`storage_object_created`. Editing an inherited trigger creates a\nchild-local shadow with the same `trigger_id`; it remains disabled unless\nthis request explicitly enables it. For a schedule trigger, updating the\nschedule or enabled state increments `version` and recomputes\n`next_run_at`.\n\nDisabling stops future scheduling but does not cancel occurrences already\ncommitted for delivery. For `storage_object_created`, the configuration\nselects one exact bucket. An omitted object-key prefix matches every key\nin that bucket; a present prefix is matched byte-for-byte and\ncase-sensitively against the full key, without path normalization or a\npath-segment boundary.\n\n**Note**: This endpoint is currently in Beta.\n",
+  "descriptionHtml": "<p>Applies a partial update. The required <code>type</code> discriminator must identify\nthe existing trigger kind. The supported types are <code>schedule</code> and\n<code>storage_object_created</code>. Editing an inherited trigger creates a\nchild-local shadow with the same <code>trigger_id</code>; it remains disabled unless\nthis request explicitly enables it. For a schedule trigger, updating the\nschedule or enabled state increments <code>version</code> and recomputes\n<code>next_run_at</code>.</p>\n<p>Disabling stops future scheduling but does not cancel occurrences already\ncommitted for delivery. For <code>storage_object_created</code>, the configuration\nselects one exact bucket. An omitted object-key prefix matches every key\nin that bucket; a present prefix is matched byte-for-byte and\ncase-sensitively against the full key, without path normalization or a\npath-segment boundary.</p>\n<p><strong>Note</strong>: This endpoint is currently in Beta.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "branch_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon branch ID",
+      "descriptionHtml": "<p>The Neon branch ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "trigger_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The opaque, project-wide trigger ID",
+      "descriptionHtml": "<p>The opaque, project-wide trigger ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": {
+    "required": true,
+    "properties": {
+      "type": {
+        "type": "string",
+        "enum": [
+          "schedule"
+        ],
+        "description": "Trigger type discriminator; it does not change the trigger type.",
+        "details": {
+          "description": "Trigger type discriminator; it does not change the trigger type.",
+          "descriptionHtml": "<p>Trigger type discriminator; it does not change the trigger type.</p>",
+          "example": null,
+          "values": [
+            "schedule"
+          ]
+        }
+      },
+      "function_slug": {
+        "type": "string",
+        "pattern": "^[a-z0-9]{1,20}$",
+        "description": "Replacement branch-local Function slug.",
+        "details": {
+          "description": "Replacement branch-local Function slug.",
+          "descriptionHtml": "<p>Replacement branch-local Function slug.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 256
+      },
+      "function_path": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 2048
+      },
+      "schedule": {
+        "type": "object",
+        "description": "A numeric five-field cron schedule interpreted in UTC.",
+        "required": [
+          "cron"
+        ],
+        "properties": {
+          "cron": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024,
+            "description": "Numeric five-field cron expression (minute through day-of-week), interpreted in UTC.",
+            "example": "0 9 * * 1-5",
+            "details": {
+              "description": "Numeric five-field cron expression (minute through day-of-week), interpreted in UTC.",
+              "descriptionHtml": "<p>Numeric five-field cron expression (minute through day-of-week), interpreted in UTC.</p>",
+              "example": "0 9 * * 1-5",
+              "values": null
+            }
+          }
+        },
+        "additionalProperties": false,
+        "details": {
+          "description": "A numeric five-field cron schedule interpreted in UTC.",
+          "descriptionHtml": "<p>A numeric five-field cron schedule interpreted in UTC.</p>",
+          "example": null,
+          "values": null
+        },
+        "displayOrder": [
+          "cron"
+        ]
+      },
+      "enabled": {
+        "type": "boolean",
+        "description": "True enables and false disables future scheduling.",
+        "details": {
+          "description": "True enables and false disables future scheduling.",
+          "descriptionHtml": "<p>True enables and false disables future scheduling.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "type"
+    ],
+    "displayOrder": [
+      "type",
+      "name",
+      "function_slug",
+      "function_path",
+      "schedule",
+      "enabled"
+    ],
+    "sections": null,
+    "seed": null,
+    "labels": null
+  },
+  "response": {
+    "status": "200",
+    "description": "The updated trigger",
+    "descriptionHtml": "<p>The updated trigger</p>",
+    "example": null,
+    "properties": {
+      "trigger": {
+        "type": "object",
+        "description": "A branch-effective trigger discriminated by `type`. The supported trigger\ntypes are `schedule` and `storage_object_created`.\n",
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "schedule": "#/components/schemas/ScheduleTrigger",
+            "storage_object_created": "#/components/schemas/StorageObjectCreatedTrigger"
+          }
+        },
+        "oneOf": [
+          {
+            "type": "object",
+            "description": "A branch-effective schedule trigger for a Function.",
+            "required": [
+              "type",
+              "trigger_id",
+              "function_slug",
+              "name",
+              "function_path",
+              "schedule",
+              "enabled",
+              "version",
+              "next_run_at",
+              "inherited"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "schedule"
+                ],
+                "description": "Trigger type discriminator."
+              },
+              "trigger_id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.\\-]{0,127}$",
+                "minLength": 1,
+                "maxLength": 128,
+                "description": "Opaque, server-minted project-wide trigger identifier."
+              },
+              "function_slug": {
+                "type": "string",
+                "description": "The branch-local Function slug resolved when an occurrence is consumed."
+              },
+              "name": {
+                "type": "string",
+                "description": "Human-readable trigger name."
+              },
+              "function_path": {
+                "type": "string",
+                "description": "Path passed to the target Function."
+              },
+              "schedule": {
+                "type": "object",
+                "description": "A numeric five-field cron schedule interpreted in UTC.",
+                "required": [
+                  "cron"
+                ],
+                "properties": {
+                  "cron": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 1024,
+                    "description": "Numeric five-field cron expression (minute through day-of-week), interpreted in UTC.",
+                    "example": "0 9 * * 1-5"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "version": {
+                "type": "integer",
+                "format": "int64",
+                "minimum": 1,
+                "description": "Monotonic configuration version."
+              },
+              "next_run_at": {
+                "type": "string",
+                "nullable": true,
+                "description": "Next scheduled occurrence as an RFC 3339 UTC timestamp, or null\nwhile disabled or inherited and not explicitly enabled on this branch.\n"
+              },
+              "inherited": {
+                "type": "boolean",
+                "description": "True when the effective configuration was authored on an ancestor branch."
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "description": "A branch-effective trigger that invokes a Function after a successful\nupload matching its exact bucket and optional object-key prefix.\n",
+            "required": [
+              "type",
+              "trigger_id",
+              "function_slug",
+              "name",
+              "function_path",
+              "storage_object_created",
+              "enabled",
+              "version",
+              "inherited"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "storage_object_created"
+                ],
+                "description": "Trigger type discriminator."
+              },
+              "trigger_id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.\\-]{0,127}$",
+                "minLength": 1,
+                "maxLength": 128,
+                "description": "Opaque, server-minted project-wide trigger identifier."
+              },
+              "function_slug": {
+                "type": "string",
+                "description": "The branch-local Function slug resolved when an invocation is consumed."
+              },
+              "name": {
+                "type": "string",
+                "description": "Human-readable trigger name."
+              },
+              "function_path": {
+                "type": "string",
+                "description": "Path passed to the target Function."
+              },
+              "storage_object_created": {
+                "type": "object",
+                "description": "Matches successful uploads to one exact bucket and, when configured, an\nobject-key prefix. The Function receives a JSON request body with\n`type` set to `storage_object_created` and a `data` object containing\nexactly `bucket_name` and `object_key`.\n",
+                "required": [
+                  "bucket_name"
+                ],
+                "properties": {
+                  "bucket_name": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 63,
+                    "description": "The exact object-storage bucket name to watch."
+                  },
+                  "prefix": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 1024,
+                    "pattern": "^[^\\x00-\\x1f\\x7f-\\x9f]+$",
+                    "description": "Optional object-key prefix of at most 1024 UTF-8 bytes. When omitted,\nevery key in the bucket matches. When present, the full object key\nmust start with these exact bytes; matching is case-sensitive and\ndoes not normalize paths or require a path-segment boundary.\nMatch-all responses omit this field rather than returning an empty\nstring.\n"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "version": {
+                "type": "integer",
+                "format": "int64",
+                "minimum": 1,
+                "description": "Monotonic configuration version."
+              },
+              "inherited": {
+                "type": "boolean",
+                "description": "True when the effective configuration was authored on an ancestor branch."
+              }
+            },
+            "additionalProperties": false
+          }
+        ],
+        "details": {
+          "description": "A branch-effective trigger discriminated by `type`. The supported trigger\ntypes are `schedule` and `storage_object_created`.",
+          "descriptionHtml": "<p>A branch-effective trigger discriminated by <code>type</code>. The supported trigger\ntypes are <code>schedule</code> and <code>storage_object_created</code>.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "trigger"
+    ],
+    "displayOrder": [
+      "trigger"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/triggers/$TRIGGER_ID\" \\\n  -X PATCH \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.updateProjectBranchTrigger({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    branch_id: process.env.BRANCH_ID,\n    trigger_id: process.env.TRIGGER_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": null
+  },
+  "specIndex": 174
+}

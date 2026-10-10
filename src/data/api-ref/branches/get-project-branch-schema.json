@@ -1,0 +1,465 @@
+{
+  "id": "get-project-branch-schema",
+  "operationId": "getProjectBranchSchema",
+  "method": "GET",
+  "path": "/projects/{project_id}/branches/{branch_id}/schema",
+  "tag": "branches",
+  "tagDisplay": "Branches",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Retrieve database schema",
+  "description": "Retrieves the database schema. Specify `lsn` or `timestamp` (not both) to read at a point in time; omit both to read from the database's head.",
+  "descriptionHtml": "<p>Retrieves the database schema. Specify <code>lsn</code> or <code>timestamp</code> (not both) to read at a point in time; omit both to read from the database's head.</p>",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "branch_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The branch ID",
+      "descriptionHtml": "<p>The branch ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "db_name",
+      "type": "string",
+      "in": "query",
+      "required": true,
+      "description": "Name of the database for which the schema is retrieved",
+      "descriptionHtml": "<p>Name of the database for which the schema is retrieved</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "lsn",
+      "type": "string",
+      "in": "query",
+      "required": false,
+      "description": "The Log Sequence Number (LSN) for which the schema is retrieved\n",
+      "descriptionHtml": "<p>The Log Sequence Number (LSN) for which the schema is retrieved</p>\n",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "timestamp",
+      "type": "string",
+      "in": "query",
+      "required": false,
+      "description": "The point in time for which the schema is retrieved\n",
+      "descriptionHtml": "<p>The point in time for which the schema is retrieved</p>\n",
+      "default": null,
+      "example": "2022-11-30T20:09:48Z"
+    },
+    {
+      "name": "format",
+      "type": "string",
+      "in": "query",
+      "required": false,
+      "description": "The format of the schema to retrieve. Possible values:\n- `sql` (default)\n- `json`\n",
+      "descriptionHtml": "<p>The format of the schema to retrieve. Possible values:</p>\n<ul>\n<li><code>sql</code> (default)</li>\n<li><code>json</code></li>\n</ul>\n",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": null,
+  "response": {
+    "status": "200",
+    "description": "Schema definition",
+    "descriptionHtml": "<p>Schema definition</p>",
+    "example": {
+      "sql": "--\n-- PostgreSQL database dump\n--\n\n-- Dumped from database version 17.10 (4f20678)\n-- Dumped by pg_dump version 17.10 (4f20678)\n\nSET statement_timeout = 0;\nSET lock_timeout = 0;\nSET idle_in_transaction_session_timeout = 0;\nSET transaction_timeout = 0;\nSET client_encoding = 'UTF8';\nSET standard_conforming_strings = on;\nSELECT pg_catalog.set_config('search_path', '', false);\nSET check_function_bodies = false;\nSET xmloption = content;\nSET client_min_messages = warning;\nSET row_security = off;\n\n--\n-- Name: DEFAULT PRIVILEGES FOR SEQUENCES; Type: DEFAULT ACL; Schema: public; Owner: cloud_admin\n--\n\nALTER DEFAULT PRIVILEGES FOR ROLE cloud_admin IN SCHEMA public GRANT ALL ON SEQUENCES TO neon_superuser WITH GRANT OPTION;\n\n\n--\n-- Name: DEFAULT PRIVILEGES FOR TABLES; Type: DEFAULT ACL; Schema: public; Owner: cloud_admin\n--\n\nALTER DEFAULT PRIVILEGES FOR ROLE cloud_admin IN SCHEMA public GRANT ALL ON TABLES TO neon_superuser WITH GRANT OPTION;\n\n\n--\n-- PostgreSQL database dump complete\n--\n\n"
+    },
+    "properties": {
+      "sql": {
+        "type": "string",
+        "description": "Branch schema expressed as SQL DDL statements.",
+        "details": {
+          "description": "Branch schema expressed as SQL DDL statements.",
+          "descriptionHtml": "<p>Branch schema expressed as SQL DDL statements.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "json": {
+        "description": "Branch schema represented as a structured JSON object, parallel to the SQL DDL in `sql`.",
+        "type": "object",
+        "required": [
+          "tables"
+        ],
+        "properties": {
+          "tables": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "schema",
+                "name",
+                "columns"
+              ],
+              "properties": {
+                "schema": {
+                  "type": "string",
+                  "description": "Postgres schema (namespace) that contains the table, for example `public`.",
+                  "details": {
+                    "description": "Postgres schema (namespace) that contains the table, for example `public`.",
+                    "descriptionHtml": "<p>Postgres schema (namespace) that contains the table, for example <code>public</code>.</p>",
+                    "example": null,
+                    "values": null
+                  }
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Name of the table within the schema.",
+                  "details": {
+                    "description": "Name of the table within the schema.",
+                    "descriptionHtml": "<p>Name of the table within the schema.</p>",
+                    "example": null,
+                    "values": null
+                  }
+                },
+                "columns": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "name",
+                      "type"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Name of the column.",
+                        "details": {
+                          "description": "Name of the column.",
+                          "descriptionHtml": "<p>Name of the column.</p>",
+                          "example": null,
+                          "values": null
+                        }
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "Postgres data type of the column, for example \"integer\" or \"text\".",
+                        "details": {
+                          "description": "Postgres data type of the column, for example \"integer\" or \"text\".",
+                          "descriptionHtml": "<p>Postgres data type of the column, for example &quot;integer&quot; or &quot;text&quot;.</p>",
+                          "example": null,
+                          "values": null
+                        }
+                      },
+                      "nullable": {
+                        "type": "boolean",
+                        "description": "Whether the column allows NULL values",
+                        "details": {
+                          "description": "Whether the column allows NULL values",
+                          "descriptionHtml": "<p>Whether the column allows NULL values</p>",
+                          "example": null,
+                          "values": null
+                        }
+                      },
+                      "generated": {
+                        "type": "boolean",
+                        "description": "Whether the column is a generated (computed) column",
+                        "details": {
+                          "description": "Whether the column is a generated (computed) column",
+                          "descriptionHtml": "<p>Whether the column is a generated (computed) column</p>",
+                          "example": null,
+                          "values": null
+                        }
+                      }
+                    },
+                    "displayOrder": [
+                      "name",
+                      "type",
+                      "nullable",
+                      "generated"
+                    ]
+                  },
+                  "description": "Columns belonging to this table, each describing a column's name and attributes.",
+                  "details": {
+                    "description": "Columns belonging to this table, each describing a column's name and attributes.",
+                    "descriptionHtml": "<p>Columns belonging to this table, each describing a column's name and attributes.</p>",
+                    "example": null,
+                    "values": null
+                  }
+                },
+                "constraints": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "type",
+                      "columns"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "description": "Type of constraint. Possible values: `primary_key`, `unique`, `foreign_key`\n",
+                        "details": {
+                          "description": "Type of constraint. Possible values: `primary_key`, `unique`, `foreign_key`",
+                          "descriptionHtml": "<p>Type of constraint. Possible values: <code>primary_key</code>, <code>unique</code>, <code>foreign_key</code></p>",
+                          "example": null,
+                          "values": null
+                        }
+                      },
+                      "columns": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "minItems": 1,
+                        "description": "Column names participating in this constraint",
+                        "details": {
+                          "description": "Column names participating in this constraint",
+                          "descriptionHtml": "<p>Column names participating in this constraint</p>",
+                          "example": null,
+                          "values": null
+                        }
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Optional name of the constraint",
+                        "details": {
+                          "description": "Optional name of the constraint",
+                          "descriptionHtml": "<p>Optional name of the constraint</p>",
+                          "example": null,
+                          "values": null
+                        }
+                      },
+                      "referenced_table": {
+                        "type": "object",
+                        "required": [
+                          "schema",
+                          "table",
+                          "columns"
+                        ],
+                        "properties": {
+                          "schema": {
+                            "type": "string",
+                            "description": "Schema of the referenced table",
+                            "details": {
+                              "description": "Schema of the referenced table",
+                              "descriptionHtml": "<p>Schema of the referenced table</p>",
+                              "example": null,
+                              "values": null
+                            }
+                          },
+                          "table": {
+                            "type": "string",
+                            "description": "Name of the referenced table",
+                            "details": {
+                              "description": "Name of the referenced table",
+                              "descriptionHtml": "<p>Name of the referenced table</p>",
+                              "example": null,
+                              "values": null
+                            }
+                          },
+                          "columns": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "description": "Names of the referenced columns",
+                            "details": {
+                              "description": "Names of the referenced columns",
+                              "descriptionHtml": "<p>Names of the referenced columns</p>",
+                              "example": null,
+                              "values": null
+                            }
+                          }
+                        },
+                        "description": "For foreign keys - the referenced table information",
+                        "details": {
+                          "description": "For foreign keys - the referenced table information",
+                          "descriptionHtml": "<p>For foreign keys - the referenced table information</p>",
+                          "example": null,
+                          "values": null
+                        },
+                        "displayOrder": [
+                          "schema",
+                          "table",
+                          "columns"
+                        ]
+                      }
+                    },
+                    "displayOrder": [
+                      "type",
+                      "columns",
+                      "name",
+                      "referenced_table"
+                    ]
+                  },
+                  "description": "Table constraints defined in the branch schema, such as primary key, foreign key, unique, and check constraints.",
+                  "details": {
+                    "description": "Table constraints defined in the branch schema, such as primary key, foreign key, unique, and check constraints.",
+                    "descriptionHtml": "<p>Table constraints defined in the branch schema, such as primary key, foreign key, unique, and check constraints.</p>",
+                    "example": null,
+                    "values": null
+                  }
+                }
+              },
+              "displayOrder": [
+                "schema",
+                "name",
+                "columns",
+                "constraints"
+              ]
+            },
+            "description": "Tables present in the branch schema.",
+            "details": {
+              "description": "Tables present in the branch schema.",
+              "descriptionHtml": "<p>Tables present in the branch schema.</p>",
+              "example": null,
+              "values": null
+            }
+          }
+        },
+        "details": {
+          "description": "Branch schema represented as a structured JSON object, parallel to the SQL DDL in `sql`.",
+          "descriptionHtml": "<p>Branch schema represented as a structured JSON object, parallel to the SQL DDL in <code>sql</code>.</p>",
+          "example": null,
+          "values": null
+        },
+        "displayOrder": [
+          "tables"
+        ]
+      }
+    },
+    "requiredFields": [],
+    "displayOrder": [
+      "sql",
+      "json"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/schema?db_name=$DB_NAME\" \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.getProjectBranchSchema({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    branch_id: process.env.BRANCH_ID\n  },\n  query: {\n    db_name: process.env.DB_NAME,\n    timestamp: \"2022-11-30T20:09:48Z\"\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": {
+    "command": "neon branches schema-diff [base] [compare]",
+    "flags": [
+      {
+        "name": "analytics",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "api-key",
+        "type": "string",
+        "required": false,
+        "default": ""
+      },
+      {
+        "name": "color",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "config-dir",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "context-file",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "help",
+        "type": "boolean",
+        "required": false,
+        "alias": "h"
+      },
+      {
+        "name": "output",
+        "type": "string",
+        "required": false,
+        "alias": "o",
+        "enum": [
+          "json",
+          "yaml",
+          "table"
+        ],
+        "default": "table"
+      },
+      {
+        "name": "profile",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "version",
+        "type": "boolean",
+        "required": false,
+        "alias": "v"
+      },
+      {
+        "name": "project-id",
+        "type": "string",
+        "required": false,
+        "apiEquiv": "project_id",
+        "apiEquivIn": "parameter"
+      },
+      {
+        "name": "database",
+        "type": "string",
+        "required": false,
+        "alias": "db"
+      }
+    ],
+    "positionals": [],
+    "tableOutput": "--- Database: neondb\t(Branch: br-young-forest-a5b6c7d8)\n+++ Database: neondb\t(Branch: br-young-forest-a5b6c7d8)\n@@ -17,104 +17,408 @@\n SET client_min_messages = warning;\n SET row_security = off;\n \n --\n--- Name: pg_session_jwt; Type: EXTENSION; Schema: -; Owner: -\n+-- Name: neon_auth; Type: SCHEMA; Schema: -; Owner: neon_auth\n --\n \n-CREATE EXTENSION IF NOT EXISTS pg_session_jwt WITH SCHEMA public;\n+CREATE SCHEMA neon_auth;\n \n \n+ALTER SCHEMA neon_auth OWNER TO neon_auth;\n+\n+SET default_tablespace = '';\n+\n+SET default_table_access_method = heap;\n+\n --\n--- Name: EXTENSION pg_session_jwt; Type: COMMENT; Schema: -; Owner: \n+-- Name: account; Type: TABLE; Schema: neon_auth; Owner: neon_auth\n --\n \n-COMMENT ON EXTENSION pg_session_jwt IS 'pg_session_jwt: manage authentication sessions using JWTs';\n+CREATE TABLE neon_auth.account (\n+    id uuid DEFAULT gen_random_uuid() NOT NULL,\n+    \"accountId\" text NOT NULL,\n+    \"providerId\" text NOT NULL,\n+    \"userId\" uuid NOT NULL,\n+    \"accessToken\" text,\n+    \"refreshToken\" text,\n+    \"idToken\" text,\n+    \"accessTokenExpiresAt\" timestamp with time zone,\n+    \"refreshTokenExpiresAt\" timestamp with time zone,\n+    scope text,\n+    password text,\n+    \"createdAt\" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,\n… (truncated for docs)"
+  },
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": "Projects → Branches"
+  },
+  "specIndex": 83
+}

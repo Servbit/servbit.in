@@ -1,0 +1,149 @@
+{
+  "id": "get-project-branch-ai-gateway",
+  "operationId": "getProjectBranchAiGateway",
+  "method": "GET",
+  "path": "/projects/{project_id}/branches/{branch_id}/ai_gateway",
+  "tag": "ai-gateway",
+  "tagDisplay": "AI Gateway",
+  "stability": "beta",
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Get branch AI Gateway endpoint",
+  "description": "Returns the AI Gateway endpoint host for the specified branch, used to\nrender code-snippet base URLs. A 200 response means the branch is\nregistered and this region serves the AI gateway. A 404 response\nincludes a `reason` field indicating why the gateway is unavailable.\n\n**Note**: This endpoint is currently in Beta.\n",
+  "descriptionHtml": "<p>Returns the AI Gateway endpoint host for the specified branch, used to\nrender code-snippet base URLs. A 200 response means the branch is\nregistered and this region serves the AI gateway. A 404 response\nincludes a <code>reason</code> field indicating why the gateway is unavailable.</p>\n<p><strong>Note</strong>: This endpoint is currently in Beta.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "branch_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon branch ID",
+      "descriptionHtml": "<p>The Neon branch ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": null,
+  "response": {
+    "status": "200",
+    "description": "AI Gateway is enabled for this branch",
+    "descriptionHtml": "<p>AI Gateway is enabled for this branch</p>",
+    "example": {
+      "enabled": true,
+      "base_url": "https://br-young-forest-a5b6c7d8-api.ai.c-5.us-east-2.aws.neon.tech"
+    },
+    "properties": {
+      "enabled": {
+        "type": "boolean",
+        "description": "Always `true` in 200 responses. Present for forward compatibility,\nmirroring BranchStorage.enabled.\n",
+        "details": {
+          "description": "Always `true` in 200 responses. Present for forward compatibility,\nmirroring BranchStorage.enabled.",
+          "descriptionHtml": "<p>Always <code>true</code> in 200 responses. Present for forward compatibility,\nmirroring BranchStorage.enabled.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "base_url": {
+        "type": "string",
+        "format": "uri",
+        "description": "The AI-gateway endpoint root for this branch — an OpenAI-compatible\nbase URL. No dialect path is included; clients append the route\n(e.g. `/ai-gateway/openai/v1/responses`) themselves.\n",
+        "example": "https://br-cool-moon-42-api.ai.c-2.local.neon.build",
+        "details": {
+          "description": "The AI-gateway endpoint root for this branch — an OpenAI-compatible\nbase URL. No dialect path is included; clients append the route\n(e.g. `/ai-gateway/openai/v1/responses`) themselves.",
+          "descriptionHtml": "<p>The AI-gateway endpoint root for this branch — an OpenAI-compatible\nbase URL. No dialect path is included; clients append the route\n(e.g. <code>/ai-gateway/openai/v1/responses</code>) themselves.</p>",
+          "example": "https://br-cool-moon-42-api.ai.c-2.local.neon.build",
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "enabled",
+      "base_url"
+    ],
+    "displayOrder": [
+      "enabled",
+      "base_url"
+    ]
+  },
+  "errors": [
+    {
+      "status": "404",
+      "description": "AI Gateway is not available for this branch, or the project/branch\nwas not found. The body is always `BranchAiGatewayNotEnabled` — see\n`reason` for the exact cause.\n",
+      "descriptionHtml": "<p>AI Gateway is not available for this branch, or the project/branch\nwas not found. The body is always <code>BranchAiGatewayNotEnabled</code> — see\n<code>reason</code> for the exact cause.</p>\n",
+      "properties": {
+        "code": {
+          "type": "string",
+          "example": "AI_GATEWAY_NOT_ENABLED"
+        },
+        "message": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string",
+          "enum": [
+            "ai_gateway_unavailable",
+            "branch_not_found"
+          ],
+          "description": "Machine-readable reason why the AI gateway is unavailable:\n- `ai_gateway_unavailable`: the project's region/cell has no AI gateway configured.\n- `branch_not_found`: the project or branch does not exist, or the caller does not\n  have access to it.\n"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "reason"
+      ]
+    },
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/ai_gateway\" \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.getProjectBranchAiGateway({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    branch_id: process.env.BRANCH_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": null
+  },
+  "specIndex": 152
+}

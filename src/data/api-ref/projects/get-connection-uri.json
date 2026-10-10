@@ -1,0 +1,305 @@
+{
+  "id": "get-connection-uri",
+  "operationId": "getConnectionURI",
+  "method": "GET",
+  "path": "/projects/{project_id}/connection_uri",
+  "tag": "projects",
+  "tagDisplay": "Projects",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Retrieve connection URI",
+  "description": "Retrieves a connection URI for the specified database.\nThe URI uses the standard PostgreSQL connection string format. Set `pooled=true` to include the `-pooler` suffix for a connection pooler URI.\n",
+  "descriptionHtml": "<p>Retrieves a connection URI for the specified database.\nThe URI uses the standard PostgreSQL connection string format. Set <code>pooled=true</code> to include the <code>-pooler</code> suffix for a connection pooler URI.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "branch_id",
+      "type": "string",
+      "in": "query",
+      "required": false,
+      "description": "The branch ID. Defaults to your project's default `branch_id` if not specified.",
+      "descriptionHtml": "<p>The branch ID. Defaults to your project's default <code>branch_id</code> if not specified.</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "endpoint_id",
+      "type": "string",
+      "in": "query",
+      "required": false,
+      "description": "The endpoint ID. Defaults to the read-write `endpoint_id` associated with the `branch_id` if not specified.",
+      "descriptionHtml": "<p>The endpoint ID. Defaults to the read-write <code>endpoint_id</code> associated with the <code>branch_id</code> if not specified.</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "database_name",
+      "type": "string",
+      "in": "query",
+      "required": true,
+      "description": "The database name",
+      "descriptionHtml": "<p>The database name</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "role_name",
+      "type": "string",
+      "in": "query",
+      "required": true,
+      "description": "The role name",
+      "descriptionHtml": "<p>The role name</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "pooled",
+      "type": "boolean",
+      "in": "query",
+      "required": false,
+      "description": "Adds the `-pooler` option to the connection URI when set to `true`, creating a pooled connection URI.",
+      "descriptionHtml": "<p>Adds the <code>-pooler</code> option to the connection URI when set to <code>true</code>, creating a pooled connection URI.</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": null,
+  "response": {
+    "status": "200",
+    "description": "Returned the connection URI",
+    "descriptionHtml": "<p>Returned the connection URI</p>",
+    "example": {
+      "uri": "postgresql://[user]:[password]@ep-cool-darkness-a5b6c7d8.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require"
+    },
+    "properties": {
+      "uri": {
+        "description": "The connection URI.\n",
+        "type": "string",
+        "details": {
+          "description": "The connection URI.",
+          "descriptionHtml": "<p>The connection URI.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "uri"
+    ],
+    "displayOrder": [
+      "uri"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/connection_uri?database_name=$DATABASE_NAME&role_name=$ROLE_NAME\" \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.getConnectionUri({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID\n  },\n  query: {\n    database_name: process.env.DATABASE_NAME,\n    role_name: process.env.ROLE_NAME\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": {
+    "command": "neon connection-string [branch]",
+    "flags": [
+      {
+        "name": "analytics",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "api-key",
+        "type": "string",
+        "required": false,
+        "default": ""
+      },
+      {
+        "name": "color",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "config-dir",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "context-file",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "help",
+        "type": "boolean",
+        "required": false,
+        "alias": "h"
+      },
+      {
+        "name": "output",
+        "type": "string",
+        "required": false,
+        "alias": "o",
+        "enum": [
+          "json",
+          "yaml",
+          "table"
+        ],
+        "default": "table"
+      },
+      {
+        "name": "profile",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "version",
+        "type": "boolean",
+        "required": false,
+        "alias": "v"
+      },
+      {
+        "name": "database-name",
+        "type": "string",
+        "required": false,
+        "apiEquiv": "database_name",
+        "apiEquivIn": "parameter"
+      },
+      {
+        "name": "endpoint-type",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "extended",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "pooled",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "apiEquiv": "pooled",
+        "apiEquivIn": "parameter"
+      },
+      {
+        "name": "prisma",
+        "type": "boolean",
+        "required": false,
+        "default": false
+      },
+      {
+        "name": "project-id",
+        "type": "string",
+        "required": false,
+        "apiEquiv": "project_id",
+        "apiEquivIn": "parameter"
+      },
+      {
+        "name": "psql",
+        "type": "boolean",
+        "required": false,
+        "default": false
+      },
+      {
+        "name": "role-name",
+        "type": "string",
+        "required": false,
+        "apiEquiv": "role_name",
+        "apiEquivIn": "parameter"
+      },
+      {
+        "name": "ssl",
+        "type": "string",
+        "required": false,
+        "enum": [
+          "require",
+          "verify-ca",
+          "verify-full",
+          "omit"
+        ],
+        "default": "require"
+      }
+    ],
+    "positionals": [],
+    "tableOutput": "postgresql://alex:AbC123dEf@ep-cool-darkness-a5b6c7d8.us-east-2.aws.neon.tech/dbname\n"
+  },
+  "mcp": {
+    "tool": "get_connection_string",
+    "description": "Get a PostgreSQL connection string for a Neon database. All parameters are optional; the tool resolves the project, branch, and database automatically if not specified. Requires write access: the connection string carries a privileged role password, so it is unavailable in read-only mode. A read-only caller who needs a DATABASE_URL must copy it from https://console.neon.tech manually.",
+    "arguments": [
+      {
+        "name": "projectId",
+        "type": "string",
+        "required": true,
+        "description": "The ID of the project. If not provided, the only available project will be used."
+      },
+      {
+        "name": "branchId",
+        "type": "string",
+        "required": false,
+        "description": "The ID or name of the branch. If not provided, the default branch will be used."
+      },
+      {
+        "name": "computeId",
+        "type": "string",
+        "required": false,
+        "description": "The ID of the compute/endpoint. If not provided, the read-write compute associated with the branch will be used."
+      },
+      {
+        "name": "databaseName",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "roleName",
+        "type": "string",
+        "required": false,
+        "description": "The name of the role to connect with. If not provided, the database owner name will be used."
+      }
+    ]
+  },
+  "console": {
+    "breadcrumb": null
+  },
+  "specIndex": 64
+}

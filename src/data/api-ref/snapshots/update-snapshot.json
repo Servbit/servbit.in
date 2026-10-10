@@ -1,0 +1,375 @@
+{
+  "id": "update-snapshot",
+  "operationId": "updateSnapshot",
+  "method": "PATCH",
+  "path": "/projects/{project_id}/snapshots/{snapshot_id}",
+  "tag": "snapshots",
+  "tagDisplay": "Snapshots",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Update snapshot",
+  "description": "Updates the specified snapshot.\n",
+  "descriptionHtml": "<p>Updates the specified snapshot.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "snapshot_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The snapshot ID",
+      "descriptionHtml": "<p>The snapshot ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": {
+    "required": true,
+    "properties": {
+      "snapshot": {
+        "type": "object",
+        "description": "Fields to update on the snapshot. Updatable fields include `name` and `expires_at`.",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Human-readable label for the snapshot.",
+            "details": {
+              "description": "Human-readable label for the snapshot.",
+              "descriptionHtml": "<p>Human-readable label for the snapshot.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "expires_at": {
+            "description": "The date and time when the snapshot will expire.\n\nOmit to leave the current expiration unchanged. Send `null` to\nclear the expiration so the snapshot never expires. A future\ntimestamp sets the absolute expiration.\n",
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2030-06-09T18:02:16Z",
+            "details": {
+              "description": "The date and time when the snapshot will expire.\n\nOmit to leave the current expiration unchanged. Send `null` to\nclear the expiration so the snapshot never expires. A future\ntimestamp sets the absolute expiration.",
+              "descriptionHtml": "<p>The date and time when the snapshot will expire.</p>\n<p>Omit to leave the current expiration unchanged. Send <code>null</code> to\nclear the expiration so the snapshot never expires. A future\ntimestamp sets the absolute expiration.</p>",
+              "example": "2030-06-09T18:02:16Z",
+              "values": null
+            }
+          }
+        },
+        "details": {
+          "description": "Fields to update on the snapshot. Updatable fields include `name` and `expires_at`.",
+          "descriptionHtml": "<p>Fields to update on the snapshot. Updatable fields include <code>name</code> and <code>expires_at</code>.</p>",
+          "example": null,
+          "values": null
+        },
+        "displayOrder": [
+          "name",
+          "expires_at"
+        ]
+      }
+    },
+    "requiredFields": [
+      "snapshot"
+    ],
+    "displayOrder": [
+      "snapshot"
+    ],
+    "sections": null,
+    "seed": null,
+    "labels": null
+  },
+  "response": {
+    "status": "200",
+    "description": "Successfully updated the snapshot",
+    "descriptionHtml": "<p>Successfully updated the snapshot</p>",
+    "example": {
+      "snapshot": {
+        "id": "snap-quiet-meadow-a5b6c7d8",
+        "name": "my-snapshot-8-renamed",
+        "source_branch_id": "br-young-forest-a5b6c7d8",
+        "created_at": "2025-01-15T10:30:00Z",
+        "manual": true
+      }
+    },
+    "properties": {
+      "snapshot": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "created_at"
+        ],
+        "properties": {
+          "id": {
+            "description": "The snapshot ID.",
+            "type": "string",
+            "pattern": "^[a-z0-9-]{1,60}$",
+            "details": {
+              "description": "The snapshot ID.",
+              "descriptionHtml": "<p>The snapshot ID.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "name": {
+            "type": "string",
+            "description": "Human-readable label for the snapshot.",
+            "details": {
+              "description": "Human-readable label for the snapshot.",
+              "descriptionHtml": "<p>Human-readable label for the snapshot.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "lsn": {
+            "type": "string",
+            "description": "WAL position (Log Sequence Number) at which the snapshot was captured, in Postgres LSN format (for example, `0/3000000`).",
+            "details": {
+              "description": "WAL position (Log Sequence Number) at which the snapshot was captured, in Postgres LSN format (for example, `0/3000000`).",
+              "descriptionHtml": "<p>WAL position (Log Sequence Number) at which the snapshot was captured, in Postgres LSN format (for example, <code>0/3000000</code>).</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "Point in time captured by the snapshot, in RFC 3339 format (UTC).",
+            "details": {
+              "description": "Point in time captured by the snapshot, in RFC 3339 format (UTC).",
+              "descriptionHtml": "<p>Point in time captured by the snapshot, in RFC 3339 format (UTC).</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "source_branch_id": {
+            "description": "Branch from which this snapshot was created.",
+            "type": "string",
+            "pattern": "^[a-z0-9-]{1,60}$",
+            "details": {
+              "description": "Branch from which this snapshot was created.",
+              "descriptionHtml": "<p>Branch from which this snapshot was created.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Timestamp when the snapshot was created, in RFC 3339 format (UTC).",
+            "example": "2025-01-15T10:30:00Z",
+            "details": {
+              "description": "Timestamp when the snapshot was created, in RFC 3339 format (UTC).",
+              "descriptionHtml": "<p>Timestamp when the snapshot was created, in RFC 3339 format (UTC).</p>",
+              "example": "2025-01-15T10:30:00Z",
+              "values": null
+            }
+          },
+          "expires_at": {
+            "type": "string",
+            "description": "RFC 3339 timestamp when the snapshot expires and is eligible for deletion. Null if the snapshot does not have an expiry.",
+            "details": {
+              "description": "RFC 3339 timestamp when the snapshot expires and is eligible for deletion. Null if the snapshot does not have an expiry.",
+              "descriptionHtml": "<p>RFC 3339 timestamp when the snapshot expires and is eligible for deletion. Null if the snapshot does not have an expiry.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "manual": {
+            "type": "boolean",
+            "description": "True if the snapshot was created manually rather than by a schedule.",
+            "details": {
+              "description": "True if the snapshot was created manually rather than by a schedule.",
+              "descriptionHtml": "<p>True if the snapshot was created manually rather than by a schedule.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "full_size": {
+            "description": "Full logical size of the snapshot in bytes at the time it was taken.\n\nWhen absent, the logical size has not been calculated yet and the snapshot is not being charged.\n\nWhen present, a value of 0 means the snapshot is not being charged.\n",
+            "type": "integer",
+            "format": "int64",
+            "details": {
+              "description": "Full logical size of the snapshot in bytes at the time it was taken.\n\nWhen absent, the logical size has not been calculated yet and the snapshot is not being charged.\n\nWhen present, a value of 0 means the snapshot is not being charged.",
+              "descriptionHtml": "<p>Full logical size of the snapshot in bytes at the time it was taken.</p>\n<p>When absent, the logical size has not been calculated yet and the snapshot is not being charged.</p>\n<p>When present, a value of 0 means the snapshot is not being charged.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "diff_size": {
+            "description": "Incremental Postgres storage size in bytes since the previous scheduled snapshot, when the snapshot is billed on incremental (diff) usage.\n\nWhen absent, either the incremental size has not been calculated yet and the snapshot is not being charged, or the snapshot is charged at full logical size (in that case `full_size` is set).\n",
+            "type": "integer",
+            "format": "int64",
+            "details": {
+              "description": "Incremental Postgres storage size in bytes since the previous scheduled snapshot, when the snapshot is billed on incremental (diff) usage.\n\nWhen absent, either the incremental size has not been calculated yet and the snapshot is not being charged, or the snapshot is charged at full logical size (in that case `full_size` is set).",
+              "descriptionHtml": "<p>Incremental Postgres storage size in bytes since the previous scheduled snapshot, when the snapshot is billed on incremental (diff) usage.</p>\n<p>When absent, either the incremental size has not been calculated yet and the snapshot is not being charged, or the snapshot is charged at full logical size (in that case <code>full_size</code> is set).</p>",
+              "example": null,
+              "values": null
+            }
+          }
+        },
+        "displayOrder": [
+          "id",
+          "name",
+          "created_at",
+          "lsn",
+          "timestamp",
+          "source_branch_id",
+          "manual",
+          "full_size",
+          "diff_size",
+          "expires_at"
+        ]
+      }
+    },
+    "requiredFields": [
+      "snapshot"
+    ],
+    "displayOrder": [
+      "snapshot"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/snapshots/$SNAPSHOT_ID\" \\\n  -X PATCH \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.updateSnapshot({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    snapshot_id: process.env.SNAPSHOT_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": {
+    "command": "neon snapshots update <snapshot_id>",
+    "flags": [
+      {
+        "name": "analytics",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "api-key",
+        "type": "string",
+        "required": false,
+        "default": ""
+      },
+      {
+        "name": "color",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "config-dir",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "context-file",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "help",
+        "type": "boolean",
+        "required": false,
+        "alias": "h"
+      },
+      {
+        "name": "output",
+        "type": "string",
+        "required": false,
+        "alias": "o",
+        "enum": [
+          "json",
+          "yaml",
+          "table"
+        ],
+        "default": "table"
+      },
+      {
+        "name": "profile",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "version",
+        "type": "boolean",
+        "required": false,
+        "alias": "v"
+      },
+      {
+        "name": "project-id",
+        "type": "string",
+        "required": false,
+        "apiEquiv": "project_id",
+        "apiEquivIn": "parameter"
+      },
+      {
+        "name": "clear-expiration",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "expires-at",
+        "type": "string",
+        "required": false,
+        "apiEquiv": "snapshot.expires_at",
+        "apiEquivIn": "body"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": false,
+        "apiEquiv": "snapshot.name",
+        "apiEquivIn": "body"
+      }
+    ],
+    "positionals": [
+      {
+        "display": "<snapshot_id>",
+        "apiEquiv": "snapshot_id"
+      }
+    ]
+  },
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": "Projects → Backup & restore"
+  },
+  "specIndex": 143
+}

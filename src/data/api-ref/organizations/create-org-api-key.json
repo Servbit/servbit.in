@@ -1,0 +1,289 @@
+{
+  "id": "create-org-api-key",
+  "operationId": "createOrgApiKey",
+  "method": "POST",
+  "path": "/organizations/{org_id}/api_keys",
+  "tag": "organizations",
+  "tagDisplay": "Organizations",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Create organization API key",
+  "description": "Creates an API key for the specified organization.\nThe `key_name` is a user-specified name for the key.\nReturns an `id` and `key`; the `key` is a randomly generated, 64-bit token required to access the Neon API.\nStore the key securely — it is only returned once.\nAPI keys can also be managed in the Neon Console.\nSee [Manage API keys](https://neon.com/docs/manage/api-keys/).\n",
+  "descriptionHtml": "<p>Creates an API key for the specified organization.\nThe <code>key_name</code> is a user-specified name for the key.\nReturns an <code>id</code> and <code>key</code>; the <code>key</code> is a randomly generated, 64-bit token required to access the Neon API.\nStore the key securely — it is only returned once.\nAPI keys can also be managed in the Neon Console.\nSee <a href=\"https://neon.com/docs/manage/api-keys/\">Manage API keys</a>.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "org_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon organization ID",
+      "descriptionHtml": "<p>The Neon organization ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": {
+    "required": true,
+    "properties": {
+      "key_name": {
+        "type": "string",
+        "description": "A user-specified API key name. This value is required when creating an API key.",
+        "maxLength": 64,
+        "details": {
+          "description": "A user-specified API key name. This value is required when creating an API key.",
+          "descriptionHtml": "<p>A user-specified API key name. This value is required when creating an API key.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "project_id": {
+        "description": "If set, the API key can access only this project",
+        "type": "string",
+        "pattern": "^[a-z0-9-]{1,60}$",
+        "details": {
+          "description": "If set, the API key can access only this project",
+          "descriptionHtml": "<p>If set, the API key can access only this project</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "key_name"
+    ],
+    "displayOrder": [
+      "key_name",
+      "project_id"
+    ],
+    "sections": null,
+    "seed": null,
+    "labels": null
+  },
+  "response": {
+    "status": "200",
+    "description": "Created an organization API key",
+    "descriptionHtml": "<p>Created an organization API key</p>",
+    "example": {
+      "id": 1000000,
+      "key": "napi_examplekey000000000000000000000000000000000000000000000000",
+      "name": "service-key-55",
+      "created_at": "2025-01-15T10:30:00Z",
+      "created_by": "00000000-0000-0000-0000-000000000000"
+    },
+    "properties": {
+      "id": {
+        "description": "The API key's unique numeric ID. Distinct from the API key token (`key`).",
+        "type": "integer",
+        "format": "int64",
+        "details": {
+          "description": "The API key's unique numeric ID. Distinct from the API key token (`key`).",
+          "descriptionHtml": "<p>The API key's unique numeric ID. Distinct from the API key token (<code>key</code>).</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "key": {
+        "description": "The generated 64-bit token required to access the Neon API",
+        "type": "string",
+        "details": {
+          "description": "The generated 64-bit token required to access the Neon API",
+          "descriptionHtml": "<p>The generated 64-bit token required to access the Neon API</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "name": {
+        "description": "The user-specified API key name",
+        "type": "string",
+        "details": {
+          "description": "The user-specified API key name",
+          "descriptionHtml": "<p>The user-specified API key name</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "created_at": {
+        "description": "A timestamp indicating when the API key was created",
+        "type": "string",
+        "format": "date-time",
+        "details": {
+          "description": "A timestamp indicating when the API key was created",
+          "descriptionHtml": "<p>A timestamp indicating when the API key was created</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "created_by": {
+        "description": "ID of the user who created this API key",
+        "type": "string",
+        "format": "uuid",
+        "details": {
+          "description": "ID of the user who created this API key",
+          "descriptionHtml": "<p>ID of the user who created this API key</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "project_id": {
+        "description": "If set, the API key can access only this project",
+        "type": "string",
+        "pattern": "^[a-z0-9-]{1,60}$",
+        "details": {
+          "description": "If set, the API key can access only this project",
+          "descriptionHtml": "<p>If set, the API key can access only this project</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "key",
+      "id",
+      "name",
+      "created_at",
+      "created_by"
+    ],
+    "displayOrder": [
+      "id",
+      "key",
+      "name",
+      "created_at",
+      "created_by",
+      "project_id"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/organizations/$ORG_ID/api_keys\" \\\n  -X POST \\\n  -H \"Authorization: Bearer $NEON_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"key_name\":\"orgkey\"}'",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.createOrgApiKey({\n  client: neon.client,\n  path: {\n    org_id: process.env.ORG_ID\n  },\n  body: {\n    key_name: \"orgkey\"\n  }\n});",
+    "bodyExample": {
+      "key_name": "orgkey"
+    },
+    "representative": {
+      "body": {
+        "key_name": "orgkey"
+      },
+      "curl": "curl \"https://console.neon.tech/api/v2/organizations/$ORG_ID/api_keys\" \\\n  -X POST \\\n  -H \"Authorization: Bearer $NEON_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"key_name\":\"orgkey\"}'",
+      "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.createOrgApiKey({\n  client: neon.client,\n  path: {\n    org_id: process.env.ORG_ID\n  },\n  body: {\n    key_name: \"orgkey\"\n  }\n});"
+    }
+  },
+  "cli": {
+    "command": "neon api-keys create",
+    "flags": [
+      {
+        "name": "analytics",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "api-key",
+        "type": "string",
+        "required": false,
+        "default": ""
+      },
+      {
+        "name": "color",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "config-dir",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "context-file",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "help",
+        "type": "boolean",
+        "required": false,
+        "alias": "h"
+      },
+      {
+        "name": "output",
+        "type": "string",
+        "required": false,
+        "alias": "o",
+        "enum": [
+          "json",
+          "yaml",
+          "table"
+        ],
+        "default": "table"
+      },
+      {
+        "name": "profile",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "version",
+        "type": "boolean",
+        "required": false,
+        "alias": "v"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "org-id",
+        "type": "string",
+        "required": false,
+        "apiEquiv": "org_id",
+        "apiEquivIn": "parameter"
+      },
+      {
+        "name": "project-id",
+        "type": "string",
+        "required": false,
+        "apiEquiv": "project_id",
+        "apiEquivIn": "body"
+      }
+    ],
+    "positionals": []
+  },
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": "Organization → Settings → API keys"
+  },
+  "specIndex": 119
+}

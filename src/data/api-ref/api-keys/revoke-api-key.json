@@ -1,0 +1,251 @@
+{
+  "id": "revoke-api-key",
+  "operationId": "revokeApiKey",
+  "method": "DELETE",
+  "path": "/api_keys/{key_id}",
+  "tag": "api-keys",
+  "tagDisplay": "API Keys",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Revoke API key",
+  "description": "Revokes the specified API key.\nAn API key that is no longer needed can be revoked.\nThis action cannot be reversed.\nAPI keys can also be managed in the Neon Console.\nSee [Manage API keys](https://neon.com/docs/manage/api-keys/).\n",
+  "descriptionHtml": "<p>Revokes the specified API key.\nAn API key that is no longer needed can be revoked.\nThis action cannot be reversed.\nAPI keys can also be managed in the Neon Console.\nSee <a href=\"https://neon.com/docs/manage/api-keys/\">Manage API keys</a>.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "key_id",
+      "type": "integer",
+      "in": "path",
+      "required": true,
+      "description": "The API key ID",
+      "descriptionHtml": "<p>The API key ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": null,
+  "response": {
+    "status": "200",
+    "description": "Revoked the specified API key",
+    "descriptionHtml": "<p>Revoked the specified API key</p>",
+    "example": {
+      "id": 1000000,
+      "name": "service-key-52",
+      "created_at": "2025-01-15T10:30:00Z",
+      "created_by": "00000000-0000-0000-0000-000000000000",
+      "last_used_at": null,
+      "last_used_from_addr": "",
+      "revoked": true
+    },
+    "properties": {
+      "id": {
+        "description": "The API key's unique numeric ID. Distinct from the API key token (`key`).",
+        "type": "integer",
+        "format": "int64",
+        "details": {
+          "description": "The API key's unique numeric ID. Distinct from the API key token (`key`).",
+          "descriptionHtml": "<p>The API key's unique numeric ID. Distinct from the API key token (<code>key</code>).</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "name": {
+        "description": "The user-specified API key name",
+        "type": "string",
+        "details": {
+          "description": "The user-specified API key name",
+          "descriptionHtml": "<p>The user-specified API key name</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "created_at": {
+        "description": "A timestamp indicating when the API key was created",
+        "type": "string",
+        "format": "date-time",
+        "details": {
+          "description": "A timestamp indicating when the API key was created",
+          "descriptionHtml": "<p>A timestamp indicating when the API key was created</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "created_by": {
+        "description": "ID of the user who created this API key",
+        "type": "string",
+        "format": "uuid",
+        "details": {
+          "description": "ID of the user who created this API key",
+          "descriptionHtml": "<p>ID of the user who created this API key</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "last_used_at": {
+        "description": "A timestamp indicating when the API was last used",
+        "type": "string",
+        "format": "date-time",
+        "nullable": true,
+        "details": {
+          "description": "A timestamp indicating when the API was last used",
+          "descriptionHtml": "<p>A timestamp indicating when the API was last used</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "last_used_from_addr": {
+        "description": "The IP address from which the API key was last used",
+        "type": "string",
+        "details": {
+          "description": "The IP address from which the API key was last used",
+          "descriptionHtml": "<p>The IP address from which the API key was last used</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "revoked": {
+        "description": "A `true` or `false` value indicating whether the API key is revoked",
+        "type": "boolean",
+        "details": {
+          "description": "A `true` or `false` value indicating whether the API key is revoked",
+          "descriptionHtml": "<p>A <code>true</code> or <code>false</code> value indicating whether the API key is revoked</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "id",
+      "name",
+      "created_at",
+      "created_by",
+      "last_used_from_addr",
+      "revoked"
+    ],
+    "displayOrder": [
+      "id",
+      "name",
+      "created_at",
+      "created_by",
+      "last_used_from_addr",
+      "revoked",
+      "last_used_at"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/api_keys/$KEY_ID\" \\\n  -X DELETE \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.revokeApiKey({\n  client: neon.client,\n  path: {\n    key_id: process.env.KEY_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": {
+    "command": "neon api-keys revoke <id>",
+    "flags": [
+      {
+        "name": "analytics",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "api-key",
+        "type": "string",
+        "required": false,
+        "default": ""
+      },
+      {
+        "name": "color",
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "config-dir",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "context-file",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "help",
+        "type": "boolean",
+        "required": false,
+        "alias": "h"
+      },
+      {
+        "name": "output",
+        "type": "string",
+        "required": false,
+        "alias": "o",
+        "enum": [
+          "json",
+          "yaml",
+          "table"
+        ],
+        "default": "table"
+      },
+      {
+        "name": "profile",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "version",
+        "type": "boolean",
+        "required": false,
+        "alias": "v"
+      },
+      {
+        "name": "org-id",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "positionals": [
+      {
+        "display": "<id>",
+        "apiEquiv": "key_id"
+      }
+    ]
+  },
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": "Account settings → API keys"
+  },
+  "specIndex": 3
+}

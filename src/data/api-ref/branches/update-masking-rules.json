@@ -1,0 +1,318 @@
+{
+  "id": "update-masking-rules",
+  "operationId": "updateMaskingRules",
+  "method": "PATCH",
+  "path": "/projects/{project_id}/branches/{branch_id}/masking_rules",
+  "tag": "branches",
+  "tagDisplay": "Branches",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Update masking rules",
+  "description": "Updates the masking rules for the specified anonymized branch.\nMasking rules define how sensitive data should be anonymized using PostgreSQL Anonymizer.\n\n**Note**: This endpoint is currently in Beta.\n",
+  "descriptionHtml": "<p>Updates the masking rules for the specified anonymized branch.\nMasking rules define how sensitive data should be anonymized using PostgreSQL Anonymizer.</p>\n<p><strong>Note</strong>: This endpoint is currently in Beta.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "branch_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The branch ID",
+      "descriptionHtml": "<p>The branch ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": {
+    "required": true,
+    "properties": {
+      "masking_rules": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "database_name",
+            "schema_name",
+            "table_name",
+            "column_name"
+          ],
+          "x-sensitive": [
+            "database_name",
+            "schema_name",
+            "table_name",
+            "column_name",
+            "masking_function",
+            "masking_value"
+          ],
+          "properties": {
+            "database_name": {
+              "description": "The name of the database containing the table to be masked\n",
+              "type": "string",
+              "details": {
+                "description": "The name of the database containing the table to be masked",
+                "descriptionHtml": "<p>The name of the database containing the table to be masked</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "schema_name": {
+              "description": "The name of the schema containing the table to be masked\n",
+              "type": "string",
+              "details": {
+                "description": "The name of the schema containing the table to be masked",
+                "descriptionHtml": "<p>The name of the schema containing the table to be masked</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "table_name": {
+              "description": "The name of the table containing the column to be masked\n",
+              "type": "string",
+              "details": {
+                "description": "The name of the table containing the column to be masked",
+                "descriptionHtml": "<p>The name of the table containing the column to be masked</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "column_name": {
+              "description": "The name of the column to be masked\n",
+              "type": "string",
+              "details": {
+                "description": "The name of the column to be masked",
+                "descriptionHtml": "<p>The name of the column to be masked</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "masking_function": {
+              "description": "The PostgreSQL Anonymizer masking function to apply.\nCan be a predefined function (e.g., 'anon.random_string(10)', 'anon.fake_email()')\nor a custom function definition (e.g., 'anon.hash(column_name)')\n",
+              "type": "string",
+              "details": {
+                "description": "The PostgreSQL Anonymizer masking function to apply.\nCan be a predefined function (e.g., 'anon.random_string(10)', 'anon.fake_email()')\nor a custom function definition (e.g., 'anon.hash(column_name)')",
+                "descriptionHtml": "<p>The PostgreSQL Anonymizer masking function to apply.\nCan be a predefined function (e.g., 'anon.random_string(10)', 'anon.fake_email()')\nor a custom function definition (e.g., 'anon.hash(column_name)')</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "masking_value": {
+              "description": "A literal value to set on the column when masking.\n",
+              "type": "string",
+              "details": {
+                "description": "A literal value to set on the column when masking.",
+                "descriptionHtml": "<p>A literal value to set on the column when masking.</p>",
+                "example": null,
+                "values": null
+              }
+            }
+          },
+          "example": {
+            "database_name": "neondb",
+            "schema_name": "public",
+            "table_name": "users",
+            "column_name": "email",
+            "masking_function": "anon.fake_email()"
+          },
+          "displayOrder": [
+            "database_name",
+            "schema_name",
+            "table_name",
+            "column_name",
+            "masking_function",
+            "masking_value"
+          ]
+        },
+        "description": "List of masking rules to apply to the branch.\nThis will replace all existing masking rules for the branch.\n",
+        "details": {
+          "description": "List of masking rules to apply to the branch.\nThis will replace all existing masking rules for the branch.",
+          "descriptionHtml": "<p>List of masking rules to apply to the branch.\nThis will replace all existing masking rules for the branch.</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "masking_rules"
+    ],
+    "displayOrder": [
+      "masking_rules"
+    ],
+    "sections": null,
+    "seed": null,
+    "labels": null
+  },
+  "response": {
+    "status": "200",
+    "description": "Masking rules updated successfully",
+    "descriptionHtml": "<p>Masking rules updated successfully</p>",
+    "example": {
+      "masking_rules": []
+    },
+    "properties": {
+      "masking_rules": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "database_name",
+            "schema_name",
+            "table_name",
+            "column_name"
+          ],
+          "x-sensitive": [
+            "database_name",
+            "schema_name",
+            "table_name",
+            "column_name",
+            "masking_function",
+            "masking_value"
+          ],
+          "properties": {
+            "database_name": {
+              "description": "The name of the database containing the table to be masked\n",
+              "type": "string",
+              "details": {
+                "description": "The name of the database containing the table to be masked",
+                "descriptionHtml": "<p>The name of the database containing the table to be masked</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "schema_name": {
+              "description": "The name of the schema containing the table to be masked\n",
+              "type": "string",
+              "details": {
+                "description": "The name of the schema containing the table to be masked",
+                "descriptionHtml": "<p>The name of the schema containing the table to be masked</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "table_name": {
+              "description": "The name of the table containing the column to be masked\n",
+              "type": "string",
+              "details": {
+                "description": "The name of the table containing the column to be masked",
+                "descriptionHtml": "<p>The name of the table containing the column to be masked</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "column_name": {
+              "description": "The name of the column to be masked\n",
+              "type": "string",
+              "details": {
+                "description": "The name of the column to be masked",
+                "descriptionHtml": "<p>The name of the column to be masked</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "masking_function": {
+              "description": "The PostgreSQL Anonymizer masking function to apply.\nCan be a predefined function (e.g., 'anon.random_string(10)', 'anon.fake_email()')\nor a custom function definition (e.g., 'anon.hash(column_name)')\n",
+              "type": "string",
+              "details": {
+                "description": "The PostgreSQL Anonymizer masking function to apply.\nCan be a predefined function (e.g., 'anon.random_string(10)', 'anon.fake_email()')\nor a custom function definition (e.g., 'anon.hash(column_name)')",
+                "descriptionHtml": "<p>The PostgreSQL Anonymizer masking function to apply.\nCan be a predefined function (e.g., 'anon.random_string(10)', 'anon.fake_email()')\nor a custom function definition (e.g., 'anon.hash(column_name)')</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "masking_value": {
+              "description": "A literal value to set on the column when masking.\n",
+              "type": "string",
+              "details": {
+                "description": "A literal value to set on the column when masking.",
+                "descriptionHtml": "<p>A literal value to set on the column when masking.</p>",
+                "example": null,
+                "values": null
+              }
+            }
+          },
+          "example": {
+            "database_name": "neondb",
+            "schema_name": "public",
+            "table_name": "users",
+            "column_name": "email",
+            "masking_function": "anon.fake_email()"
+          },
+          "displayOrder": [
+            "database_name",
+            "schema_name",
+            "table_name",
+            "column_name",
+            "masking_function",
+            "masking_value"
+          ]
+        },
+        "description": "List of masking rules for the branch\n",
+        "details": {
+          "description": "List of masking rules for the branch",
+          "descriptionHtml": "<p>List of masking rules for the branch</p>",
+          "example": null,
+          "values": null
+        }
+      }
+    },
+    "requiredFields": [
+      "masking_rules"
+    ],
+    "displayOrder": [
+      "masking_rules"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/masking_rules\" \\\n  -X PATCH \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.updateMaskingRules({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    branch_id: process.env.BRANCH_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": "Projects → Branches → Data Masking"
+  },
+  "specIndex": 86
+}

@@ -1,0 +1,1166 @@
+{
+  "id": "update-project-branch",
+  "operationId": "updateProjectBranch",
+  "method": "PATCH",
+  "path": "/projects/{project_id}/branches/{branch_id}",
+  "tag": "branches",
+  "tagDisplay": "Branches",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "Update branch",
+  "description": "Updates the specified branch.\nFor more information, see [Manage branches](https://neon.com/docs/manage/branches/).\n",
+  "descriptionHtml": "<p>Updates the specified branch.\nFor more information, see <a href=\"https://neon.com/docs/manage/branches/\">Manage branches</a>.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "branch_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The branch ID",
+      "descriptionHtml": "<p>The branch ID</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": {
+    "required": true,
+    "properties": {
+      "branch": {
+        "type": "object",
+        "description": "Branch attributes to update. Supply only the fields you want to change, for example `name` or `protected`.",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "description": "New display name for the branch.",
+            "details": {
+              "description": "New display name for the branch.",
+              "descriptionHtml": "<p>New display name for the branch.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "protected": {
+            "type": "boolean",
+            "description": "Whether the branch is protected. Protected branches (and their computes) cannot be deleted, archived, or reset, and block deletion of the project. Can be gated by `protected_branches_only` in the IP allowlist. Paid plans only.\n",
+            "details": {
+              "description": "Whether the branch is protected. Protected branches (and their computes) cannot be deleted, archived, or reset, and block deletion of the project. Can be gated by `protected_branches_only` in the IP allowlist. Paid plans only.",
+              "descriptionHtml": "<p>Whether the branch is protected. Protected branches (and their computes) cannot be deleted, archived, or reset, and block deletion of the project. Can be gated by <code>protected_branches_only</code> in the IP allowlist. Paid plans only.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "expires_at": {
+            "description": "The timestamp when the branch is scheduled to expire and be automatically deleted. Must be set by the client following the [RFC 3339, section 5.6](https://tools.ietf.org/html/rfc3339#section-5.6) format with precision up to seconds (such as 2025-06-09T18:02:16Z). Deletion is performed by a background job and may not occur exactly at the specified time. If this field is set to null, the expiration timestamp is removed.\n\nAccess to this feature is currently limited to participants in the Early Access Program.\n",
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2025-06-09T18:02:16Z",
+            "details": {
+              "description": "The timestamp when the branch is scheduled to expire and be automatically deleted. Must be set by the client following the [RFC 3339, section 5.6](https://tools.ietf.org/html/rfc3339#section-5.6) format with precision up to seconds (such as 2025-06-09T18:02:16Z). Deletion is performed by a background job and may not occur exactly at the specified time. If this field is set to null, the expiration timestamp is removed.\n\nAccess to this feature is currently limited to participants in the Early Access Program.",
+              "descriptionHtml": "<p>The timestamp when the branch is scheduled to expire and be automatically deleted. Must be set by the client following the <a href=\"https://tools.ietf.org/html/rfc3339#section-5.6\">RFC 3339, section 5.6</a> format with precision up to seconds (such as 2025-06-09T18:02:16Z). Deletion is performed by a background job and may not occur exactly at the specified time. If this field is set to null, the expiration timestamp is removed.</p>\n<p>Access to this feature is currently limited to participants in the Early Access Program.</p>",
+              "example": "2025-06-09T18:02:16Z",
+              "values": null
+            }
+          }
+        },
+        "details": {
+          "description": "Branch attributes to update. Supply only the fields you want to change, for example `name` or `protected`.",
+          "descriptionHtml": "<p>Branch attributes to update. Supply only the fields you want to change, for example <code>name</code> or <code>protected</code>.</p>",
+          "example": null,
+          "values": null
+        },
+        "displayOrder": [
+          "name",
+          "protected",
+          "expires_at"
+        ]
+      }
+    },
+    "requiredFields": [
+      "branch"
+    ],
+    "displayOrder": [
+      "branch"
+    ],
+    "sections": null,
+    "seed": null,
+    "labels": null
+  },
+  "response": {
+    "status": "200",
+    "description": "Updated the specified branch",
+    "descriptionHtml": "<p>Updated the specified branch</p>",
+    "example": {
+      "branch": {
+        "id": "br-young-forest-a5b6c7d8",
+        "project_id": "aged-wildflower-123456",
+        "parent_id": "br-young-forest-a5b6c7d8",
+        "parent_lsn": "0/1964258",
+        "parent_timestamp": "2025-01-15T10:30:00Z",
+        "name": "my-branch-5-renamed",
+        "slug": "br-young-forest-a5b6c7d8",
+        "project_slug": "aged-wildflower-123456",
+        "current_state": "ready",
+        "state_changed_at": "2025-01-15T10:30:00Z",
+        "creation_source": "console",
+        "primary": false,
+        "default": false,
+        "protected": false,
+        "cpu_used_sec": 0,
+        "compute_time_seconds": 0,
+        "active_time_seconds": 0,
+        "written_data_bytes": 0,
+        "data_transfer_bytes": 0,
+        "created_at": "2025-01-15T10:30:00Z",
+        "updated_at": "2025-01-15T10:30:00Z",
+        "init_source": "parent-data"
+      },
+      "operations": []
+    },
+    "properties": {
+      "branch": {
+        "description": "Branch returned by the request.",
+        "type": "object",
+        "required": [
+          "id",
+          "project_id",
+          "name",
+          "current_state",
+          "state_changed_at",
+          "creation_source",
+          "created_at",
+          "updated_at",
+          "default",
+          "protected",
+          "cpu_used_sec",
+          "active_time_seconds",
+          "compute_time_seconds",
+          "written_data_bytes",
+          "data_transfer_bytes"
+        ],
+        "properties": {
+          "id": {
+            "description": "The branch ID. This value is generated when a branch is created. A `branch_id` value has a `br` prefix. For example: `br-small-term-683261`.\n",
+            "type": "string",
+            "pattern": "^[a-z0-9-]{1,60}$",
+            "details": {
+              "description": "The branch ID. This value is generated when a branch is created. A `branch_id` value has a `br` prefix. For example: `br-small-term-683261`.",
+              "descriptionHtml": "<p>The branch ID. This value is generated when a branch is created. A <code>branch_id</code> value has a <code>br</code> prefix. For example: <code>br-small-term-683261</code>.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "project_id": {
+            "description": "The ID of the project this branch belongs to.",
+            "type": "string",
+            "pattern": "^[a-z0-9-]{1,60}$",
+            "details": {
+              "description": "The ID of the project this branch belongs to.",
+              "descriptionHtml": "<p>The ID of the project this branch belongs to.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "parent_id": {
+            "description": "The `branch_id` of the parent branch\n",
+            "type": "string",
+            "pattern": "^[a-z0-9-]{1,60}$",
+            "details": {
+              "description": "The `branch_id` of the parent branch",
+              "descriptionHtml": "<p>The <code>branch_id</code> of the parent branch</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "parent_lsn": {
+            "description": "The Log Sequence Number (LSN) on the parent branch from which this branch was created.\nWhen restoring a branch using the `POST /projects/{project_id}/branches/{branch_id}/restore` endpoint,\nthis value isn’t finalized until all operations related to the restore have completed successfully.\n",
+            "type": "string",
+            "details": {
+              "description": "The Log Sequence Number (LSN) on the parent branch from which this branch was created.\nWhen restoring a branch using the `POST /projects/{project_id}/branches/{branch_id}/restore` endpoint,\nthis value isn’t finalized until all operations related to the restore have completed successfully.",
+              "descriptionHtml": "<p>The Log Sequence Number (LSN) on the parent branch from which this branch was created.\nWhen restoring a branch using the <code>POST /projects/{project_id}/branches/{branch_id}/restore</code> endpoint,\nthis value isn’t finalized until all operations related to the restore have completed successfully.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "parent_timestamp": {
+            "description": "The point in time on the parent branch from which this branch was created.\nWhen restoring a branch using the `POST /projects/{project_id}/branches/{branch_id}/restore` endpoint,\nthis value isn’t finalized until all operations related to the restore have completed successfully.\nAfter all the operations completed, this value might stay empty.\n",
+            "type": "string",
+            "format": "date-time",
+            "details": {
+              "description": "The point in time on the parent branch from which this branch was created.\nWhen restoring a branch using the `POST /projects/{project_id}/branches/{branch_id}/restore` endpoint,\nthis value isn’t finalized until all operations related to the restore have completed successfully.\nAfter all the operations completed, this value might stay empty.",
+              "descriptionHtml": "<p>The point in time on the parent branch from which this branch was created.\nWhen restoring a branch using the <code>POST /projects/{project_id}/branches/{branch_id}/restore</code> endpoint,\nthis value isn’t finalized until all operations related to the restore have completed successfully.\nAfter all the operations completed, this value might stay empty.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "name": {
+            "description": "The branch name\n",
+            "type": "string",
+            "details": {
+              "description": "The branch name",
+              "descriptionHtml": "<p>The branch name</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "current_state": {
+            "description": "The branch’s state, indicating if it is initializing, ready for use, or archived.\n  * 'init' - the branch is being created but is not available for querying.\n  * 'resetting' - the branch is being reset to a specific point in time or LSN and is not yet available for querying.\n  * 'ready' - the branch is fully operational and ready for querying. Expect normal query response times.\n  * 'archived' - the branch is stored in cost-effective archival Postgres storage. Expect slow query response times.\n",
+            "type": "string",
+            "details": {
+              "description": "The branch’s state, indicating if it is initializing, ready for use, or archived.\n  * 'init' - the branch is being created but is not available for querying.\n  * 'resetting' - the branch is being reset to a specific point in time or LSN and is not yet available for querying.\n  * 'ready' - the branch is fully operational and ready for querying. Expect normal query response times.\n  * 'archived' - the branch is stored in cost-effective archival Postgres storage. Expect slow query response times.",
+              "descriptionHtml": "<p>The branch’s state, indicating if it is initializing, ready for use, or archived.</p>\n<ul>\n<li>'init' - the branch is being created but is not available for querying.</li>\n<li>'resetting' - the branch is being reset to a specific point in time or LSN and is not yet available for querying.</li>\n<li>'ready' - the branch is fully operational and ready for querying. Expect normal query response times.</li>\n<li>'archived' - the branch is stored in cost-effective archival Postgres storage. Expect slow query response times.</li>\n</ul>",
+              "example": null,
+              "values": null
+            }
+          },
+          "pending_state": {
+            "description": "The branch’s state, indicating if it is initializing, ready for use, or archived.\n  * 'init' - the branch is being created but is not available for querying.\n  * 'resetting' - the branch is being reset to a specific point in time or LSN and is not yet available for querying.\n  * 'ready' - the branch is fully operational and ready for querying. Expect normal query response times.\n  * 'archived' - the branch is stored in cost-effective archival Postgres storage. Expect slow query response times.\n",
+            "type": "string",
+            "details": {
+              "description": "The branch’s state, indicating if it is initializing, ready for use, or archived.\n  * 'init' - the branch is being created but is not available for querying.\n  * 'resetting' - the branch is being reset to a specific point in time or LSN and is not yet available for querying.\n  * 'ready' - the branch is fully operational and ready for querying. Expect normal query response times.\n  * 'archived' - the branch is stored in cost-effective archival Postgres storage. Expect slow query response times.",
+              "descriptionHtml": "<p>The branch’s state, indicating if it is initializing, ready for use, or archived.</p>\n<ul>\n<li>'init' - the branch is being created but is not available for querying.</li>\n<li>'resetting' - the branch is being reset to a specific point in time or LSN and is not yet available for querying.</li>\n<li>'ready' - the branch is fully operational and ready for querying. Expect normal query response times.</li>\n<li>'archived' - the branch is stored in cost-effective archival Postgres storage. Expect slow query response times.</li>\n</ul>",
+              "example": null,
+              "values": null
+            }
+          },
+          "state_changed_at": {
+            "description": "A UTC timestamp indicating when the `current_state` began\n",
+            "type": "string",
+            "format": "date-time",
+            "details": {
+              "description": "A UTC timestamp indicating when the `current_state` began",
+              "descriptionHtml": "<p>A UTC timestamp indicating when the <code>current_state</code> began</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "logical_size": {
+            "description": "The logical size of the branch, in bytes\n",
+            "type": "integer",
+            "format": "int64",
+            "details": {
+              "description": "The logical size of the branch, in bytes",
+              "descriptionHtml": "<p>The logical size of the branch, in bytes</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "creation_source": {
+            "description": "The branch creation source\n",
+            "type": "string",
+            "details": {
+              "description": "The branch creation source",
+              "descriptionHtml": "<p>The branch creation source</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "primary": {
+            "deprecated": true,
+            "description": "Deprecated. Use the `default` field. Whether the branch is the project's primary branch.\n",
+            "type": "boolean",
+            "details": {
+              "description": "Deprecated. Use the `default` field. Whether the branch is the project's primary branch.",
+              "descriptionHtml": "<p>Deprecated. Use the <code>default</code> field. Whether the branch is the project's primary branch.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "default": {
+            "description": "Whether the branch is the project's default branch\n",
+            "type": "boolean",
+            "details": {
+              "description": "Whether the branch is the project's default branch",
+              "descriptionHtml": "<p>Whether the branch is the project's default branch</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "protected": {
+            "description": "Whether the branch is protected. Protected branches (and their computes) cannot be deleted, archived, or reset, and block deletion of the project.\n",
+            "type": "boolean",
+            "details": {
+              "description": "Whether the branch is protected. Protected branches (and their computes) cannot be deleted, archived, or reset, and block deletion of the project.",
+              "descriptionHtml": "<p>Whether the branch is protected. Protected branches (and their computes) cannot be deleted, archived, or reset, and block deletion of the project.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "cpu_used_sec": {
+            "deprecated": true,
+            "description": "Deprecated. Use `compute_time_seconds` instead. CPU seconds used by all of the branch's compute endpoints, including deleted ones. This value is reset at the beginning of each billing period.\n",
+            "type": "integer",
+            "format": "int64",
+            "details": {
+              "description": "Deprecated. Use `compute_time_seconds` instead. CPU seconds used by all of the branch's compute endpoints, including deleted ones. This value is reset at the beginning of each billing period.",
+              "descriptionHtml": "<p>Deprecated. Use <code>compute_time_seconds</code> instead. CPU seconds used by all of the branch's compute endpoints, including deleted ones. This value is reset at the beginning of each billing period.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "compute_time_seconds": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Total Postgres compute time consumed by this branch during the current billing period, in CU-seconds (weighted by compute size). Divide by 3600 for CU-hours.",
+            "details": {
+              "description": "Total Postgres compute time consumed by this branch during the current billing period, in CU-seconds (weighted by compute size). Divide by 3600 for CU-hours.",
+              "descriptionHtml": "<p>Total Postgres compute time consumed by this branch during the current billing period, in CU-seconds (weighted by compute size). Divide by 3600 for CU-hours.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "active_time_seconds": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Total time this branch's compute has been active during the current billing period, in seconds (not weighted by compute size). Distinct from `compute_time_seconds`, which is CU-weighted.",
+            "details": {
+              "description": "Total time this branch's compute has been active during the current billing period, in seconds (not weighted by compute size). Distinct from `compute_time_seconds`, which is CU-weighted.",
+              "descriptionHtml": "<p>Total time this branch's compute has been active during the current billing period, in seconds (not weighted by compute size). Distinct from <code>compute_time_seconds</code>, which is CU-weighted.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "written_data_bytes": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Data written by this branch during the current billing period, in bytes.",
+            "details": {
+              "description": "Data written by this branch during the current billing period, in bytes.",
+              "descriptionHtml": "<p>Data written by this branch during the current billing period, in bytes.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "data_transfer_bytes": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Total data transferred out of the branch, in bytes. Used as a consumption metric.",
+            "details": {
+              "description": "Total data transferred out of the branch, in bytes. Used as a consumption metric.",
+              "descriptionHtml": "<p>Total data transferred out of the branch, in bytes. Used as a consumption metric.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "created_at": {
+            "description": "A timestamp indicating when the branch was created\n",
+            "type": "string",
+            "format": "date-time",
+            "details": {
+              "description": "A timestamp indicating when the branch was created",
+              "descriptionHtml": "<p>A timestamp indicating when the branch was created</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "updated_at": {
+            "description": "A timestamp indicating when the branch was last updated\n",
+            "type": "string",
+            "format": "date-time",
+            "details": {
+              "description": "A timestamp indicating when the branch was last updated",
+              "descriptionHtml": "<p>A timestamp indicating when the branch was last updated</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "ttl_interval_seconds": {
+            "description": "The time-to-live (TTL) duration originally configured for the branch, in seconds. This read-only value represents the interval between the time `expires_at` was set and the expiration timestamp itself. It is preserved to ensure the same TTL duration is reapplied when resetting the branch from its parent, and only updates when a new `expires_at` value is set.\n\nAccess to this feature is currently limited to participants in the Early Access Program.\n",
+            "type": "integer",
+            "example": 3600,
+            "details": {
+              "description": "The time-to-live (TTL) duration originally configured for the branch, in seconds. This read-only value represents the interval between the time `expires_at` was set and the expiration timestamp itself. It is preserved to ensure the same TTL duration is reapplied when resetting the branch from its parent, and only updates when a new `expires_at` value is set.\n\nAccess to this feature is currently limited to participants in the Early Access Program.",
+              "descriptionHtml": "<p>The time-to-live (TTL) duration originally configured for the branch, in seconds. This read-only value represents the interval between the time <code>expires_at</code> was set and the expiration timestamp itself. It is preserved to ensure the same TTL duration is reapplied when resetting the branch from its parent, and only updates when a new <code>expires_at</code> value is set.</p>\n<p>Access to this feature is currently limited to participants in the Early Access Program.</p>",
+              "example": "3600",
+              "values": null
+            }
+          },
+          "expires_at": {
+            "description": "The timestamp when the branch is scheduled to expire and be automatically deleted. Must be set by the client following the [RFC 3339, section 5.6](https://tools.ietf.org/html/rfc3339#section-5.6) format with precision up to seconds (such as 2025-06-09T18:02:16Z). Deletion is performed by a background job and may not occur exactly at the specified time.\n\nAccess to this feature is currently limited to participants in the Early Access Program.\n",
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-06-09T18:02:16Z",
+            "details": {
+              "description": "The timestamp when the branch is scheduled to expire and be automatically deleted. Must be set by the client following the [RFC 3339, section 5.6](https://tools.ietf.org/html/rfc3339#section-5.6) format with precision up to seconds (such as 2025-06-09T18:02:16Z). Deletion is performed by a background job and may not occur exactly at the specified time.\n\nAccess to this feature is currently limited to participants in the Early Access Program.",
+              "descriptionHtml": "<p>The timestamp when the branch is scheduled to expire and be automatically deleted. Must be set by the client following the <a href=\"https://tools.ietf.org/html/rfc3339#section-5.6\">RFC 3339, section 5.6</a> format with precision up to seconds (such as 2025-06-09T18:02:16Z). Deletion is performed by a background job and may not occur exactly at the specified time.</p>\n<p>Access to this feature is currently limited to participants in the Early Access Program.</p>",
+              "example": "2025-06-09T18:02:16Z",
+              "values": null
+            }
+          },
+          "last_reset_at": {
+            "description": "A timestamp indicating when the branch was last reset\n",
+            "type": "string",
+            "format": "date-time",
+            "details": {
+              "description": "A timestamp indicating when the branch was last reset",
+              "descriptionHtml": "<p>A timestamp indicating when the branch was last reset</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "created_by": {
+            "description": "The resolved user model that contains details of the user/org/integration/api_key used for branch creation. This field is filled only in listing/get/create/get/update/delete methods, if it is empty when calling other handlers, it does not mean that it is empty in the system.\n",
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Display name of the user who created the branch.",
+                "details": {
+                  "description": "Display name of the user who created the branch.",
+                  "descriptionHtml": "<p>Display name of the user who created the branch.</p>",
+                  "example": null,
+                  "values": null
+                }
+              },
+              "image": {
+                "type": "string",
+                "description": "The URL to the user's avatar image.",
+                "details": {
+                  "description": "The URL to the user's avatar image.",
+                  "descriptionHtml": "<p>The URL to the user's avatar image.</p>",
+                  "example": null,
+                  "values": null
+                }
+              }
+            },
+            "details": {
+              "description": "The resolved user model that contains details of the user/org/integration/api_key used for branch creation. This field is filled only in listing/get/create/get/update/delete methods, if it is empty when calling other handlers, it does not mean that it is empty in the system.",
+              "descriptionHtml": "<p>The resolved user model that contains details of the user/org/integration/api_key used for branch creation. This field is filled only in listing/get/create/get/update/delete methods, if it is empty when calling other handlers, it does not mean that it is empty in the system.</p>",
+              "example": null,
+              "values": null
+            },
+            "displayOrder": [
+              "name",
+              "image"
+            ]
+          },
+          "init_source": {
+            "description": "Source of initialization for the branch. `parent-data` (default) copies schema and data from the parent. `parent-schema` copies schema only from the parent. `schema-only` creates a root branch with schema only. `import` initializes from an external import.\n",
+            "type": "string",
+            "example": "parent-data",
+            "details": {
+              "description": "Source of initialization for the branch. `parent-data` (default) copies schema and data from the parent. `parent-schema` copies schema only from the parent. `schema-only` creates a root branch with schema only. `import` initializes from an external import.",
+              "descriptionHtml": "<p>Source of initialization for the branch. <code>parent-data</code> (default) copies schema and data from the parent. <code>parent-schema</code> copies schema only from the parent. <code>schema-only</code> creates a root branch with schema only. <code>import</code> initializes from an external import.</p>",
+              "example": "parent-data",
+              "values": null
+            }
+          },
+          "restore_status": {
+            "description": "Could be `restored`, `finalized` or `detaching`.\nA `restored` branch becomes permanently `finalized` when you call `finalizeRestoreBranch`\nA `restored` or `finalized` branch may begin `detaching` as a one-time performance optimisation, after which it will continue in its original state\n",
+            "type": "string",
+            "details": {
+              "description": "Could be `restored`, `finalized` or `detaching`.\nA `restored` branch becomes permanently `finalized` when you call `finalizeRestoreBranch`\nA `restored` or `finalized` branch may begin `detaching` as a one-time performance optimisation, after which it will continue in its original state",
+              "descriptionHtml": "<p>Could be <code>restored</code>, <code>finalized</code> or <code>detaching</code>.\nA <code>restored</code> branch becomes permanently <code>finalized</code> when you call <code>finalizeRestoreBranch</code>\nA <code>restored</code> or <code>finalized</code> branch may begin <code>detaching</code> as a one-time performance optimisation, after which it will continue in its original state</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "restored_from": {
+            "description": "ID of the snapshot that was the restore source for this branch\n",
+            "type": "string",
+            "details": {
+              "description": "ID of the snapshot that was the restore source for this branch",
+              "descriptionHtml": "<p>ID of the snapshot that was the restore source for this branch</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "restored_as": {
+            "description": "ID of the target branch which was replaced when this branch was restored\n",
+            "type": "string",
+            "details": {
+              "description": "ID of the target branch which was replaced when this branch was restored",
+              "descriptionHtml": "<p>ID of the target branch which was replaced when this branch was restored</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "restricted_actions": {
+            "description": "A list of actions that are currently restricted for this branch and the reason why.\n",
+            "type": "array",
+            "items": {
+              "description": "An action that is currently restricted for the branch and the reason why.\n",
+              "type": "object",
+              "required": [
+                "name",
+                "reason"
+              ],
+              "properties": {
+                "name": {
+                  "description": "The name of a restricted action on a branch. `restore`: the branch cannot be used as a restore target. `delete-rw-endpoint`: the read-write endpoint for the branch cannot be deleted.\n",
+                  "type": "string",
+                  "example": "restore",
+                  "details": {
+                    "description": "The name of a restricted action on a branch. `restore`: the branch cannot be used as a restore target. `delete-rw-endpoint`: the read-write endpoint for the branch cannot be deleted.",
+                    "descriptionHtml": "<p>The name of a restricted action on a branch. <code>restore</code>: the branch cannot be used as a restore target. <code>delete-rw-endpoint</code>: the read-write endpoint for the branch cannot be deleted.</p>",
+                    "example": "restore",
+                    "values": null
+                  }
+                },
+                "reason": {
+                  "description": "A human-readable explanation of why the action is restricted.\n",
+                  "type": "string",
+                  "details": {
+                    "description": "A human-readable explanation of why the action is restricted.",
+                    "descriptionHtml": "<p>A human-readable explanation of why the action is restricted.</p>",
+                    "example": null,
+                    "values": null
+                  }
+                }
+              },
+              "displayOrder": [
+                "name",
+                "reason"
+              ]
+            },
+            "details": {
+              "description": "A list of actions that are currently restricted for this branch and the reason why.",
+              "descriptionHtml": "<p>A list of actions that are currently restricted for this branch and the reason why.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "recovery": {
+            "description": "Recovery information for a deleted branch. Only present when listing deleted branches\nwith `include_deleted=true`.\n\nThis is part of the Branch Recovery feature, which is in preview and not available to all users.\n",
+            "type": "object",
+            "required": [
+              "deleted_at",
+              "recoverable_until",
+              "deletion_method"
+            ],
+            "properties": {
+              "deleted_at": {
+                "description": "Timestamp when the branch was deleted\n",
+                "type": "string",
+                "format": "date-time",
+                "details": {
+                  "description": "Timestamp when the branch was deleted",
+                  "descriptionHtml": "<p>Timestamp when the branch was deleted</p>",
+                  "example": null,
+                  "values": null
+                }
+              },
+              "recoverable_until": {
+                "description": "Timestamp when the recovery window expires and the branch will be permanently deleted\n",
+                "type": "string",
+                "format": "date-time",
+                "details": {
+                  "description": "Timestamp when the recovery window expires and the branch will be permanently deleted",
+                  "descriptionHtml": "<p>Timestamp when the recovery window expires and the branch will be permanently deleted</p>",
+                  "example": null,
+                  "values": null
+                }
+              },
+              "deletion_method": {
+                "description": "How the branch was deleted: 'user' for manual deletion, 'ttl' for TTL expiration\n",
+                "type": "string",
+                "enum": [
+                  "user",
+                  "ttl"
+                ],
+                "details": {
+                  "description": "How the branch was deleted: 'user' for manual deletion, 'ttl' for TTL expiration",
+                  "descriptionHtml": "<p>How the branch was deleted: 'user' for manual deletion, 'ttl' for TTL expiration</p>",
+                  "example": null,
+                  "values": [
+                    "user",
+                    "ttl"
+                  ]
+                }
+              }
+            },
+            "details": {
+              "description": "Recovery information for a deleted branch. Only present when listing deleted branches\nwith `include_deleted=true`.\n\nThis is part of the Branch Recovery feature, which is in preview and not available to all users.",
+              "descriptionHtml": "<p>Recovery information for a deleted branch. Only present when listing deleted branches\nwith <code>include_deleted=true</code>.</p>\n<p>This is part of the Branch Recovery feature, which is in preview and not available to all users.</p>",
+              "example": null,
+              "values": null
+            },
+            "displayOrder": [
+              "deleted_at",
+              "recoverable_until",
+              "deletion_method"
+            ]
+          }
+        },
+        "example": {
+          "id": "br-wispy-meadow-118737",
+          "project_id": "spring-example-302709",
+          "parent_id": "br-aged-salad-637688",
+          "parent_lsn": "0/1DE2850",
+          "name": "dev2",
+          "protected": false,
+          "current_state": "ready",
+          "state_changed_at": "2022-11-30T20:09:48Z",
+          "creation_source": "console",
+          "created_at": "2022-11-30T19:09:48Z",
+          "updated_at": "2022-12-01T19:53:05Z",
+          "default": true,
+          "init_source": "parent-data",
+          "data_transfer_bytes": 72911987,
+          "written_data_bytes": 542998300,
+          "compute_time_seconds": 823880990,
+          "active_time_seconds": 922200,
+          "cpu_used_sec": 461100
+        },
+        "details": {
+          "description": "Branch returned by the request.",
+          "descriptionHtml": "<p>Branch returned by the request.</p>",
+          "example": "{\n  \"id\": \"br-wispy-meadow-118737\",\n  \"project_id\": \"spring-example-302709\",\n  \"parent_id\": \"br-aged-salad-637688\",\n  \"parent_lsn\": \"0/1DE2850\",\n  \"name\": \"dev2\",\n  \"protected\": false,\n  \"current_state\": \"ready\",\n  \"state_changed_at\": \"2022-11-30T20:09:48Z\",\n  \"creation_source\": \"console\",\n  \"created_at\": \"2022-11-30T19:09:48Z\",\n  \"updated_at\": \"2022-12-01T19:53:05Z\",\n  \"default\": true,\n  \"init_source\": \"parent-data\",\n  \"data_transfer_bytes\": 72911987,\n  \"written_data_bytes\": 542998300,\n  \"compute_time_seconds\": 823880990,\n  \"active_time_seconds\": 922200,\n  \"cpu_used_sec\": 461100\n}",
+          "values": null
+        },
+        "displayOrder": [
+          "id",
+          "project_id",
+          "name",
+          "current_state",
+          "state_changed_at",
+          "creation_source",
+          "default",
+          "protected",
+          "cpu_used_sec",
+          "compute_time_seconds",
+          "active_time_seconds",
+          "written_data_bytes",
+          "data_transfer_bytes",
+          "created_at",
+          "updated_at",
+          "parent_id",
+          "parent_lsn",
+          "parent_timestamp",
+          "pending_state",
+          "logical_size",
+          "primary",
+          "ttl_interval_seconds",
+          "created_by",
+          "init_source",
+          "restore_status",
+          "restored_from",
+          "restored_as",
+          "restricted_actions",
+          "recovery",
+          "expires_at",
+          "last_reset_at"
+        ]
+      },
+      "operations": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "An asynchronous action Neon performs on your resources (for example, starting a compute or creating a branch). Fields such as `action`, `status`, and `total_duration_ms` describe the operation and its progress.",
+          "required": [
+            "id",
+            "project_id",
+            "action",
+            "status",
+            "failures_count",
+            "created_at",
+            "updated_at",
+            "total_duration_ms"
+          ],
+          "properties": {
+            "id": {
+              "description": "The operation ID",
+              "type": "string",
+              "format": "uuid",
+              "details": {
+                "description": "The operation ID",
+                "descriptionHtml": "<p>The operation ID</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "project_id": {
+              "description": "The ID of the project this operation ran on.",
+              "type": "string",
+              "pattern": "^[a-z0-9-]{1,60}$",
+              "details": {
+                "description": "The ID of the project this operation ran on.",
+                "descriptionHtml": "<p>The ID of the project this operation ran on.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "branch_id": {
+              "description": "The ID of the branch this operation ran on.",
+              "type": "string",
+              "pattern": "^[a-z0-9-]{1,60}$",
+              "details": {
+                "description": "The ID of the branch this operation ran on.",
+                "descriptionHtml": "<p>The ID of the branch this operation ran on.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "endpoint_id": {
+              "description": "The ID of the compute endpoint this operation ran on.",
+              "type": "string",
+              "pattern": "^[a-z0-9-]{1,60}$",
+              "details": {
+                "description": "The ID of the compute endpoint this operation ran on.",
+                "descriptionHtml": "<p>The ID of the compute endpoint this operation ran on.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "action": {
+              "description": "The action performed by the operation",
+              "type": "string",
+              "enum": [
+                "create_compute",
+                "create_timeline",
+                "start_compute",
+                "suspend_compute",
+                "apply_config",
+                "check_availability",
+                "delete_timeline",
+                "create_branch",
+                "import_data",
+                "tenant_ignore",
+                "tenant_attach",
+                "tenant_detach",
+                "tenant_detach_safekeepers",
+                "tenant_attach_safekeepers",
+                "tenant_reattach",
+                "replace_safekeeper",
+                "disable_maintenance",
+                "apply_storage_config",
+                "prepare_secondary_pageserver",
+                "switch_pageserver",
+                "detach_parent_branch",
+                "timeline_archive",
+                "timeline_unarchive",
+                "start_reserved_compute",
+                "sync_dbs_and_roles_from_compute",
+                "apply_schema_from_branch",
+                "timeline_mark_invisible",
+                "timeline_update_protected_config",
+                "prewarm_replica",
+                "promote_replica",
+                "set_storage_non_dirty",
+                "swap_binding_id",
+                "finalize_migration",
+                "mark_migration_prepared",
+                "update_catalog",
+                "epc_sync"
+              ],
+              "details": {
+                "description": "The action performed by the operation",
+                "descriptionHtml": "<p>The action performed by the operation</p>",
+                "example": null,
+                "values": [
+                  "create_compute",
+                  "create_timeline",
+                  "start_compute",
+                  "suspend_compute",
+                  "apply_config",
+                  "check_availability",
+                  "delete_timeline",
+                  "create_branch",
+                  "import_data",
+                  "tenant_ignore",
+                  "tenant_attach",
+                  "tenant_detach",
+                  "tenant_detach_safekeepers",
+                  "tenant_attach_safekeepers",
+                  "tenant_reattach",
+                  "replace_safekeeper",
+                  "disable_maintenance",
+                  "apply_storage_config",
+                  "prepare_secondary_pageserver",
+                  "switch_pageserver",
+                  "detach_parent_branch",
+                  "timeline_archive",
+                  "timeline_unarchive",
+                  "start_reserved_compute",
+                  "sync_dbs_and_roles_from_compute",
+                  "apply_schema_from_branch",
+                  "timeline_mark_invisible",
+                  "timeline_update_protected_config",
+                  "prewarm_replica",
+                  "promote_replica",
+                  "set_storage_non_dirty",
+                  "swap_binding_id",
+                  "finalize_migration",
+                  "mark_migration_prepared",
+                  "update_catalog",
+                  "epc_sync"
+                ]
+              }
+            },
+            "status": {
+              "description": "Current lifecycle state of the operation. On `failed`, see `failures_count` and `retry_at` for retry detail.",
+              "type": "string",
+              "enum": [
+                "scheduling",
+                "running",
+                "finished",
+                "failed",
+                "error",
+                "cancelling",
+                "cancelled",
+                "skipped"
+              ],
+              "details": {
+                "description": "Current lifecycle state of the operation. On `failed`, see `failures_count` and `retry_at` for retry detail.",
+                "descriptionHtml": "<p>Current lifecycle state of the operation. On <code>failed</code>, see <code>failures_count</code> and <code>retry_at</code> for retry detail.</p>",
+                "example": null,
+                "values": [
+                  "scheduling",
+                  "running",
+                  "finished",
+                  "failed",
+                  "error",
+                  "cancelling",
+                  "cancelled",
+                  "skipped"
+                ]
+              }
+            },
+            "error": {
+              "description": "Human-readable message describing why the operation failed.",
+              "type": "string",
+              "details": {
+                "description": "Human-readable message describing why the operation failed.",
+                "descriptionHtml": "<p>Human-readable message describing why the operation failed.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "failures_count": {
+              "description": "The number of times the operation failed",
+              "type": "integer",
+              "format": "int32",
+              "details": {
+                "description": "The number of times the operation failed",
+                "descriptionHtml": "<p>The number of times the operation failed</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "retry_at": {
+              "description": "A timestamp indicating when the operation was last retried",
+              "type": "string",
+              "format": "date-time",
+              "details": {
+                "description": "A timestamp indicating when the operation was last retried",
+                "descriptionHtml": "<p>A timestamp indicating when the operation was last retried</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "created_at": {
+              "description": "A timestamp indicating when the operation was created",
+              "type": "string",
+              "format": "date-time",
+              "details": {
+                "description": "A timestamp indicating when the operation was created",
+                "descriptionHtml": "<p>A timestamp indicating when the operation was created</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "updated_at": {
+              "description": "A timestamp indicating when the operation status was last updated",
+              "type": "string",
+              "format": "date-time",
+              "details": {
+                "description": "A timestamp indicating when the operation status was last updated",
+                "descriptionHtml": "<p>A timestamp indicating when the operation status was last updated</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "total_duration_ms": {
+              "description": "The total duration of the operation in milliseconds",
+              "type": "integer",
+              "format": "int32",
+              "details": {
+                "description": "The total duration of the operation in milliseconds",
+                "descriptionHtml": "<p>The total duration of the operation in milliseconds</p>",
+                "example": null,
+                "values": null
+              }
+            }
+          },
+          "example": {
+            "id": "d8ac46eb-a757-42b1-9907-f78322ee394e",
+            "project_id": "spring-example-302709",
+            "branch_id": "br-wispy-meadow-118737",
+            "endpoint_id": "ep-silent-smoke-806639",
+            "action": "start_compute",
+            "status": "finished",
+            "failures_count": 0,
+            "created_at": "2022-11-15T20:02:00Z",
+            "updated_at": "2022-11-15T20:02:02Z",
+            "total_duration_ms": 200
+          },
+          "displayOrder": [
+            "id",
+            "project_id",
+            "action",
+            "status",
+            "failures_count",
+            "created_at",
+            "updated_at",
+            "total_duration_ms",
+            "branch_id",
+            "endpoint_id",
+            "error",
+            "retry_at"
+          ]
+        }
+      }
+    },
+    "requiredFields": [
+      "branch",
+      "operations"
+    ],
+    "displayOrder": [
+      "branch",
+      "operations"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID\" \\\n  -X PATCH \\\n  -H \"Authorization: Bearer $NEON_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"branch\":{\"name\":\"mybranch\"}}'",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.updateProjectBranch({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    branch_id: process.env.BRANCH_ID\n  },\n  body: {\n    branch: {\n      name: \"mybranch\"\n    }\n  }\n});",
+    "bodyExample": {
+      "branch": {
+        "name": "mybranch"
+      }
+    },
+    "representative": {
+      "body": {
+        "branch": {
+          "name": "mybranch"
+        }
+      },
+      "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID\" \\\n  -X PATCH \\\n  -H \"Authorization: Bearer $NEON_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"branch\":{\"name\":\"mybranch\"}}'",
+      "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.updateProjectBranch({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    branch_id: process.env.BRANCH_ID\n  },\n  body: {\n    branch: {\n      name: \"mybranch\"\n    }\n  }\n});"
+    }
+  },
+  "cli": {
+    "commands": [
+      {
+        "command": "neon branches rename <id|name> <new-name>",
+        "covers": [
+          "name"
+        ],
+        "flags": [
+          {
+            "name": "analytics",
+            "type": "boolean",
+            "required": false,
+            "default": true
+          },
+          {
+            "name": "api-key",
+            "type": "string",
+            "required": false,
+            "default": ""
+          },
+          {
+            "name": "color",
+            "type": "boolean",
+            "required": false,
+            "default": true
+          },
+          {
+            "name": "config-dir",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "context-file",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "help",
+            "type": "boolean",
+            "required": false,
+            "alias": "h"
+          },
+          {
+            "name": "output",
+            "type": "string",
+            "required": false,
+            "alias": "o",
+            "enum": [
+              "json",
+              "yaml",
+              "table"
+            ],
+            "default": "table"
+          },
+          {
+            "name": "profile",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "version",
+            "type": "boolean",
+            "required": false,
+            "alias": "v"
+          },
+          {
+            "name": "project-id",
+            "type": "string",
+            "required": false,
+            "apiEquiv": "project_id",
+            "apiEquivIn": "parameter"
+          }
+        ],
+        "positionals": [
+          {
+            "display": "<id|name>",
+            "apiEquiv": "branch_id"
+          },
+          {
+            "display": "<new-name>",
+            "apiEquiv": null
+          }
+        ]
+      },
+      {
+        "command": "neon branches set-expiration <id|name>",
+        "covers": [
+          "expires_at"
+        ],
+        "flags": [
+          {
+            "name": "analytics",
+            "type": "boolean",
+            "required": false,
+            "default": true
+          },
+          {
+            "name": "api-key",
+            "type": "string",
+            "required": false,
+            "default": ""
+          },
+          {
+            "name": "color",
+            "type": "boolean",
+            "required": false,
+            "default": true
+          },
+          {
+            "name": "config-dir",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "context-file",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "help",
+            "type": "boolean",
+            "required": false,
+            "alias": "h"
+          },
+          {
+            "name": "output",
+            "type": "string",
+            "required": false,
+            "alias": "o",
+            "enum": [
+              "json",
+              "yaml",
+              "table"
+            ],
+            "default": "table"
+          },
+          {
+            "name": "profile",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "version",
+            "type": "boolean",
+            "required": false,
+            "alias": "v"
+          },
+          {
+            "name": "project-id",
+            "type": "string",
+            "required": false,
+            "apiEquiv": "project_id",
+            "apiEquivIn": "parameter"
+          },
+          {
+            "name": "expires-at",
+            "type": "string",
+            "required": false,
+            "apiEquiv": "branch.expires_at",
+            "apiEquivIn": "body"
+          }
+        ],
+        "positionals": [
+          {
+            "display": "<id|name>",
+            "apiEquiv": "branch_id"
+          }
+        ]
+      }
+    ],
+    "uncovered": [
+      "protected"
+    ],
+    "tableOutput": "┌─────────────────────┬──────────────────────────┬───────────────┬──────────────────────┐\n│ Name                │ Id                       │ Current State │ Created At           │\n├─────────────────────┼──────────────────────────┼───────────────┼──────────────────────┤\n│ my-branch-4-renamed │ br-young-forest-a5b6c7d8 │ ready         │ 2025-01-15T10:30:00Z │\n└─────────────────────┴──────────────────────────┴───────────────┴──────────────────────┘\n"
+  },
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": "Projects → Branches"
+  },
+  "specIndex": 80
+}

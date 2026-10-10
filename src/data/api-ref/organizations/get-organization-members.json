@@ -1,0 +1,379 @@
+{
+  "id": "get-organization-members",
+  "operationId": "getOrganizationMembers",
+  "method": "GET",
+  "path": "/organizations/{org_id}/members",
+  "tag": "organizations",
+  "tagDisplay": "Organizations",
+  "stability": null,
+  "deprecated": false,
+  "sunset": null,
+  "summary": "List organization members",
+  "description": "Retrieves a paginated list of members for the specified organization.\n",
+  "descriptionHtml": "<p>Retrieves a paginated list of members for the specified organization.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "org_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon organization ID",
+      "descriptionHtml": "<p>The Neon organization ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "sort_by",
+      "type": "string",
+      "in": "query",
+      "required": false,
+      "description": "Sort the members by the specified field. Defaults to `joined_at`.",
+      "descriptionHtml": "<p>Sort the members by the specified field. Defaults to <code>joined_at</code>.</p>",
+      "default": "joined_at",
+      "example": null
+    },
+    {
+      "name": "cursor",
+      "type": "string",
+      "in": "query",
+      "required": false,
+      "description": "A cursor to use in pagination. A cursor defines your place in the data list. Include `response.pagination.next` in subsequent API calls to fetch next page of the list.",
+      "descriptionHtml": "<p>A cursor to use in pagination. A cursor defines your place in the data list. Include <code>response.pagination.next</code> in subsequent API calls to fetch next page of the list.</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "sort_order",
+      "type": "string",
+      "in": "query",
+      "required": false,
+      "description": "Defines the sorting order of entities.",
+      "descriptionHtml": "<p>Defines the sorting order of entities.</p>",
+      "default": "desc",
+      "example": null
+    },
+    {
+      "name": "limit",
+      "type": "integer",
+      "in": "query",
+      "required": false,
+      "description": "The maximum number of members to return in the response",
+      "descriptionHtml": "<p>The maximum number of members to return in the response</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": null,
+  "response": {
+    "status": "200",
+    "description": "Returned information about organization members",
+    "descriptionHtml": "<p>Returned information about organization members</p>",
+    "example": {
+      "members": [
+        {
+          "member": {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "user_id": "00000000-0000-0000-0000-000000000000",
+            "org_id": "org-spring-garden-12345",
+            "role": "member",
+            "joined_at": "2025-01-15T10:30:00Z"
+          },
+          "user": {
+            "email": "alex@example.com",
+            "has_mfa": false
+          }
+        },
+        {
+          "member": {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "user_id": "00000000-0000-0000-0000-000000000000",
+            "org_id": "org-spring-garden-12345",
+            "role": "admin",
+            "joined_at": "2025-01-15T11:00:00Z"
+          },
+          "user": {
+            "email": "jane.doe@example.com",
+            "has_mfa": false
+          }
+        }
+      ],
+      "pagination": {
+        "sort_by": "joined_at",
+        "sort_order": "desc"
+      }
+    },
+    "properties": {
+      "members": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "member",
+            "user"
+          ],
+          "properties": {
+            "member": {
+              "description": "Membership record for the user in the organization.",
+              "type": "object",
+              "required": [
+                "id",
+                "user_id",
+                "org_id",
+                "role"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "description": "The organization member's ID.",
+                  "details": {
+                    "description": "The organization member's ID.",
+                    "descriptionHtml": "<p>The organization member's ID.</p>",
+                    "example": null,
+                    "values": null
+                  }
+                },
+                "user_id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "description": "The Neon user ID.",
+                  "details": {
+                    "description": "The Neon user ID.",
+                    "descriptionHtml": "<p>The Neon user ID.</p>",
+                    "example": null,
+                    "values": null
+                  }
+                },
+                "org_id": {
+                  "description": "The Neon organization ID. Returned as `id` from `GET /users/me/organizations`.",
+                  "example": "org-cool-darkness-12345678",
+                  "type": "string",
+                  "pattern": "^[a-z0-9-]{1,60}$",
+                  "details": {
+                    "description": "The Neon organization ID. Returned as `id` from `GET /users/me/organizations`.",
+                    "descriptionHtml": "<p>The Neon organization ID. Returned as <code>id</code> from <code>GET /users/me/organizations</code>.</p>",
+                    "example": "org-cool-darkness-12345678",
+                    "values": null
+                  }
+                },
+                "role": {
+                  "description": "Organization member's role. `admin`: full administrative access. `editor` (and its legacy alias `member`): standard access governed by project permissions. `viewer` and `collaborator`: additional scoped project roles. Some values may not be available for all organizations.",
+                  "type": "string",
+                  "enum": [
+                    "admin",
+                    "member",
+                    "editor",
+                    "viewer",
+                    "collaborator"
+                  ],
+                  "details": {
+                    "description": "Organization member's role. `admin`: full administrative access. `editor` (and its legacy alias `member`): standard access governed by project permissions. `viewer` and `collaborator`: additional scoped project roles. Some values may not be available for all organizations.",
+                    "descriptionHtml": "<p>Organization member's role. <code>admin</code>: full administrative access. <code>editor</code> (and its legacy alias <code>member</code>): standard access governed by project permissions. <code>viewer</code> and <code>collaborator</code>: additional scoped project roles. Some values may not be available for all organizations.</p>",
+                    "example": null,
+                    "values": [
+                      "admin",
+                      "member",
+                      "editor",
+                      "viewer",
+                      "collaborator"
+                    ]
+                  }
+                },
+                "joined_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Timestamp when the user joined the organization.",
+                  "details": {
+                    "description": "Timestamp when the user joined the organization.",
+                    "descriptionHtml": "<p>Timestamp when the user joined the organization.</p>",
+                    "example": null,
+                    "values": null
+                  }
+                }
+              },
+              "details": {
+                "description": "Membership record for the user in the organization.",
+                "descriptionHtml": "<p>Membership record for the user in the organization.</p>",
+                "example": null,
+                "values": null
+              },
+              "displayOrder": [
+                "id",
+                "user_id",
+                "org_id",
+                "role",
+                "joined_at"
+              ]
+            },
+            "user": {
+              "description": "Profile information for the organization member.",
+              "type": "object",
+              "required": [
+                "email"
+              ],
+              "x-sensitive": [
+                "email"
+              ],
+              "properties": {
+                "email": {
+                  "description": "Email address of the organization member's user account.",
+                  "type": "string",
+                  "format": "email",
+                  "minLength": 1,
+                  "maxLength": 256,
+                  "details": {
+                    "description": "Email address of the organization member's user account.",
+                    "descriptionHtml": "<p>Email address of the organization member's user account.</p>",
+                    "example": null,
+                    "values": null
+                  }
+                },
+                "has_mfa": {
+                  "type": "boolean",
+                  "description": "Whether the member has MFA (TOTP) enabled",
+                  "details": {
+                    "description": "Whether the member has MFA (TOTP) enabled",
+                    "descriptionHtml": "<p>Whether the member has MFA (TOTP) enabled</p>",
+                    "example": null,
+                    "values": null
+                  }
+                },
+                "deactivated_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Timestamp of when the user account was deactivated.\nAbsent for active users. When present, the UI should render a\n\"Deactivated\" badge inline next to the member.\n",
+                  "details": {
+                    "description": "Timestamp of when the user account was deactivated.\nAbsent for active users. When present, the UI should render a\n\"Deactivated\" badge inline next to the member.",
+                    "descriptionHtml": "<p>Timestamp of when the user account was deactivated.\nAbsent for active users. When present, the UI should render a\n&quot;Deactivated&quot; badge inline next to the member.</p>",
+                    "example": null,
+                    "values": null
+                  }
+                }
+              },
+              "details": {
+                "description": "Profile information for the organization member.",
+                "descriptionHtml": "<p>Profile information for the organization member.</p>",
+                "example": null,
+                "values": null
+              },
+              "displayOrder": [
+                "email",
+                "has_mfa",
+                "deactivated_at"
+              ]
+            }
+          },
+          "displayOrder": [
+            "member",
+            "user"
+          ]
+        },
+        "description": "Members of the organization, each combining membership details (role, status) with the associated user's identity.",
+        "details": {
+          "description": "Members of the organization, each combining membership details (role, status) with the associated user's identity.",
+          "descriptionHtml": "<p>Members of the organization, each combining membership details (role, status) with the associated user's identity.</p>",
+          "example": null,
+          "values": null
+        }
+      },
+      "pagination": {
+        "type": "object",
+        "description": "To paginate the response, issue an initial request with `limit` value. Then, add the value returned in the response `.pagination.next` attribute into the request under the `cursor` query parameter to the subsequent request to retrieve next page in pagination. The contents on cursor `next` are opaque, clients are not expected to make any assumptions on the format of the data inside the cursor.",
+        "properties": {
+          "next": {
+            "type": "string",
+            "description": "Cursor for the next page of results. Pass it as the `cursor` query parameter on the next request. Absent on the last page.",
+            "details": {
+              "description": "Cursor for the next page of results. Pass it as the `cursor` query parameter on the next request. Absent on the last page.",
+              "descriptionHtml": "<p>Cursor for the next page of results. Pass it as the <code>cursor</code> query parameter on the next request. Absent on the last page.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "sort_by": {
+            "type": "string",
+            "description": "Field by which the results were sorted, echoing the request's sort_by parameter.",
+            "details": {
+              "description": "Field by which the results were sorted, echoing the request's sort_by parameter.",
+              "descriptionHtml": "<p>Field by which the results were sorted, echoing the request's sort_by parameter.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "sort_order": {
+            "type": "string",
+            "description": "Sort order active for this page. Pass back as `sort_order` in the next request to maintain consistent ordering. Valid values are `asc` and `desc`.",
+            "details": {
+              "description": "Sort order active for this page. Pass back as `sort_order` in the next request to maintain consistent ordering. Valid values are `asc` and `desc`.",
+              "descriptionHtml": "<p>Sort order active for this page. Pass back as <code>sort_order</code> in the next request to maintain consistent ordering. Valid values are <code>asc</code> and <code>desc</code>.</p>",
+              "example": null,
+              "values": null
+            }
+          }
+        },
+        "details": {
+          "description": "To paginate the response, issue an initial request with `limit` value. Then, add the value returned in the response `.pagination.next` attribute into the request under the `cursor` query parameter to the subsequent request to retrieve next page in pagination. The contents on cursor `next` are opaque, clients are not expected to make any assumptions on the format of the data inside the cursor.",
+          "descriptionHtml": "<p>To paginate the response, issue an initial request with <code>limit</code> value. Then, add the value returned in the response <code>.pagination.next</code> attribute into the request under the <code>cursor</code> query parameter to the subsequent request to retrieve next page in pagination. The contents on cursor <code>next</code> are opaque, clients are not expected to make any assumptions on the format of the data inside the cursor.</p>",
+          "example": null,
+          "values": null
+        },
+        "displayOrder": [
+          "next",
+          "sort_by",
+          "sort_order"
+        ]
+      }
+    },
+    "requiredFields": [
+      "members"
+    ],
+    "displayOrder": [
+      "members",
+      "pagination"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/organizations/$ORG_ID/members\" \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.getOrganizationMembers({\n  client: neon.client,\n  path: {\n    org_id: process.env.ORG_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": "Organization → People → Members"
+  },
+  "specIndex": 124
+}

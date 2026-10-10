@@ -1,0 +1,267 @@
+{
+  "id": "list-project-branch-custom-domains",
+  "operationId": "listProjectBranchCustomDomains",
+  "method": "GET",
+  "path": "/projects/{project_id}/branches/{branch_id}/custom-domains",
+  "tag": "functions",
+  "tagDisplay": "Functions",
+  "stability": "beta",
+  "deprecated": false,
+  "sunset": null,
+  "summary": "List the custom domains on a branch",
+  "description": "Lists all custom domains registered on the branch, across every target\nentity.\n\n**Note**: This endpoint is currently in Beta.\n",
+  "descriptionHtml": "<p>Lists all custom domains registered on the branch, across every target\nentity.</p>\n<p><strong>Note</strong>: This endpoint is currently in Beta.</p>\n",
+  "auth": {
+    "scheme": "bearer",
+    "required": true
+  },
+  "parameters": [
+    {
+      "name": "project_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon project ID",
+      "descriptionHtml": "<p>The Neon project ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "branch_id",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "description": "The Neon branch ID",
+      "descriptionHtml": "<p>The Neon branch ID</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "cursor",
+      "type": "string",
+      "in": "query",
+      "required": false,
+      "description": "A cursor to use in pagination. A cursor defines your place in the data list. Include `response.pagination.next` in subsequent API calls to fetch next page of the list.",
+      "descriptionHtml": "<p>A cursor to use in pagination. A cursor defines your place in the data list. Include <code>response.pagination.next</code> in subsequent API calls to fetch next page of the list.</p>",
+      "default": null,
+      "example": null
+    },
+    {
+      "name": "limit",
+      "type": "integer",
+      "in": "query",
+      "required": false,
+      "description": "Specify a value from 1 to 1000 to limit number of domains in the response",
+      "descriptionHtml": "<p>Specify a value from 1 to 1000 to limit number of domains in the response</p>",
+      "default": null,
+      "example": null
+    }
+  ],
+  "requestBody": null,
+  "response": {
+    "status": "200",
+    "description": "The list of custom domains",
+    "descriptionHtml": "<p>The list of custom domains</p>",
+    "example": null,
+    "properties": {
+      "custom_domains": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "domain",
+            "entity_type",
+            "entity_id",
+            "cname_target"
+          ],
+          "properties": {
+            "domain": {
+              "type": "string",
+              "description": "The registered custom domain (normalized, lowercase).",
+              "details": {
+                "description": "The registered custom domain (normalized, lowercase).",
+                "descriptionHtml": "<p>The registered custom domain (normalized, lowercase).</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "entity_type": {
+              "type": "string",
+              "description": "The kind of branch entity the domain targets. Possible values:\n`function` (v1 supports only `function`). Not an `enum`: new values may\nship in later spec versions — treat any undocumented value as unknown.\n",
+              "details": {
+                "description": "The kind of branch entity the domain targets. Possible values:\n`function` (v1 supports only `function`). Not an `enum`: new values may\nship in later spec versions — treat any undocumented value as unknown.",
+                "descriptionHtml": "<p>The kind of branch entity the domain targets. Possible values:\n<code>function</code> (v1 supports only <code>function</code>). Not an <code>enum</code>: new values may\nship in later spec versions — treat any undocumented value as unknown.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "entity_id": {
+              "type": "string",
+              "description": "The target entity's identifier within the branch. For `function` this\nis the function slug.\n",
+              "details": {
+                "description": "The target entity's identifier within the branch. For `function` this\nis the function slug.",
+                "descriptionHtml": "<p>The target entity's identifier within the branch. For <code>function</code> this\nis the function slug.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "cname_target": {
+              "type": "string",
+              "description": "The hostname the customer must point their custom domain at with a\nCNAME record. Empty when the serving region has no custom-domains\nfront door configured. This is the activation input: point DNS here\nand the domain goes live (see `status`) once a certificate is issued\non the first request.\n",
+              "details": {
+                "description": "The hostname the customer must point their custom domain at with a\nCNAME record. Empty when the serving region has no custom-domains\nfront door configured. This is the activation input: point DNS here\nand the domain goes live (see `status`) once a certificate is issued\non the first request.",
+                "descriptionHtml": "<p>The hostname the customer must point their custom domain at with a\nCNAME record. Empty when the serving region has no custom-domains\nfront door configured. This is the activation input: point DNS here\nand the domain goes live (see <code>status</code>) once a certificate is issued\non the first request.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "status": {
+              "type": "string",
+              "description": "The domain's current validity, computed by a background check:\n`pending` (still converging — point your CNAME at `cname_target` and\nwait), `active` (live: DNS resolves to the edge, the CA is authorized,\nand routing is published), or `error` (a fixable problem — see\n`status_reason`). Not an `enum`: treat any undocumented value as\nunknown. May be absent briefly right after registration.\n",
+              "details": {
+                "description": "The domain's current validity, computed by a background check:\n`pending` (still converging — point your CNAME at `cname_target` and\nwait), `active` (live: DNS resolves to the edge, the CA is authorized,\nand routing is published), or `error` (a fixable problem — see\n`status_reason`). Not an `enum`: treat any undocumented value as\nunknown. May be absent briefly right after registration.",
+                "descriptionHtml": "<p>The domain's current validity, computed by a background check:\n<code>pending</code> (still converging — point your CNAME at <code>cname_target</code> and\nwait), <code>active</code> (live: DNS resolves to the edge, the CA is authorized,\nand routing is published), or <code>error</code> (a fixable problem — see\n<code>status_reason</code>). Not an <code>enum</code>: treat any undocumented value as\nunknown. May be absent briefly right after registration.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "dns_status": {
+              "type": "string",
+              "description": "The DNS + CAA portion of the check: `pending` (no records yet), `ok`\n(resolves to our edge and the CA is authorized), `misconfigured` (your\nCNAME does not resolve to our edge), or `caa_blocked` (your CAA records\nforbid Let's Encrypt). Not an `enum`.\n",
+              "details": {
+                "description": "The DNS + CAA portion of the check: `pending` (no records yet), `ok`\n(resolves to our edge and the CA is authorized), `misconfigured` (your\nCNAME does not resolve to our edge), or `caa_blocked` (your CAA records\nforbid Let's Encrypt). Not an `enum`.",
+                "descriptionHtml": "<p>The DNS + CAA portion of the check: <code>pending</code> (no records yet), <code>ok</code>\n(resolves to our edge and the CA is authorized), <code>misconfigured</code> (your\nCNAME does not resolve to our edge), or <code>caa_blocked</code> (your CAA records\nforbid Let's Encrypt). Not an <code>enum</code>.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "binding_status": {
+              "type": "string",
+              "description": "Whether Neon's internal routing for the domain is published:\n`pending`, `present`, or `missing`. `missing` is an internal fault\nsurfaced for support. Not an `enum`.\n",
+              "details": {
+                "description": "Whether Neon's internal routing for the domain is published:\n`pending`, `present`, or `missing`. `missing` is an internal fault\nsurfaced for support. Not an `enum`.",
+                "descriptionHtml": "<p>Whether Neon's internal routing for the domain is published:\n<code>pending</code>, <code>present</code>, or <code>missing</code>. <code>missing</code> is an internal fault\nsurfaced for support. Not an <code>enum</code>.</p>",
+                "example": null,
+                "values": null
+              }
+            },
+            "status_reason": {
+              "type": "string",
+              "description": "A short, stable machine-readable reason for a non-active `status`\n(e.g. `cname-not-pointing-at-edge`, `caa-blocks-lets-encrypt`,\n`binding-missing`), suitable for keying an actionable hint. Empty when\nactive or pending.\n",
+              "details": {
+                "description": "A short, stable machine-readable reason for a non-active `status`\n(e.g. `cname-not-pointing-at-edge`, `caa-blocks-lets-encrypt`,\n`binding-missing`), suitable for keying an actionable hint. Empty when\nactive or pending.",
+                "descriptionHtml": "<p>A short, stable machine-readable reason for a non-active <code>status</code>\n(e.g. <code>cname-not-pointing-at-edge</code>, <code>caa-blocks-lets-encrypt</code>,\n<code>binding-missing</code>), suitable for keying an actionable hint. Empty when\nactive or pending.</p>",
+                "example": null,
+                "values": null
+              }
+            }
+          },
+          "displayOrder": [
+            "domain",
+            "entity_type",
+            "entity_id",
+            "cname_target",
+            "status",
+            "dns_status",
+            "binding_status",
+            "status_reason"
+          ]
+        }
+      },
+      "pagination": {
+        "type": "object",
+        "description": "To paginate the response, issue an initial request with `limit` value. Then, add the value returned in the response `.pagination.next` attribute into the request under the `cursor` query parameter to the subsequent request to retrieve next page in pagination. The contents on cursor `next` are opaque, clients are not expected to make any assumptions on the format of the data inside the cursor.",
+        "properties": {
+          "next": {
+            "type": "string",
+            "description": "Cursor for the next page of results. Pass it as the `cursor` query parameter on the next request. Absent on the last page.",
+            "details": {
+              "description": "Cursor for the next page of results. Pass it as the `cursor` query parameter on the next request. Absent on the last page.",
+              "descriptionHtml": "<p>Cursor for the next page of results. Pass it as the <code>cursor</code> query parameter on the next request. Absent on the last page.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "sort_by": {
+            "type": "string",
+            "description": "Field by which the results were sorted, echoing the request's sort_by parameter.",
+            "details": {
+              "description": "Field by which the results were sorted, echoing the request's sort_by parameter.",
+              "descriptionHtml": "<p>Field by which the results were sorted, echoing the request's sort_by parameter.</p>",
+              "example": null,
+              "values": null
+            }
+          },
+          "sort_order": {
+            "type": "string",
+            "description": "Sort order active for this page. Pass back as `sort_order` in the next request to maintain consistent ordering. Valid values are `asc` and `desc`.",
+            "details": {
+              "description": "Sort order active for this page. Pass back as `sort_order` in the next request to maintain consistent ordering. Valid values are `asc` and `desc`.",
+              "descriptionHtml": "<p>Sort order active for this page. Pass back as <code>sort_order</code> in the next request to maintain consistent ordering. Valid values are <code>asc</code> and <code>desc</code>.</p>",
+              "example": null,
+              "values": null
+            }
+          }
+        },
+        "details": {
+          "description": "To paginate the response, issue an initial request with `limit` value. Then, add the value returned in the response `.pagination.next` attribute into the request under the `cursor` query parameter to the subsequent request to retrieve next page in pagination. The contents on cursor `next` are opaque, clients are not expected to make any assumptions on the format of the data inside the cursor.",
+          "descriptionHtml": "<p>To paginate the response, issue an initial request with <code>limit</code> value. Then, add the value returned in the response <code>.pagination.next</code> attribute into the request under the <code>cursor</code> query parameter to the subsequent request to retrieve next page in pagination. The contents on cursor <code>next</code> are opaque, clients are not expected to make any assumptions on the format of the data inside the cursor.</p>",
+          "example": null,
+          "values": null
+        },
+        "displayOrder": [
+          "next",
+          "sort_by",
+          "sort_order"
+        ]
+      }
+    },
+    "requiredFields": [
+      "custom_domains"
+    ],
+    "displayOrder": [
+      "custom_domains",
+      "pagination"
+    ]
+  },
+  "errors": [
+    {
+      "status": "default",
+      "description": "General Error.\n\nThe request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.\n\n- If no response is returned from the API, a network error or timeout likely occurred.\n- In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.\n\nThe following HTTP methods are considered non-idempotent: `POST`, `PATCH`, `DELETE`, and `PUT`. Retrying these methods is generally **not safe**.\nThe following methods are considered idempotent: `GET`, `HEAD`, and `OPTIONS`. Retrying these methods is **safe** in the event of a network error or timeout.\n\nAny request that returns a `503 Service Unavailable` response is always safe to retry.\n\nAny request that returns a `423 Locked` response is safe to retry. `423 Locked` indicates that the resource is temporarily locked, for example, due to another operation in progress.\n",
+      "descriptionHtml": "<p>General Error.</p>\n<p>The request may or may not be safe to retry, depending on the HTTP method, response status code,\nand whether a response was received.</p>\n<ul>\n<li>If no response is returned from the API, a network error or timeout likely occurred.</li>\n<li>In some cases, the request may have reached the server and been successfully processed, but the response failed to reach the client. As a result, retrying non-idempotent requests can lead to unintended results.</li>\n</ul>\n<p>The following HTTP methods are considered non-idempotent: <code>POST</code>, <code>PATCH</code>, <code>DELETE</code>, and <code>PUT</code>. Retrying these methods is generally <strong>not safe</strong>.\nThe following methods are considered idempotent: <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code>. Retrying these methods is <strong>safe</strong> in the event of a network error or timeout.</p>\n<p>Any request that returns a <code>503 Service Unavailable</code> response is always safe to retry.</p>\n<p>Any request that returns a <code>423 Locked</code> response is safe to retry. <code>423 Locked</code> indicates that the resource is temporarily locked, for example, due to another operation in progress.</p>\n",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "description": "Unique identifier for the request, useful for debugging.\nYou can set this value manually by including an `X-Request-ID` header in the request. If not provided, the value will be generated automatically.\n"
+        },
+        "code": {
+          "description": "Machine-readable code classifying the error type. See `message` for a human-readable explanation.",
+          "type": "string",
+          "default": ""
+        },
+        "message": {
+          "description": "Error message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "code"
+      ]
+    }
+  ],
+  "examples": {
+    "curl": "curl \"https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/custom-domains\" \\\n  -H \"Authorization: Bearer $NEON_API_KEY\"",
+    "typescript": "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.listProjectBranchCustomDomains({\n  client: neon.client,\n  path: {\n    project_id: process.env.PROJECT_ID,\n    branch_id: process.env.BRANCH_ID\n  }\n});",
+    "bodyExample": null,
+    "representative": null
+  },
+  "cli": null,
+  "mcp": {
+    "tool": null
+  },
+  "console": {
+    "breadcrumb": null
+  },
+  "specIndex": 176
+}
