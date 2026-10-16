@@ -64,7 +64,7 @@
     "@headlessui/tailwindcss": "^0.2.2",
     "@hookform/resolvers": "^5.9.1",
     "@inkeep/cxkit-react": "^0.5.119",
-    "@next/bundle-analyzer": "16.3.8",
+    "@next/bundle-analyzer": "16.4.0",
     "@octokit/core": "^7.0.8",
     "@radix-ui/react-collapsible": "^1.1.20",
     "@radix-ui/react-toast": "^1.2.23",
