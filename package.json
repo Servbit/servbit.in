@@ -133,7 +133,7 @@
     "@eslint/js": "^9.39.5",
     "@neon/sdk": "^7.0.0",
     "@next/eslint-plugin-next": "16.3.8",
-    "@playwright/test": "1.63.0",
+    "@playwright/test": "1.64.0",
     "@scalar/openapi-parser": "^0.29.10",
     "@shikijs/transformers": "^4.5.0",
     "@svgr/webpack": "^8.1.0",
