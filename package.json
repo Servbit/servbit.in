@@ -110,7 +110,7 @@
     "react-intersection-observer": "^11.0.1",
     "react-medium-image-zoom": "^5.4.9",
     "react-paginate": "^8.3.0",
-    "react-share": "^5.3.0",
+    "react-share": "^6.1.0",
     "react-tooltip": "^6.0.8",
     "react-use": "^17.6.1",
     "remark-gfm": "^4.0.1",
